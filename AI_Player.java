@@ -1,4 +1,7 @@
 import java.util.*;
+import Card;
+import hand;
+import Suit;
 
 public class AI_Player extends Player
 {
@@ -7,19 +10,21 @@ public class AI_Player extends Player
 	public short bet;
 	private Random rand;
 	private float confidence;
-	private Card hand[7]; 
-	private char [] handValue = [0,1,2,3,4,5,6,7,8,9]
+	private Card myHand[5]; 
 	private char handValueIndex = 0;
 	private Game game;
 	private Card a;
 	private Card b;
+	private hand calculator;
+
+	private final float betConfidenceThreshold = 0.7;
 
 	public AI_Player(String name, int chips, Game game)
 	{
 		this.name = name;
 		this.chips = chips;
-		this.boldness = rand.next(10)+1;
-		this.confidence = 0.05*boldness;
+		boldness = rand.nextInt(9)+1;
+		confidence = 0.05*boldness;
 		this.game = game;
 	}
 
@@ -30,6 +35,8 @@ public class AI_Player extends Player
 		{
 			a = game.draw();
 			b = game.draw();
+			myHand[0] = a;
+			myHand[1] = b;
 		}
 
 		// pre-flop
@@ -44,25 +51,32 @@ public class AI_Player extends Player
 			{
 				confidence -= (2-startVal)*confidence;
 			}
-
+			bettingPhase();
 		}
 		
 		// flop
 		else if(game.cardsPlayed == 3)
 		{
+			myHand[2] = game.cards[0];
+			myHand[3] = game.cards[1];
+			myHand[4] = game.cards[2];			
 			checkCurrentValue(3,2);
 		}
 		
 		// 4th card
 		else if(game.cardsPlayed == 4)
 		{
-			checkCurrentValue(1,5);
+			myHand = bestHand(myHand, game.cards[3]);
+			// recalculate confidence fn goes here
+					
+			
 		}
 		
 		// river
 		else
 		{
-			checkCurrentValue(1,6);
+			myHand = bestHand(myHand, game.cards[4]);
+			// recalculate confidence fn goes here	
 		}
 		
 	}
@@ -77,9 +91,9 @@ public class AI_Player extends Player
 		if(a.value == b.value)
 		{
 			handValueIndex = 1;
-			value += 2.0
+			value += 2.0;
 			// 0 = Two, 1 = Three, and so on
-			char cnt = 0;
+			char cnt = 2;
 
 			// if pocket aces, this goes up by 3
 			while(cnt < a.value)
@@ -98,13 +112,12 @@ public class AI_Player extends Player
 			high = b;
 			low = a;
 		}
-		diff = high.value - low.value+;
+		diff = high.value - low.value;
 		diff2 = low.value - high.value;
 		if(diff < 5)
 		{
 			value += 2^(1-diff) + 1^(12 - high.value) + 1^(11-low.value);
-		}
-		// 2 7 = 
+		} 
 		else if (diff2 + 13 < 5)
 		{
 			value += 2^(1-diff) + 1^(12 - high.value) + 1^(11-low.value);
@@ -116,18 +129,83 @@ public class AI_Player extends Player
 		return value;
 	}
 	
-	// determines value of cards given so far
+	
 	private void checkCurrentValue(char cardsDealt, char handIndex)
 	{
-		// get new cards
-		for(char c = 0; c < cardsDealt; c++)
+		// recalculate confidence based off of all possible cards to come
+	}
+
+	// when a new card is given to the ai when the Turn and River cards are dealt
+	private Card [] bestHand (Card [] current, Card next)
+	{
+		// get whatever our hands score is going before considering the new cards
+		int currScore = calculator.score(current);
+
+		for(char i = 0; i < 3; i++)
 		{
-			hand[handIndex+c] = game.cards[handIndex - 2]
+			Card [] temp = current;
+			temp[i+2] = next;
+			
+			// if the score of adding the new card to this slot is better than the
+			// old hand then this is the new best hand we have currently
+			int tempScore = calculator.score(temp);
+			if(tempScore > currScore)
+			{
+				currScore = tempScore;
+				current = temp;
+			}
 		}
-		handIndex += cardsDealt;
-		
-		// TODO: calculate where the handValueIndex is with cards dealt
-		//	 and determine how likely it is to raise that index with
-		//	 future cards
+		return current;
+	}
+	
+	private void bettingPhase()
+	{
+		if(bet < game.bet)
+		{
+			if(confidence > betConfidenceThreshold)
+			{
+				if(game.bet >= 0.5 * chips && confidence < 0.85)
+				{
+					fold();
+				}
+				else
+				{
+					call();
+				}
+			}
+		}
+		else
+		{
+			if(confidence > betConfidenceThreshold)
+			{
+				if(confidence < 0.95)
+				{
+					if(1.5 * bet < 0.5 * chips)
+					{
+						raise(1.5 * bet);
+					}
+					else if (chips < 10)
+					{
+						raise(chips);
+					}
+				}
+				else
+				{
+					raise(chips);
+				}
+			}
+		}
+	}
+
+	// just turn the numbers passed in into Enums
+	private Suit family(int x)
+	{
+		switch(x)
+		{
+			case 0: return CLUBS;
+			case 1: return HEARTS;
+			case 2: return DIAMONDS;
+			default: return SPADES;
+		}
 	}
 }
