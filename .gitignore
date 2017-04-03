@@ -1,1 +1,13 @@
+<<<<<<< HEAD
 *.class
+=======
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+>>>>>>> 8375725f5cfe4a50f497ec431a7caea117e4ad74
