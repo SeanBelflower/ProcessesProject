@@ -10,7 +10,7 @@ public class Player{
   private boolean bigBlind = false;
   private boolean smallBlind = false;
   private boolean dealer = false;
-  private boolean inGame = false; // Has the player folded yet
+  private boolean hasFolded = false; // Is the player still playing
   private boolean TexasHoldEm;
   private boolean FiveCardDraw;
 
@@ -38,10 +38,19 @@ public class Player{
   public ArrayList<Card> getHand(){
     return this.Hand;
   }
-// Returns true if the raise was possible, otherwise there was insufficient funds
-  public boolean raise(int amount){
-    if(amount <= chipStack && this.inGame){
+// Returns true if the bet was possible, otherwise there was insufficient funds
+  public boolean bet(int amount){
+    if(amount <= this.chipStack && this.inGame){
       this.chipStack -= amount;
+      return true;
+    }
+    else
+      return false;
+  }
+// Returns true if a raise is possible, otherwise there was insufficient funds
+  public boolean raise(int amount){
+    if(2*amount <= this.chipStack && this.inGame){
+      this.chipStack -= 2*amount;
       return true;
     }
     else
@@ -49,7 +58,7 @@ public class Player{
   }
 // Similar to raise but its for call
   public boolean call(int amount){
-    if(amount <= chipStack && this.inGame){
+    if(amount <= this.chipStack && this.inGame){
       this.chipStack -= amount;
       return true;
     }
@@ -58,7 +67,7 @@ public class Player{
   }
 // User chooses to fold
   public void fold(){
-    this.inGame = false;
+    this.hasFolded = true;
   }
 // Makes this player the big Blind
   public void setBigBlind(){
@@ -81,5 +90,16 @@ public class Player{
   public void resetDealer(){
     this.dealer = false;
   }
-
+// Returns how much a player has contributed to the pot
+  public int getContribution(){
+    return this.contribution;
+  }
+// Resets the contribution (usually means the end of a round)
+  public void resetContribution(){
+    this.contribution = 0;
+  }
+// Is the player still in the game
+  public boolean hasFolded(){
+    return this.hasFolded;
+  }
 }
