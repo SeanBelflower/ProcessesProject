@@ -26,7 +26,7 @@ public class Player{
   }
 // Takes multiple cards and adds them to the hand
   public void addToHand(ArrayList<Card> cards){
-    for(int i = 0; i < cards.length(); i++){
+    for(int i = 0; i < cards.size(); i++){
       this.Hand.add(cards.get(i));
     }
   }
@@ -40,8 +40,9 @@ public class Player{
   }
 // Returns true if the bet was possible, otherwise there was insufficient funds
   public boolean bet(int amount){
-    if(amount <= this.chipStack && this.inGame){
+    if(amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= amount;
+      this.contribution += amount;
       return true;
     }
     else
@@ -49,8 +50,9 @@ public class Player{
   }
 // Returns true if a raise is possible, otherwise there was insufficient funds
   public boolean raise(int amount){
-    if(2*amount <= this.chipStack && this.inGame){
+    if(2*amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= 2*amount;
+      this.contribution += 2*amount;
       return true;
     }
     else
@@ -58,8 +60,9 @@ public class Player{
   }
 // Similar to raise but its for call
   public boolean call(int amount){
-    if(amount <= this.chipStack && this.inGame){
+    if(amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= amount;
+      this.contribution += amount;
       return true;
     }
     else
