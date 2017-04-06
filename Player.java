@@ -50,9 +50,9 @@ public class Player{
   }
 // Returns true if a raise is possible, otherwise there was insufficient funds
   public boolean raise(int amount){
-    if(amount <= this.chipStack && !this.hasFolded){
-      this.chipStack -= amount;
-      this.contribution += amount;
+    if(2*amount <= this.chipStack && !this.hasFolded){
+      this.chipStack -= 2*amount;
+      this.contribution += 2*amount;
       return true;
     }
     else
