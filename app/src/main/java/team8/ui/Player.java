@@ -1,9 +1,5 @@
-package team8.ui;
-
 import java.io.*;
 import java.util.*;
-
-import team8.ui.Card;
 
 public class Player{
 
@@ -17,15 +13,14 @@ public class Player{
   private boolean hasFolded = false; // Is the player still playing
   private boolean TexasHoldEm;
   private boolean FiveCardDraw;
-  private boolean inGame;
 
 // Manually set the chipStack
-  public Player(int playerID, int chipStack){
+  Player(int playerID, int chipStack){
     this.playerID = playerID;
     this.chipStack = chipStack;
   }
 // chipStack is automatically set to 100 if not set Manually
-  public Player(int playerID){
+  Player(int playerID){
     this.playerID = playerID;
     this.chipStack = 100;
   }
@@ -45,8 +40,9 @@ public class Player{
   }
 // Returns true if the bet was possible, otherwise there was insufficient funds
   public boolean bet(int amount){
-    if(amount <= this.chipStack && this.inGame){
+    if(amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= amount;
+      this.contribution += amount;
       return true;
     }
     else
@@ -54,8 +50,9 @@ public class Player{
   }
 // Returns true if a raise is possible, otherwise there was insufficient funds
   public boolean raise(int amount){
-    if(2*amount <= this.chipStack && this.inGame){
+    if(2*amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= 2*amount;
+      this.contribution += 2*amount;
       return true;
     }
     else
@@ -63,8 +60,9 @@ public class Player{
   }
 // Similar to raise but its for call
   public boolean call(int amount){
-    if(amount <= this.chipStack && this.inGame){
+    if(amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= amount;
+      this.contribution += amount;
       return true;
     }
     else

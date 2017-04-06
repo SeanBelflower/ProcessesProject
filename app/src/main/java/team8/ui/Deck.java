@@ -1,14 +1,9 @@
-package team8.ui;
-
 import java.io.*;
 import java.util.*;
 
-import team8.ui.Card;
-
 // NOTE: The deck is not shuffled upon instantiation! You have to call the method
 
-public class Deck
-{
+public class Deck{
 
 //Stores all the cards in the Deck
   private ArrayList<Card> deck = new ArrayList<Card>();
@@ -16,17 +11,14 @@ public class Deck
   private int cardsInDeck = 52;
 
 // Class constructor that populates the deck
-  Deck()
-  {
+  Deck(){
     populateDeck();
   }
 
 // Returns the top card
-  public Card getCard()
-  {
+  public Card getCard(){
     // If there are no cards left to draw, return null
-    if(cardsInDeck - 1 < 0)
-    {
+    if(cardsInDeck - 1 < 0){
       return null;
     }
     cardsInDeck--;
@@ -34,11 +26,9 @@ public class Deck
   }
 
 // Returns the number of cards specified from the deck
-  public ArrayList<Card> getCard(int numOfCards)
-  {
+  public ArrayList<Card> getCard(int numOfCards){
     // If there are no cards left to draw, return null
-    if(cardsInDeck - numOfCards < 0)
-    {
+    if(cardsInDeck - numOfCards < 0){
       return null;
     }
     // Stores the cards to be returned
@@ -50,31 +40,26 @@ public class Deck
     return temp;
   }
 // Shuffles the deck
-  public void shuffle()
-  {
+  public void shuffle(){
     int index;
-    for(int i = 0; i < cardsInDeck;i++)
-    {
+    for(int i = 0; i < cardsInDeck;i++){
       index = (int)(Math.random() * cardsInDeck);
       swap(i, index);
     }
   }
 
 // Returns the number of cards left
-  public int numCardsLeft()
-  {
+  public int numCardsLeft(){
     return this.cardsInDeck;
   }
 // Prints the contents of the deck (May not be useful)
-  private void print()
-  {
+  private void print(){
     for(int i = 0; i < cardsInDeck;i++){
       System.out.println(deck.get(i));
     }
   }
   // Populates the deck
-  private void populateDeck()
-  {
+  private void populateDeck(){
     deck.add(new Card(2, Suit.HEARTS));
     deck.add(new Card(3, Suit.HEARTS));
     deck.add(new Card(4, Suit.HEARTS));
@@ -129,11 +114,10 @@ public class Deck
     deck.add(new Card(14,Suit.DIAMONDS));
   }
 // Basic swap function (Only needed for shuffle)
-  private void swap(int a, int b)
-  {
-      Card temp;
-      temp = deck.get(a);
-      deck.set(a, deck.get(b));
-      deck.set(b, temp);
+  private void swap(int a, int b){
+    Card temp;
+    temp = deck.get(a);
+    deck.set(a,deck.get(b));
+    deck.set(b, temp);
   }
 }
