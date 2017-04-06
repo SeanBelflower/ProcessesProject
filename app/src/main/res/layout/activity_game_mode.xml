@@ -7,10 +7,10 @@
     tools:context="team8.ui.GameMode">
 
     <RelativeLayout
-        android:layout_width="357dp"
-        android:layout_height="493dp"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="11dp">
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="76dp">
 
         <Button
             android:id="@+id/button8"
@@ -19,6 +19,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="94dp"
+            android:onClick="goToOptions"
             android:text="Texas Hold'em" />
 
         <Button
@@ -29,17 +30,8 @@
             android:layout_alignStart="@+id/button8"
             android:layout_below="@+id/button8"
             android:layout_marginTop="86dp"
+            android:onClick="goToOptions"
             android:text="Five-card Draw" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/button9"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="56dp"
-            android:text="Options"
-            android:onClick="goToOptions"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

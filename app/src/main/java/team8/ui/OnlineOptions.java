@@ -11,9 +11,10 @@ import android.widget.Spinner;
 
 public class OnlineOptions extends AppCompatActivity
 {
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offline_options);
+        setContentView(R.layout.activity_online_options);
 
         Spinner chipsSpinner = (Spinner) findViewById(R.id.chipsSpinner);
         ArrayAdapter<CharSequence> chipsAdapter = ArrayAdapter.createFromResource(this,

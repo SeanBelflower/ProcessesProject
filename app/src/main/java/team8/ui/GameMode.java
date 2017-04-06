@@ -15,16 +15,18 @@ public class GameMode extends AppCompatActivity
 
     public void goToOptions(View view)
     {
-        String mode = getIntent().getStringExtra("Player Mode");
+        String mode = getIntent().getStringExtra("mode");
 
         if(mode.equals("Offline"))
         {
             Intent intent = new Intent(GameMode.this, OfflineOptions.class);
+            intent.putExtra("mode", mode);
             startActivity(intent);
         }
         else
         {
             Intent intent = new Intent(GameMode.this, OnlineOptions.class);
+            intent.putExtra("mode", mode);
             startActivity(intent);
         }
     }

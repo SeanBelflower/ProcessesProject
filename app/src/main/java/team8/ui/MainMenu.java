@@ -27,7 +27,7 @@ public class MainMenu extends AppCompatActivity
                 break;
         }
         Intent intent = new Intent(MainMenu.this, GameMode.class);
-        intent.putExtra("Player Mode", mode);
+        intent.putExtra("mode", mode);
         startActivity(intent);
     }
 }

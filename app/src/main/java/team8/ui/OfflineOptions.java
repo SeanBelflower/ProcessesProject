@@ -1,5 +1,6 @@
 package team8.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,8 @@ import android.widget.Spinner;
 
 public class OfflineOptions extends AppCompatActivity
 {
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_options);
 
@@ -85,5 +87,26 @@ public class OfflineOptions extends AppCompatActivity
                 }
             }
         });
+    }
+
+    public void save(View view)
+    {
+        Spinner botsSpinner = (Spinner)findViewById(R.id.botsSpinner);
+
+        EditText bot1Name = (EditText)findViewById(R.id.bot1Name);
+        EditText bot2Name = (EditText)findViewById(R.id.bot2Name);
+        EditText bot3Name = (EditText)findViewById(R.id.bot3Name);
+        EditText bot4Name = (EditText)findViewById(R.id.bot4Name);
+
+        Intent intent = new Intent(OfflineOptions.this, TexasHoldem.class);
+
+        intent.putExtra("numBots", botsSpinner.getSelectedItem().toString());
+        intent.putExtra("mode", getIntent().getStringExtra("mode"));
+        intent.putExtra("name1", bot1Name.getText().toString());
+        intent.putExtra("name2", bot2Name.getText().toString());
+        intent.putExtra("name3", bot3Name.getText().toString());
+        intent.putExtra("name4", bot4Name.getText().toString());
+
+        startActivity(intent);
     }
 }
