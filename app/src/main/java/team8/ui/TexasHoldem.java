@@ -23,6 +23,8 @@ public class TexasHoldem extends AppCompatActivity
     private int playerIndex = 0; // Keeps track of the current player
     private int dealerIndex = 0; // Keeps track of the dealer
     private Deck deck;
+	
+	public int rankHand (Card[]);
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -256,5 +258,122 @@ public class TexasHoldem extends AppCompatActivity
         }
     }
 
-
+	//ranks a hand
+	public int rankHand (Card[] hand)
+	{
+		//primitive boolean defaults to false
+		boolean flush, straight, pair, three, four, twoPair, fullHouse;
+		
+		//sort the hand to make it easier to rank
+		hand = sortHand(hand);
+		
+		//check for straight
+		for(int i = 1; i < 5; i++)
+		{
+			//can see wraparound straights
+			if(hand[i].getValue() - 2 != hand[i-1].getValue - 1 % 13)
+			{
+				break;
+			}
+			else if(i == 4)
+			{
+				straight = true;
+			}
+		}
+		
+		//check for flush
+		for (int i=0; i<hand.length-1; i++)
+		{
+			if (hand[i].getSuit() != hand[i+1])
+			{
+				break;
+			}
+			flush = true;
+		}
+		
+		//check for royal flush and straight flush
+		if(flush && straight)
+		{
+			if(card[0] == 8)
+			{
+				return 10;
+			}
+			else
+			{
+				return 9;
+			}
+		}
+		
+		//check for other hands
+		valueCheck = hand[0].getValue();
+		counter = 1;
+		//one loop through hand
+		for(int i = 1; i <= 5; i++)
+		{
+			//when non-matching card is encountered, decide rank
+			if(hand[i] != valueCheck || i == 5)
+			{
+				switch (counter)
+				{
+					case 2: if (three)
+								fullHouse = true;
+							else if (pair)
+								twoPair = true;
+							else 
+								pair = true;
+							break;
+					case 3: if (pair)
+								fullHouse = true;
+							else
+								three = true;
+							break;
+					case 4: four = true;
+							break;
+					default: break;
+				}
+				valueCheck = hand[i].getValue();
+				counter = 1;
+			}
+			else counter++;
+		}
+		
+		//return rank of hand
+		if (four)
+			return 8;
+		if (fullHouse)
+			return 7;
+		if (flush)
+			return 6;
+		if (straight)
+			return 5;
+		if (three)
+			return 4;
+		if (twoPair)
+			return 3;
+		if (pair)
+			return 2;
+		
+		//lol loser
+		return 1;
+	}
+	
+	//ghetto bubblesort
+	public sortHand (Card[] hand)
+	{
+		int bound = 4;
+		Card temp;
+		while (bound>0)
+		{
+			for (int i=0; i<bound-1; i++)
+			{
+				if (hand[i].compareTo(hand[i+1] > 0)
+				{
+					temp = hand[i];
+					hand[i] = hand[i+1];
+					hand[i+1] = temp;
+				}
+			}
+			bound--;
+		}
+	}
 }
