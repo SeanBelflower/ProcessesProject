@@ -65,10 +65,11 @@ public class TexasHoldem extends AppCompatActivity
                 // PreFlop, all of this is taken care of in setUp()
             }
             if(i == 1) {
-                // Flop, Make cards on table visible, already added with setUp
+                // Flop, Make cards on table visible, already added with setUp()
 
                 // New round reset maxContribution and start at smallBlind again
-                maxContribution = 0;
+                // -1 to make sure player contribution does not equal maxContribution at 0
+                maxContribution = -1;
                 playerIndex = dealerIndex + 1 % numPlayers;
                 // smallBlind makes initial bet
 
@@ -80,7 +81,7 @@ public class TexasHoldem extends AppCompatActivity
                 cardsOnTable.add(deck.getCard());
 
                 // New round reset maxContribution and start at smallBlind again
-                maxContribution = 0;
+                maxContribution = -1;
                 playerIndex = dealerIndex + 1 % numPlayers;
                 // smallBlind makes initial bet
 
@@ -184,7 +185,13 @@ public class TexasHoldem extends AppCompatActivity
         }
         return equal;
     }
+    // Resets the players contributions
+    public void resetContributions(){
 
+        for(int i = 0; i < numPlayers;i++){
+            players[i].resetContribution();
+        }
+    }
     public void showPlayers(int numBots)
     {
         switch(numBots)
