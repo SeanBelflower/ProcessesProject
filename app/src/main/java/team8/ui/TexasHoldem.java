@@ -366,7 +366,7 @@ public class TexasHoldem extends AppCompatActivity
 		{
 			for (int i=0; i<bound-1; i++)
 			{
-				if (hand[i].compareTo(hand[i+1] > 0)
+				if (hand[i].compareTo(hand[i+1]) > 0)
 				{
 					temp = hand[i];
 					hand[i] = hand[i+1];
