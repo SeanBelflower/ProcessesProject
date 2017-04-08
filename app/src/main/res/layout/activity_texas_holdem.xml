@@ -235,7 +235,8 @@
             android:layout_marginRight="19dp"
             android:text="Call"
             tools:layout_editor_absoluteX="293dp"
-            tools:layout_editor_absoluteY="457dp" />
+            tools:layout_editor_absoluteY="457dp"
+            android:onClick="openCallWindow"/>
 
         <Button
             android:id="@+id/button11"
@@ -246,9 +247,9 @@
             android:layout_alignLeft="@+id/button10"
             android:layout_alignStart="@+id/button10"
             android:text="Raise"
-            android:onClick="openRaiseWindow"
             tools:layout_editor_absoluteX="293dp"
-            tools:layout_editor_absoluteY="505dp" />
+            tools:layout_editor_absoluteY="505dp"
+            android:onClick="openRaiseWindow"/>
 
         <Button
             android:id="@+id/button7"
@@ -260,7 +261,8 @@
             android:layout_marginTop="6dp"
             android:text="Check"
             tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="505dp" />
+            tools:layout_editor_absoluteY="505dp"
+            android:onClick="openCheckWindow"/>
 
         <Button
             android:id="@+id/button5"
@@ -273,7 +275,8 @@
             android:layout_toStartOf="@+id/card1"
             android:text="Fold"
             tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="457dp" />
+            tools:layout_editor_absoluteY="457dp"
+            android:onClick="openFoldWindow"/>
 
         <ImageView
             android:id="@+id/card1"

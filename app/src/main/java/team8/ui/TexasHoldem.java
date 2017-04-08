@@ -147,18 +147,21 @@ public class TexasHoldEm extends AppCompatActivity
         return 1;
     }
 
-    public void call(View view)
+    public int call()
     {
 
-        if(!currentPlayer.call(maxContribution)){
+        if(!currentPlayer.call(maxContribution))
+        {
             // print call was not possible
-            return;
+            return 0;
         }
         updatePot(maxContribution);
         playerIndex++;
+
+        return 1;
     }
 
-    public void fold(View view)
+    public void fold()
     {
         currentPlayer.fold();
         playerIndex++;
@@ -171,14 +174,15 @@ public class TexasHoldEm extends AppCompatActivity
             // print insuffcient funds
             return;
         }
-        else{
+        else
+        {
             maxContribution = value;
             updatePot(value);
         }
         playerIndex++;
     }
 
-    public void check(View view)
+    public void check()
     {
         // Should only be visible in rounds 2,3,4 not 1
         playerIndex++;
@@ -222,11 +226,12 @@ public class TexasHoldEm extends AppCompatActivity
         dealerIndex++;
 
     }
+
     // checks to see if all the bets made by the current players is equal
     public boolean betsEqual()
     {
         boolean equal = true;
-        for(int i = 0; i < this.numPlayers;i++)
+        for(int i = 0; i < this.numPlayers; i++)
         {
             equal &= ((players[i].getContribution() == this.maxContribution) ||
                     players[i].hasFolded());
@@ -331,9 +336,9 @@ public class TexasHoldEm extends AppCompatActivity
 		}
 		
 		//check for flush
-		for (int i=0; i<hand.length-1; i++)
+		for(int i = 0; i < hand.length - 1; i++)
 		{
-			if (hand[i].getSuit() != hand[i+1].getSuit())
+			if(hand[i].getSuit() != hand[i+1].getSuit())
 			{
 				break;
 			}
@@ -435,8 +440,10 @@ public class TexasHoldEm extends AppCompatActivity
         final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
         final TextView warning = (TextView)popupView.findViewById(R.id.warning);
         warning.setText("");
+
         Button raiseSave = (Button)popupView.findViewById(R.id.raiseSave);
         final EditText raiseText = (EditText)popupView.findViewById(R.id.raiseText);
         raiseSave.setOnClickListener(new Button.OnClickListener(){
@@ -456,5 +463,105 @@ public class TexasHoldEm extends AppCompatActivity
                     }
                 }
             }});
+    }
+
+    public void openFoldWindow(View view)
+    {
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.fold_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        Button yesOpt = (Button)popupView.findViewById(R.id.yes);
+        yesOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                fold();
+                popupWindow.dismiss();
+            }
+        });
+
+        Button noOpt = (Button)popupView.findViewById(R.id.no);
+        noOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    public void openCallWindow(View view)
+    {
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.call_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
+        final Button noOpt = (Button)popupView.findViewById(R.id.no);
+
+        yesOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                int result = call();
+
+                if(result == 1)
+                    popupWindow.dismiss();
+                else
+                {
+                    final TextView warning = (TextView)popupView.findViewById(R.id.warning);
+                    warning.setVisibility(View.VISIBLE);
+                    yesOpt.setVisibility(View.GONE);
+                    noOpt.setVisibility(View.GONE);
+
+                    final Button ok = (Button)popupView.findViewById(R.id.ok);
+                    final TextView callPrompt = (TextView)popupView.findViewById(R.id.callPrompt);
+                    callPrompt.setVisibility(View.GONE);
+                    ok.setVisibility(View.VISIBLE);
+                    ok.setOnClickListener(new Button.OnClickListener(){
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                            warning.setVisibility(View.GONE);
+                            yesOpt.setVisibility(View.VISIBLE);
+                            noOpt.setVisibility(View.VISIBLE);
+                            ok.setVisibility(View.GONE);
+                            callPrompt.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+        });
+
+        noOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    public void openCheckWindow(View view)
+    {
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.check_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        Button yesOpt = (Button)popupView.findViewById(R.id.yes);
+        yesOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                check();
+                popupWindow.dismiss();
+            }
+        });
+
+        Button noOpt = (Button)popupView.findViewById(R.id.no);
+        noOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+            }
+        });
     }
 }

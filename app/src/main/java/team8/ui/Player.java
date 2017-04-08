@@ -45,7 +45,8 @@ public class Player
   }
 
 // Takes one card and adds it to the Hand
-  public void addToHand(Card card){
+  public void addToHand(Card card)
+  {
     this.Hand.add(card);
   }
 // Returns the players current Hand
@@ -79,8 +80,10 @@ public class Player
     else
       return false;
   }
+
 // Similar to raise but its for call
-  public boolean call(int amount){
+  public boolean call(int amount)
+  {
     if(amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= amount;
       this.contribution += amount;
@@ -89,12 +92,15 @@ public class Player
     else
       return false;
   }
+
 // User chooses to fold
-  public void fold(){
+  public void fold()
+  {
     this.hasFolded = true;
   }
 // Makes this player the big Blind
-  public void setBigBlind(){
+  public void setBigBlind()
+  {
     this.bigBlind = true;;
   }
 // Make this player the small blind
