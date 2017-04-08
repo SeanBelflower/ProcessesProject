@@ -28,6 +28,15 @@
         android:layout_marginStart="8dp">
 
         <TextView
+            android:id="@+id/player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/bot3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="9dp"
+            android:text="name0" />
+
+        <TextView
             android:id="@+id/potLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,31 +55,31 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/bot1Name"
+            android:id="@+id/bot1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/bot2Name"
-            android:layout_alignBottom="@+id/bot2Name"
-            android:layout_alignLeft="@+id/bot3Name"
-            android:layout_alignStart="@+id/bot3Name"
+            android:layout_alignBaseline="@+id/bot2"
+            android:layout_alignBottom="@+id/bot2"
+            android:layout_alignLeft="@+id/bot3"
+            android:layout_alignStart="@+id/bot3"
             android:text="" />
 
         <TextView
-            android:id="@+id/bot2Name"
+            android:id="@+id/bot2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/bot4Name"
-            android:layout_alignStart="@+id/bot4Name"
+            android:layout_alignLeft="@+id/bot4"
+            android:layout_alignStart="@+id/bot4"
             android:layout_below="@+id/layoutB2"
             android:layout_marginTop="7dp"
             android:text="" />
 
         <TextView
-            android:id="@+id/bot3Name"
+            android:id="@+id/bot3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/bot4Name"
-            android:layout_alignBottom="@+id/bot4Name"
+            android:layout_alignBaseline="@+id/bot4"
+            android:layout_alignBottom="@+id/bot4"
             android:layout_alignEnd="@+id/layoutB3"
             android:layout_alignRight="@+id/layoutB3"
             android:layout_marginEnd="6dp"
@@ -78,7 +87,7 @@
             android:text="" />
 
         <TextView
-            android:id="@+id/bot4Name"
+            android:id="@+id/bot4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/layoutB4"
@@ -293,7 +302,7 @@
             android:id="@+id/card2"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            android:layout_below="@+id/bot3Name"
+            android:layout_below="@+id/bot3"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="20dp"

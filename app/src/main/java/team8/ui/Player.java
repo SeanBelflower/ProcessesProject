@@ -27,7 +27,8 @@ public class Player
   }
 
 // chipStack is automatically set to 100 if not set Manually
-  Player(int playerID){
+  Player(int playerID)
+  {
     this.playerID = playerID;
     this.chipStack = 100;
   }

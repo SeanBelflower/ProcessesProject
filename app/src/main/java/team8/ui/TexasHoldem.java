@@ -32,6 +32,13 @@ public class TexasHoldEm extends AppCompatActivity
     private int dealerIndex = 0; // Keeps track of the dealer
     private Deck deck;
 
+    final int PLAYER_ID = 0;
+    final int BOT1_ID = 1;
+    final int BOT2_ID = 2;
+    final int BOT3_ID = 3;
+    final int BOT4_ID = 4;
+
+
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -124,6 +131,33 @@ public class TexasHoldEm extends AppCompatActivity
         potText.setText("" + pot);
     }
 
+    public void updatePlayerChips(int playerID)
+    {
+        switch(playerID)
+        {
+            case 4:
+                TextView bot4Name = (TextView)findViewById(R.id.bot4);
+                bot4Name.setText(getIntent().getStringExtra("name4") + ": " + players[4].getChipStack());
+                break;
+            case 3:
+                TextView bot3Name = (TextView)findViewById(R.id.bot3);
+                bot3Name.setText(getIntent().getStringExtra("name3") + ": " + players[3].getChipStack());
+                break;
+            case 2:
+                TextView bot2Name = (TextView)findViewById(R.id.bot2);
+                bot2Name.setText(getIntent().getStringExtra("name2") + ": " + players[2].getChipStack());
+                break;
+            case 1:
+                TextView bot1Name = (TextView)findViewById(R.id.bot1);
+                bot1Name.setText(getIntent().getStringExtra("name1") + ": " + players[1].getChipStack());
+                break;
+            case 0:
+                TextView bot0Name = (TextView)findViewById(R.id.player);
+                bot0Name.setText("Player: " + players[0].getChipStack());
+                break;
+        }
+    }
+
     //returns
     public int raise(int value)
     {
@@ -140,6 +174,7 @@ public class TexasHoldEm extends AppCompatActivity
         {
             maxContribution = value;
             updatePot(value);
+            updatePlayerChips(currentPlayer.getPlayerID());
         }
 
         playerIndex++;
@@ -193,13 +228,14 @@ public class TexasHoldEm extends AppCompatActivity
     // Sets up the game including picking the blinds, dealers, creating the deck, etc.
     public void setUp()
     {
+        int startingChips = Integer.parseInt(getIntent().getStringExtra("startingChips"));
         deck = new Deck();
         deck.shuffle();
         numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
         this.players = new Player[numPlayers];
         for(int i = 0; i < numPlayers;i++)
         {
-            players[i] = new Player(i);
+            players[i] = new Player(i, startingChips);
         }
         // New game pot gets reset
         updatePot(0);
@@ -223,6 +259,7 @@ public class TexasHoldEm extends AppCompatActivity
         currentPlayer = bigBlind = players[dealerIndex + 2 % this.numPlayers];
         // playerIndex points to the current player, currently the player after the BigBlind
         playerIndex = dealerIndex + 3;
+
         dealerIndex++;
 
     }
@@ -254,20 +291,19 @@ public class TexasHoldEm extends AppCompatActivity
         {
             case 4:
                 findViewById(R.id.layoutB4).setVisibility(View.VISIBLE);
-                TextView bot4Name = (TextView)findViewById(R.id.bot4Name);
-                bot4Name.setText(getIntent().getStringExtra("name4"));
+                updatePlayerChips(BOT4_ID);
             case 3:
                 findViewById(R.id.layoutB3).setVisibility(View.VISIBLE);
-                TextView bot3Name = (TextView)findViewById(R.id.bot3Name);
-                bot3Name.setText(getIntent().getStringExtra("name3"));
+                updatePlayerChips(BOT3_ID);
             case 2:
                 findViewById(R.id.layoutB2).setVisibility(View.VISIBLE);
-                TextView bot2Name = (TextView)findViewById(R.id.bot2Name);
-                bot2Name.setText(getIntent().getStringExtra("name2"));
+                updatePlayerChips(BOT2_ID);
             case 1:
                 findViewById(R.id.layoutB1).setVisibility(View.VISIBLE);
-                TextView bot1Name = (TextView)findViewById(R.id.bot1Name);
-                bot1Name.setText(getIntent().getStringExtra("name1"));
+                updatePlayerChips(BOT1_ID);
+            default:
+                updatePlayerChips(PLAYER_ID);
+
         }
     }
 
@@ -452,6 +488,7 @@ public class TexasHoldEm extends AppCompatActivity
                 if(!raiseText.getText().toString().isEmpty())
                 {
                     int result = raise(Integer.parseInt(raiseText.getText().toString()));
+                    Log.w("BEEF0", "" + currentPlayer.getChipStack() + " pot: " + pot);
                     if(result == 1)
                         popupWindow.dismiss();
                     else

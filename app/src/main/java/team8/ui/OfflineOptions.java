@@ -42,46 +42,46 @@ public class OfflineOptions extends AppCompatActivity
             {
                 if(botsSpinner.getSelectedItem().toString().equals("1"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1Name);
+                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2Name);
+                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
                     bot2Name.setVisibility(View.GONE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3Name);
+                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
                     bot3Name.setVisibility(View.GONE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4Name);
+                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
                     bot4Name.setVisibility(View.GONE);
                 }
                 if(botsSpinner.getSelectedItem().toString().equals("2"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1Name);
+                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2Name);
+                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
                     bot2Name.setVisibility(View.VISIBLE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3Name);
+                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
                     bot3Name.setVisibility(View.GONE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4Name);
+                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
                     bot4Name.setVisibility(View.GONE);
                 }
                 if(botsSpinner.getSelectedItem().toString().equals("3"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1Name);
+                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2Name);
+                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
                     bot2Name.setVisibility(View.VISIBLE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3Name);
+                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
                     bot3Name.setVisibility(View.VISIBLE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4Name);
+                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
                     bot4Name.setVisibility(View.GONE);
                 }
                 if(botsSpinner.getSelectedItem().toString().equals("4"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1Name);
+                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2Name);
+                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
                     bot2Name.setVisibility(View.VISIBLE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3Name);
+                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
                     bot3Name.setVisibility(View.VISIBLE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4Name);
+                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
                     bot4Name.setVisibility(View.VISIBLE);
                 }
             }
@@ -91,15 +91,17 @@ public class OfflineOptions extends AppCompatActivity
     public void save(View view)
     {
         Spinner botsSpinner = (Spinner)findViewById(R.id.botsSpinner);
+        Spinner chipsSpinner = (Spinner)findViewById(R.id.chipsSpinner);
 
-        EditText bot1Name = (EditText)findViewById(R.id.bot1Name);
-        EditText bot2Name = (EditText)findViewById(R.id.bot2Name);
-        EditText bot3Name = (EditText)findViewById(R.id.bot3Name);
-        EditText bot4Name = (EditText)findViewById(R.id.bot4Name);
+        EditText bot1Name = (EditText)findViewById(R.id.bot1);
+        EditText bot2Name = (EditText)findViewById(R.id.bot2);
+        EditText bot3Name = (EditText)findViewById(R.id.bot3);
+        EditText bot4Name = (EditText)findViewById(R.id.bot4);
 
         Intent intent = new Intent(OfflineOptions.this, TexasHoldEm.class);
 
         intent.putExtra("numBots", botsSpinner.getSelectedItem().toString());
+        intent.putExtra("startingChips", chipsSpinner.getSelectedItem().toString());
         intent.putExtra("mode", getIntent().getStringExtra("mode"));
         intent.putExtra("name1", bot1Name.getText().toString());
         intent.putExtra("name2", bot2Name.getText().toString());
