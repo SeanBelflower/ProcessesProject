@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class TexasHoldem extends AppCompatActivity
+public class TexasHoldEm extends AppCompatActivity
 {
     private Player bigBlind;
     private Player smallBlind;
@@ -23,15 +23,15 @@ public class TexasHoldem extends AppCompatActivity
     private int playerIndex = 0; // Keeps track of the current player
     private int dealerIndex = 0; // Keeps track of the dealer
     private Deck deck;
-	
-	public int rankHand (Card[]);
+
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_texas_holdem);
         boolean PlayGame = true;
-        while(PlayGame) {
+        while(PlayGame)
+        {
             Deck deck = new Deck();
             deck.shuffle();
             setUp();
@@ -47,8 +47,10 @@ public class TexasHoldem extends AppCompatActivity
         showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
     }
 
-    TexasHoldEm(int numPlayers){
-        if(numPlayers < 3){
+    public TexasHoldEm(int numPlayers)
+    {
+        if(numPlayers < 3)
+        {
             // Print something saying you need 3 players, dealer, SmallBlind, BigBlind
             return;
         }
@@ -58,15 +60,21 @@ public class TexasHoldem extends AppCompatActivity
             players[i] = new Player(i);
         }
     }
+
     // Must be called after setUp()
-    public void gamePlay(){
+    public void gamePlay()
+    {
         // Get the number of players
         // numPlayers = the number of players
-        for(int i = 0; i < 4; i++){
-            if(i == 0){
+        int numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
+        for(int i = 0; i < 4; i++)
+        {
+            if(i == 0)
+            {
                 // PreFlop, all of this is taken care of in setUp()
             }
-            if(i == 1) {
+            if(i == 1)
+            {
                 // Flop, Make cards on table visible, already added with setUp()
 
                 // New round reset maxContribution and start at smallBlind again
@@ -76,7 +84,8 @@ public class TexasHoldem extends AppCompatActivity
                 // smallBlind makes initial bet
 
             }
-            if(i > 1){
+            if(i > 1)
+            {
                 // The Turn and The River
 
                 // Add a card to cards on table
@@ -88,22 +97,27 @@ public class TexasHoldem extends AppCompatActivity
                 // smallBlind makes initial bet
 
             }
-            while(!betsEqual()){
-                currentPlayer = playerIndex[playerIndex % numPlayers];
+            while(!betsEqual())
+            {
+                currentPlayer = players[playerIndex % numPlayers];
                 // Give players the option to raise, call, fold, checking
                 // currentPlayer.getPlayerID() gets the current ID of the player
             }
         }
 
     }
-    public void raise(View view){
+    public void raise(View view)
+    {
         // get value
-        if(value < maxContribution){
+        int value = 0;
+        if(value < maxContribution)
+        {
             // Enter a higher amount than maxContribution
             return;
         }
 
-        if(!currentPlayer.raise(value)){
+        if(!currentPlayer.raise(value))
+        {
             //print raise was not possible
             return;
         }
@@ -116,7 +130,8 @@ public class TexasHoldem extends AppCompatActivity
 
     }
 
-    public void call(View view){
+    public void call(View view)
+    {
 
         if(!currentPlayer.call(maxContribution)){
             // print call was not possible
@@ -126,12 +141,14 @@ public class TexasHoldem extends AppCompatActivity
         playerIndex++;
     }
 
-    public void fold(View view){
+    public void fold(View view)
+    {
         currentPlayer.fold();
         playerIndex++;
     }
 
-    public void bet(View view){
+    public void bet(int value)
+    {
         // get value only should be visible at the start of a round
         if(!currentPlayer.bet(value)){
             // print insuffcient funds
@@ -144,7 +161,8 @@ public class TexasHoldem extends AppCompatActivity
         playerIndex++;
     }
 
-    public void check(View view){
+    public void check(View view)
+    {
         // Should only be visible in rounds 2,3,4 not 1
         playerIndex++;
         currentPlayer = players[playerIndex % numPlayers];
@@ -152,7 +170,8 @@ public class TexasHoldem extends AppCompatActivity
     }
 
     // Sets up the game including picking the blinds, dealers, creating the deck, etc.
-    public void setUp(){
+    public void setUp()
+    {
         // New game pot gets reset
         pot = 0;
         // picking the blinds and dealer
@@ -179,7 +198,8 @@ public class TexasHoldem extends AppCompatActivity
 
     }
     // checks to see if all the bets made by the current players is equal
-    public boolean betsEqual(){
+    public boolean betsEqual()
+    {
         boolean equal = true;
         for(int i = 0; i < this.numPlayers;i++){
             equal &= ((players[i].getContribution() == this.maxContribution) ||
@@ -187,13 +207,16 @@ public class TexasHoldem extends AppCompatActivity
         }
         return equal;
     }
+
     // Resets the players contributions
-    public void resetContributions(){
+    public void resetContributions()
+    {
 
         for(int i = 0; i < numPlayers;i++){
             players[i].resetContribution();
         }
     }
+
     public void showPlayers(int numBots)
     {
         switch(numBots)
