@@ -2,8 +2,16 @@ package team8.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,7 +37,8 @@ public class TexasHoldEm extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_texas_holdem);
-        boolean PlayGame = true;
+
+       /* boolean PlayGame = true;
         while(PlayGame)
         {
             Deck deck = new Deck();
@@ -41,13 +50,15 @@ public class TexasHoldEm extends AppCompatActivity
 
             // Ask if the player wants to continue Playing
             // PlayGame = their response
-        }
+        }*/
+
+        setUp();
         updatePlayerCards(deck.getCard(), deck.getCard());
         updateCommunityCards(deck.getCard(), deck.getCard(), deck.getCard(), deck.getCard(), null);
         showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
     }
 
-    public TexasHoldEm(int numPlayers)
+  /*  public TexasHoldEm(int numPlayers)
     {
         if(numPlayers < 3)
         {
@@ -56,17 +67,15 @@ public class TexasHoldEm extends AppCompatActivity
         }
         this.numPlayers = numPlayers;
         this.players = new Player[numPlayers];
-        for(int i = 0; i < numPlayers;i++){
+        for(int i = 0; i < numPlayers;i++)
+        {
             players[i] = new Player(i);
         }
-    }
+    }*/
 
     // Must be called after setUp()
     public void gamePlay()
     {
-        // Get the number of players
-        // numPlayers = the number of players
-        int numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
         for(int i = 0; i < 4; i++)
         {
             if(i == 0)
@@ -106,28 +115,36 @@ public class TexasHoldEm extends AppCompatActivity
         }
 
     }
-    public void raise(View view)
+
+    //adds value to pot
+    public void updatePot(int value)
     {
-        // get value
-        int value = 0;
+        pot += value;
+        TextView potText = (TextView)findViewById(R.id.potText);
+        potText.setText("" + pot);
+    }
+
+    //returns
+    public int raise(int value)
+    {
         if(value < maxContribution)
         {
             // Enter a higher amount than maxContribution
-            return;
+            return 0;
         }
-
-        if(!currentPlayer.raise(value))
+        else if(!currentPlayer.raise(value)) //not enough funds
         {
-            //print raise was not possible
-            return;
+            return -1;
         }
-        else{
+        else
+        {
             maxContribution = value;
-            pot += value;
+            updatePot(value);
         }
 
         playerIndex++;
 
+        return 1;
     }
 
     public void call(View view)
@@ -137,7 +154,7 @@ public class TexasHoldEm extends AppCompatActivity
             // print call was not possible
             return;
         }
-        pot+=maxContribution;
+        updatePot(maxContribution);
         playerIndex++;
     }
 
@@ -156,7 +173,7 @@ public class TexasHoldEm extends AppCompatActivity
         }
         else{
             maxContribution = value;
-            pot += value;
+            updatePot(value);
         }
         playerIndex++;
     }
@@ -172,8 +189,16 @@ public class TexasHoldEm extends AppCompatActivity
     // Sets up the game including picking the blinds, dealers, creating the deck, etc.
     public void setUp()
     {
+        deck = new Deck();
+        deck.shuffle();
+        numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
+        this.players = new Player[numPlayers];
+        for(int i = 0; i < numPlayers;i++)
+        {
+            players[i] = new Player(i);
+        }
         // New game pot gets reset
-        pot = 0;
+        updatePot(0);
         // picking the blinds and dealer
         players[dealerIndex % this.numPlayers].setDealer();
         players[dealerIndex + 1 % this.numPlayers].setSmallBlind();
@@ -201,7 +226,8 @@ public class TexasHoldEm extends AppCompatActivity
     public boolean betsEqual()
     {
         boolean equal = true;
-        for(int i = 0; i < this.numPlayers;i++){
+        for(int i = 0; i < this.numPlayers;i++)
+        {
             equal &= ((players[i].getContribution() == this.maxContribution) ||
                     players[i].hasFolded());
         }
@@ -401,4 +427,34 @@ public class TexasHoldEm extends AppCompatActivity
 
 		return hand;
 	}
+
+
+	public void openRaiseWindow(View view)
+    {
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        final TextView warning = (TextView)popupView.findViewById(R.id.warning);
+        warning.setText("");
+        Button raiseSave = (Button)popupView.findViewById(R.id.raiseSave);
+        final EditText raiseText = (EditText)popupView.findViewById(R.id.raiseText);
+        raiseSave.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                if(!raiseText.getText().toString().isEmpty())
+                {
+                    int result = raise(Integer.parseInt(raiseText.getText().toString()));
+                    if(result == 1)
+                        popupWindow.dismiss();
+                    else
+                    {
+                        if(result == 0)
+                            warning.setText("Must match or exceed max contribution.");
+                        else
+                            warning.setText("Not enough chips.");
+                    }
+                }
+            }});
+    }
 }

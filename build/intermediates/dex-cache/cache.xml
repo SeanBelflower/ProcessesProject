@@ -3,129 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\d161077695ed244b85793142bb0b021af77fe8c7\output\jars\classes.jar"
+        jar="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_15cbfe6c21c1def8a01de54d79682a9ac8e3844b\classes.dex" />
+        sha1="1094a1283230b8ae5aa3e38053ed9994a62582dc">
+        <dex dex="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_c89b1da6fcdb406dac5ac096cddf210934cf0828\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\7b73af4a011f25e12af2c12e15e3fde05c80b3cc\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7996a478a4b24338e4a07e1f543a85f92d7fa40c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\a360efc7176cd0cac387e2f3bc38a5c56b419346\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_39d26fc29bac9e0dcb4ffc3daa05fc81fe72cf0b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\361edae718cb00c47222264b7bbac6b7b7fe7224\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_eafb0665168e0f95083fef367ee9358d0e109fad\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\137c483a4d0ff51ce104c8b4c33dc366263fe2a4\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="518768f3200963fbfec652f498da2c9d39245234">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2423d77bd17174cdbdcf2c46c04ffa10d13ad468\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_eb517588ba3adf8108abd94be55e751a01c95784\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_1b1f96b24846b9311711d57f5f01741bc0d3f1e6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\991a52778ed0301b715d899b3cc87fab5e438b1d\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6ccb8704e54e5da4c71c56812da15ec5e035d01c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.0\support-annotations-25.3.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.0_1f0d16bbaf220824f4504905c8e49b7bbd0881c7\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\d88bd092a82e4a6b985723748a80c097027c83b9\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5e3fc14d558d9e52dd6dccd5a08254512047053f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6bbe663b8d8f14ff1b64b94d76863f71f627a4d4">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_2a3416a89874bc6ba671634f77011e920b920d32\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\18cc43a527759bc373d4a66e2719e4e1db364972\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f2a683cac262dde5b4356125882302a76659394e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\d18879bad1d4465e5e562cced08d8e25b1b12ef1\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1375633da3ef1b5dd713decfee6b8530355dca4a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\mateo\.android\build-cache\b9d382ba45b0743d925c6e268904719f7e201535\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
-        <dex dex="C:\Users\mateo\Downloads\ProcessesProject-master\ProcessesProject-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_13d40e5f7408c09780baf5197847c3c31ae12d63\classes.dex" />
+        <dex dex="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_95413d2e91787eb86aafd329a8ad486ab478c2f8\classes.dex" />
     </item>
 
 </items>

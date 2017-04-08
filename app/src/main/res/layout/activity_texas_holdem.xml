@@ -28,6 +28,24 @@
         android:layout_marginStart="8dp">
 
         <TextView
+            android:id="@+id/potLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/layoutB1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp"
+            android:text="Pot:" />
+
+        <TextView
+            android:id="@+id/potText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="0"
+            android:layout_below="@+id/potLabel"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
             android:id="@+id/bot1Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -228,7 +246,7 @@
             android:layout_alignLeft="@+id/button10"
             android:layout_alignStart="@+id/button10"
             android:text="Raise"
-            android:onClick="raise"
+            android:onClick="openRaiseWindow"
             tools:layout_editor_absoluteX="293dp"
             tools:layout_editor_absoluteY="505dp" />
 
