@@ -262,7 +262,7 @@ public class TexasHoldem extends AppCompatActivity
 	public int rankHand (Card[] hand)
 	{
 		//primitive boolean defaults to false
-		boolean flush, straight, pair, three, four, twoPair, fullHouse;
+		boolean flush = false, straight = false, pair = false, three = false, four = false, twoPair = false, fullHouse = false;
 		
 		//sort the hand to make it easier to rank
 		hand = sortHand(hand);
@@ -271,7 +271,7 @@ public class TexasHoldem extends AppCompatActivity
 		for(int i = 1; i < 5; i++)
 		{
 			//can see wraparound straights
-			if(hand[i].getValue() - 2 != hand[i-1].getValue - 1 % 13)
+			if(hand[i].getValue() - 2 != hand[i-1].getValue() - 1 % 13)
 			{
 				break;
 			}
@@ -284,7 +284,7 @@ public class TexasHoldem extends AppCompatActivity
 		//check for flush
 		for (int i=0; i<hand.length-1; i++)
 		{
-			if (hand[i].getSuit() != hand[i+1])
+			if (hand[i].getSuit() != hand[i+1].getSuit())
 			{
 				break;
 			}
@@ -294,7 +294,7 @@ public class TexasHoldem extends AppCompatActivity
 		//check for royal flush and straight flush
 		if(flush && straight)
 		{
-			if(card[0] == 8)
+			if(hand[0].getValue() == 8) //revisit
 			{
 				return 10;
 			}
@@ -305,13 +305,13 @@ public class TexasHoldem extends AppCompatActivity
 		}
 		
 		//check for other hands
-		valueCheck = hand[0].getValue();
-		counter = 1;
+		int valueCheck = hand[0].getValue();
+		int counter = 1;
 		//one loop through hand
 		for(int i = 1; i <= 5; i++)
 		{
 			//when non-matching card is encountered, decide rank
-			if(hand[i] != valueCheck || i == 5)
+			if(hand[i].getValue() != valueCheck || i == 5)
 			{
 				switch (counter)
 				{
@@ -358,7 +358,7 @@ public class TexasHoldem extends AppCompatActivity
 	}
 	
 	//ghetto bubblesort
-	public sortHand (Card[] hand)
+	public Card[] sortHand (Card[] hand)
 	{
 		int bound = 4;
 		Card temp;
@@ -375,5 +375,7 @@ public class TexasHoldem extends AppCompatActivity
 			}
 			bound--;
 		}
+
+		return hand;
 	}
 }
