@@ -21,7 +21,7 @@
         <activity android:name=".MainMenu" />
         <activity android:name=".GameMode" />
         <activity android:name=".OnlineOptions" />
-        <activity android:name=".TexasHoldem"></activity>
+        <activity android:name=".TexasHoldEm"></activity>
     </application>
 
 </manifest>

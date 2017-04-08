@@ -1,7 +1,10 @@
+package team8.ui;
+
 import java.io.*;
 import java.util.*;
 
-public class Player{
+public class Player
+{
 
   private int playerID;
   private int chipStack;

@@ -1,9 +1,14 @@
+package team8.ui;
+
 import java.io.*;
 import java.util.*;
 
+import team8.ui.Card;
+
 // NOTE: The deck is not shuffled upon instantiation! You have to call the method
 
-public class Deck{
+public class Deck
+{
 
 //Stores all the cards in the Deck
   private ArrayList<Card> deck = new ArrayList<Card>();
