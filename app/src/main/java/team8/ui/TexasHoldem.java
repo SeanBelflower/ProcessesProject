@@ -212,6 +212,9 @@ public class TexasHoldEm extends AppCompatActivity
         switch(playerID)
         {
             case 0:
+                TextView userAction = (TextView)findViewById(R.id.userAction);
+                userAction.setText(action);
+                userAction.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 TextView bot1Action = (TextView)findViewById(R.id.bot1Action);
@@ -593,11 +596,18 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 if(!raiseText.getText().toString().isEmpty())
                 {
-                    int result = raise(Integer.parseInt(raiseText.getText().toString()));
+                    int raiseAmount = Integer.parseInt(raiseText.getText().toString());
+                    int result = raise(raiseAmount);
                     if(result == 1)
                     {
                         popupWindow.dismiss();
-                        simulateTurns();
+                        hideUserOptions(0);
+                        showPlayerAction(0, "Raise: " + raiseAmount);
+                        thread.postDelayed(new Runnable(){
+                            public void run()
+                            {
+                                simulateTurns();
+                            }}, 5000);
                     }
                     else
                     {
@@ -623,7 +633,13 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 fold();
                 popupWindow.dismiss();
-                simulateTurns();
+                hideUserOptions(0);
+                showPlayerAction(0, "Fold");
+                thread.postDelayed(new Runnable(){
+                    public void run()
+                    {
+                        simulateTurns();
+                    }}, 5000);
             }
         });
 
@@ -654,7 +670,13 @@ public class TexasHoldEm extends AppCompatActivity
                 if(result == 1)
                 {
                     popupWindow.dismiss();
-                    simulateTurns();
+                    hideUserOptions(0);
+                    showPlayerAction(0, "Call");
+                    thread.postDelayed(new Runnable(){
+                        public void run()
+                        {
+                            simulateTurns();
+                        }}, 5000);
                 }
                 else
                 {
@@ -702,7 +724,13 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 check();
                 popupWindow.dismiss();
-                simulateTurns();
+                hideUserOptions(0);
+                showPlayerAction(0, "Check");
+                thread.postDelayed(new Runnable(){
+                    public void run()
+                    {
+                        simulateTurns();
+                    }}, 5000);
             }
         });
 
