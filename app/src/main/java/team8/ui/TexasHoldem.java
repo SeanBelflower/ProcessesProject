@@ -59,7 +59,14 @@ public class TexasHoldEm extends AppCompatActivity
             // PlayGame = their response
         }*/
 
-        setUp();
+        try
+        {
+            gamePlay();
+        } catch (InterruptedException e)
+        {
+
+        }
+
         updatePlayerCards(deck.getCard(), deck.getCard());
         updateCommunityCards(deck.getCard(), deck.getCard(), deck.getCard(), deck.getCard(), null);
         showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
@@ -81,13 +88,14 @@ public class TexasHoldEm extends AppCompatActivity
     }*/
 
     // Must be called after setUp()
-    public void gamePlay()
+    public void gamePlay() throws InterruptedException
     {
         for(int i = 0; i < 4; i++)
         {
             if(i == 0)
             {
                 // PreFlop, all of this is taken care of in setUp()
+                setUp();
             }
             if(i == 1)
             {
@@ -116,8 +124,38 @@ public class TexasHoldEm extends AppCompatActivity
             while(!betsEqual())
             {
                 currentPlayer = players[playerIndex % numPlayers];
+
+                int randAction = (int)(Math.random() * 4);
+                String action = "";
+                switch(randAction)
+                {
+                    case 0:
+                        action = "Fold";
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        fold();
+                        break;
+                    case 1:
+                        action = "Call";
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        call();
+                        break;
+                    case 2:
+                        action = "Check";
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        check();
+                        break;
+                    case 3:
+                        action = "Raise: " + maxContribution + randAction * 4;
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        raise(maxContribution + randAction * 4);
+                        break;
+                }
+
                 // Give players the option to raise, call, fold, checking
                 // currentPlayer.getPlayerID() gets the current ID of the player
+                Log.w("DEBUG", "Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+
+                //Thread.sleep(3000);
             }
         }
 
@@ -129,6 +167,40 @@ public class TexasHoldEm extends AppCompatActivity
         pot += value;
         TextView potText = (TextView)findViewById(R.id.potText);
         potText.setText("" + pot);
+    }
+
+    public void showUserOptions(int round)
+    {
+
+    }
+
+    public void showPlayerAction(int playerID, String action)
+    {
+        switch(playerID)
+        {
+            case 0:
+                break;
+            case 1:
+                TextView bot1Action = (TextView)findViewById(R.id.bot1Action);
+                bot1Action.setText(action);
+                bot1Action.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                TextView bot2Action = (TextView)findViewById(R.id.bot2Action);
+                bot2Action.setText(action);
+                bot2Action.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                TextView bot3Action = (TextView)findViewById(R.id.bot3Action);
+                bot3Action.setText(action);
+                bot3Action.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                TextView bot4Action = (TextView)findViewById(R.id.bot4Action);
+                bot4Action.setText(action);
+                bot4Action.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     public void updatePlayerChips(int playerID)

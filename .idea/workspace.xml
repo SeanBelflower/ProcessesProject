@@ -23,12 +23,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/OfflineOptions.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/OfflineOptions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/OnlineOptions.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/OnlineOptions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldem.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_offline_options.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_offline_options.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_online_options.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_online_options.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml" />
     </list>
     <ignored path="ProcessesProject-master.iws" />
@@ -64,8 +59,8 @@
       <file leaf-file-name="activity_texas_holdem.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml">
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="1304">
-              <caret line="114" column="41" selection-start-line="114" selection-start-column="40" selection-end-line="114" selection-end-column="41" />
+            <state relative-caret-position="-1858">
+              <caret line="154" column="41" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -74,40 +69,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OfflineOptions.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/OfflineOptions.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="632">
-              <caret line="103" column="46" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TexasHoldEm.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="119" column="80" selection-start-line="119" selection-start-column="80" selection-end-line="119" selection-end-column="80" />
+            <state relative-caret-position="380">
+              <caret line="157" column="18" selection-start-line="157" selection-start-column="18" selection-end-line="157" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#732#738#0" expanded="true" />
-                <element signature="e#14083#14831#0" expanded="true" />
-                <element signature="e#14830#14831#0" expanded="true" />
-                <element signature="e#15437#15607#0" expanded="true" />
-                <element signature="e#15606#15607#0" expanded="true" />
-                <element signature="e#15708#15854#0" expanded="true" />
-                <element signature="e#15853#15854#0" expanded="true" />
-                <element signature="e#16537#17898#0" expanded="true" />
-                <element signature="e#17358#17854#0" expanded="true" />
-                <element signature="e#17853#17854#0" expanded="true" />
-                <element signature="e#17897#17898#0" expanded="true" />
-                <element signature="e#17935#18081#0" expanded="true" />
-                <element signature="e#18080#18081#0" expanded="true" />
-                <element signature="e#18689#18860#0" expanded="true" />
-                <element signature="e#18859#18860#0" expanded="true" />
-                <element signature="e#18961#19107#0" expanded="true" />
-                <element signature="e#19106#19107#0" expanded="true" />
+                <element signature="e#16571#17319#0" expanded="true" />
+                <element signature="e#17318#17319#0" expanded="true" />
+                <element signature="e#17925#18095#0" expanded="true" />
+                <element signature="e#18094#18095#0" expanded="true" />
+                <element signature="e#18196#18342#0" expanded="true" />
+                <element signature="e#18341#18342#0" expanded="true" />
+                <element signature="e#19025#20386#0" expanded="true" />
+                <element signature="e#19846#20342#0" expanded="true" />
+                <element signature="e#20341#20342#0" expanded="true" />
+                <element signature="e#20385#20386#0" expanded="true" />
+                <element signature="e#20423#20569#0" expanded="true" />
+                <element signature="e#20568#20569#0" expanded="true" />
+                <element signature="e#21177#21348#0" expanded="true" />
+                <element signature="e#21347#21348#0" expanded="true" />
+                <element signature="e#21449#21595#0" expanded="true" />
+                <element signature="e#21594#21595#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -116,8 +101,8 @@
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-408">
-              <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
+            <state relative-caret-position="183">
+              <caret line="97" column="14" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#798#799#0" expanded="true" />
@@ -1944,8 +1929,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/check_popup.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/call_popup.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/OfflineOptions.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java" />
       </list>
     </option>
@@ -2476,22 +2461,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#732#738#0" expanded="true" />
-            <element signature="e#14083#14831#0" expanded="true" />
-            <element signature="e#14830#14831#0" expanded="true" />
-            <element signature="e#15437#15607#0" expanded="true" />
-            <element signature="e#15606#15607#0" expanded="true" />
-            <element signature="e#15708#15854#0" expanded="true" />
-            <element signature="e#15853#15854#0" expanded="true" />
-            <element signature="e#16537#17898#0" expanded="true" />
-            <element signature="e#17358#17854#0" expanded="true" />
-            <element signature="e#17853#17854#0" expanded="true" />
-            <element signature="e#17897#17898#0" expanded="true" />
-            <element signature="e#17935#18081#0" expanded="true" />
-            <element signature="e#18080#18081#0" expanded="true" />
-            <element signature="e#18689#18860#0" expanded="true" />
-            <element signature="e#18859#18860#0" expanded="true" />
-            <element signature="e#18961#19107#0" expanded="true" />
-            <element signature="e#19106#19107#0" expanded="true" />
+            <element signature="e#16571#17319#0" expanded="true" />
+            <element signature="e#17318#17319#0" expanded="true" />
+            <element signature="e#17925#18095#0" expanded="true" />
+            <element signature="e#18094#18095#0" expanded="true" />
+            <element signature="e#18196#18342#0" expanded="true" />
+            <element signature="e#18341#18342#0" expanded="true" />
+            <element signature="e#19025#20386#0" expanded="true" />
+            <element signature="e#19846#20342#0" expanded="true" />
+            <element signature="e#20341#20342#0" expanded="true" />
+            <element signature="e#20385#20386#0" expanded="true" />
+            <element signature="e#20423#20569#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
+            <element signature="e#21177#21348#0" expanded="true" />
+            <element signature="e#21347#21348#0" expanded="true" />
+            <element signature="e#21449#21595#0" expanded="true" />
+            <element signature="e#21594#21595#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2533,22 +2518,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#732#738#0" expanded="true" />
-            <element signature="e#14083#14831#0" expanded="true" />
-            <element signature="e#14830#14831#0" expanded="true" />
-            <element signature="e#15437#15607#0" expanded="true" />
-            <element signature="e#15606#15607#0" expanded="true" />
-            <element signature="e#15708#15854#0" expanded="true" />
-            <element signature="e#15853#15854#0" expanded="true" />
-            <element signature="e#16537#17898#0" expanded="true" />
-            <element signature="e#17358#17854#0" expanded="true" />
-            <element signature="e#17853#17854#0" expanded="true" />
-            <element signature="e#17897#17898#0" expanded="true" />
-            <element signature="e#17935#18081#0" expanded="true" />
-            <element signature="e#18080#18081#0" expanded="true" />
-            <element signature="e#18689#18860#0" expanded="true" />
-            <element signature="e#18859#18860#0" expanded="true" />
-            <element signature="e#18961#19107#0" expanded="true" />
-            <element signature="e#19106#19107#0" expanded="true" />
+            <element signature="e#16571#17319#0" expanded="true" />
+            <element signature="e#17318#17319#0" expanded="true" />
+            <element signature="e#17925#18095#0" expanded="true" />
+            <element signature="e#18094#18095#0" expanded="true" />
+            <element signature="e#18196#18342#0" expanded="true" />
+            <element signature="e#18341#18342#0" expanded="true" />
+            <element signature="e#19025#20386#0" expanded="true" />
+            <element signature="e#19846#20342#0" expanded="true" />
+            <element signature="e#20341#20342#0" expanded="true" />
+            <element signature="e#20385#20386#0" expanded="true" />
+            <element signature="e#20423#20569#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
+            <element signature="e#21177#21348#0" expanded="true" />
+            <element signature="e#21347#21348#0" expanded="true" />
+            <element signature="e#21449#21595#0" expanded="true" />
+            <element signature="e#21594#21595#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2586,22 +2571,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#732#738#0" expanded="true" />
-            <element signature="e#14083#14831#0" expanded="true" />
-            <element signature="e#14830#14831#0" expanded="true" />
-            <element signature="e#15437#15607#0" expanded="true" />
-            <element signature="e#15606#15607#0" expanded="true" />
-            <element signature="e#15708#15854#0" expanded="true" />
-            <element signature="e#15853#15854#0" expanded="true" />
-            <element signature="e#16537#17898#0" expanded="true" />
-            <element signature="e#17358#17854#0" expanded="true" />
-            <element signature="e#17853#17854#0" expanded="true" />
-            <element signature="e#17897#17898#0" expanded="true" />
-            <element signature="e#17935#18081#0" expanded="true" />
-            <element signature="e#18080#18081#0" expanded="true" />
-            <element signature="e#18689#18860#0" expanded="true" />
-            <element signature="e#18859#18860#0" expanded="true" />
-            <element signature="e#18961#19107#0" expanded="true" />
-            <element signature="e#19106#19107#0" expanded="true" />
+            <element signature="e#16571#17319#0" expanded="true" />
+            <element signature="e#17318#17319#0" expanded="true" />
+            <element signature="e#17925#18095#0" expanded="true" />
+            <element signature="e#18094#18095#0" expanded="true" />
+            <element signature="e#18196#18342#0" expanded="true" />
+            <element signature="e#18341#18342#0" expanded="true" />
+            <element signature="e#19025#20386#0" expanded="true" />
+            <element signature="e#19846#20342#0" expanded="true" />
+            <element signature="e#20341#20342#0" expanded="true" />
+            <element signature="e#20385#20386#0" expanded="true" />
+            <element signature="e#20423#20569#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
+            <element signature="e#21177#21348#0" expanded="true" />
+            <element signature="e#21347#21348#0" expanded="true" />
+            <element signature="e#21449#21595#0" expanded="true" />
+            <element signature="e#21594#21595#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2635,22 +2620,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#732#738#0" expanded="true" />
-            <element signature="e#14083#14831#0" expanded="true" />
-            <element signature="e#14830#14831#0" expanded="true" />
-            <element signature="e#15437#15607#0" expanded="true" />
-            <element signature="e#15606#15607#0" expanded="true" />
-            <element signature="e#15708#15854#0" expanded="true" />
-            <element signature="e#15853#15854#0" expanded="true" />
-            <element signature="e#16537#17898#0" expanded="true" />
-            <element signature="e#17358#17854#0" expanded="true" />
-            <element signature="e#17853#17854#0" expanded="true" />
-            <element signature="e#17897#17898#0" expanded="true" />
-            <element signature="e#17935#18081#0" expanded="true" />
-            <element signature="e#18080#18081#0" expanded="true" />
-            <element signature="e#18689#18860#0" expanded="true" />
-            <element signature="e#18859#18860#0" expanded="true" />
-            <element signature="e#18961#19107#0" expanded="true" />
-            <element signature="e#19106#19107#0" expanded="true" />
+            <element signature="e#16571#17319#0" expanded="true" />
+            <element signature="e#17318#17319#0" expanded="true" />
+            <element signature="e#17925#18095#0" expanded="true" />
+            <element signature="e#18094#18095#0" expanded="true" />
+            <element signature="e#18196#18342#0" expanded="true" />
+            <element signature="e#18341#18342#0" expanded="true" />
+            <element signature="e#19025#20386#0" expanded="true" />
+            <element signature="e#19846#20342#0" expanded="true" />
+            <element signature="e#20341#20342#0" expanded="true" />
+            <element signature="e#20385#20386#0" expanded="true" />
+            <element signature="e#20423#20569#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
+            <element signature="e#21177#21348#0" expanded="true" />
+            <element signature="e#21347#21348#0" expanded="true" />
+            <element signature="e#21449#21595#0" expanded="true" />
+            <element signature="e#21594#21595#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2819,16 +2804,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/GameMode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -2950,29 +2925,18 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="1304">
-          <caret line="114" column="41" selection-start-line="114" selection-start-column="40" selection-end-line="114" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/OfflineOptions.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="632">
-          <caret line="103" column="46" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
+        <state relative-caret-position="-1258">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408">
-          <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
+        <state relative-caret-position="183">
+          <caret line="97" column="14" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#798#799#0" expanded="true" />
@@ -2987,29 +2951,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/OfflineOptions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1196">
+          <caret line="103" column="46" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-1858">
+          <caret line="154" column="41" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="119" column="80" selection-start-line="119" selection-start-column="80" selection-end-line="119" selection-end-column="80" />
+        <state relative-caret-position="380">
+          <caret line="157" column="18" selection-start-line="157" selection-start-column="18" selection-end-line="157" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#732#738#0" expanded="true" />
-            <element signature="e#14083#14831#0" expanded="true" />
-            <element signature="e#14830#14831#0" expanded="true" />
-            <element signature="e#15437#15607#0" expanded="true" />
-            <element signature="e#15606#15607#0" expanded="true" />
-            <element signature="e#15708#15854#0" expanded="true" />
-            <element signature="e#15853#15854#0" expanded="true" />
-            <element signature="e#16537#17898#0" expanded="true" />
-            <element signature="e#17358#17854#0" expanded="true" />
-            <element signature="e#17853#17854#0" expanded="true" />
-            <element signature="e#17897#17898#0" expanded="true" />
-            <element signature="e#17935#18081#0" expanded="true" />
-            <element signature="e#18080#18081#0" expanded="true" />
-            <element signature="e#18689#18860#0" expanded="true" />
-            <element signature="e#18859#18860#0" expanded="true" />
-            <element signature="e#18961#19107#0" expanded="true" />
-            <element signature="e#19106#19107#0" expanded="true" />
+            <element signature="e#16571#17319#0" expanded="true" />
+            <element signature="e#17318#17319#0" expanded="true" />
+            <element signature="e#17925#18095#0" expanded="true" />
+            <element signature="e#18094#18095#0" expanded="true" />
+            <element signature="e#18196#18342#0" expanded="true" />
+            <element signature="e#18341#18342#0" expanded="true" />
+            <element signature="e#19025#20386#0" expanded="true" />
+            <element signature="e#19846#20342#0" expanded="true" />
+            <element signature="e#20341#20342#0" expanded="true" />
+            <element signature="e#20385#20386#0" expanded="true" />
+            <element signature="e#20423#20569#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
+            <element signature="e#21177#21348#0" expanded="true" />
+            <element signature="e#21347#21348#0" expanded="true" />
+            <element signature="e#21449#21595#0" expanded="true" />
+            <element signature="e#21594#21595#0" expanded="true" />
           </folding>
         </state>
       </provider>

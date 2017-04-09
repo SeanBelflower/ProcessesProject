@@ -28,6 +28,46 @@
         android:layout_marginStart="8dp">
 
         <TextView
+            android:id="@+id/bot3Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/layoutB3"
+            android:layout_alignEnd="@+id/card2"
+            android:layout_alignRight="@+id/card2"
+            android:text="TextView"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/bot4Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/layoutB4"
+            android:layout_toLeftOf="@+id/player"
+            android:layout_toStartOf="@+id/player"
+            android:text="TextView"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/bot2Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/layoutB2"
+            android:layout_toLeftOf="@+id/player"
+            android:layout_toStartOf="@+id/player"
+            android:text="TextView"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/bot1Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/layoutB1"
+            android:layout_toEndOf="@+id/player"
+            android:layout_toRightOf="@+id/player"
+            android:text="TextView"
+            android:visibility="invisible" />
+
+        <TextView
             android:id="@+id/player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,8 +143,8 @@
             android:layout_width="80dp"
             android:layout_height="120dp"
 
-            android:layout_alignEnd="@+id/button10"
-            android:layout_alignRight="@+id/button10"
+            android:layout_alignEnd="@+id/call"
+            android:layout_alignRight="@+id/call"
             android:layout_below="@+id/relativeLayout"
             android:layout_marginEnd="14dp"
             android:layout_marginRight="14dp"
@@ -138,8 +178,8 @@
             android:id="@+id/layoutB4"
             android:layout_width="80dp"
             android:layout_height="120dp"
-            android:layout_alignEnd="@+id/button5"
-            android:layout_alignRight="@+id/button5"
+            android:layout_alignEnd="@+id/fold"
+            android:layout_alignRight="@+id/fold"
             android:layout_alignTop="@+id/layoutB3"
             android:visibility="invisible"
             tools:layout_editor_absoluteX="285dp"
@@ -234,47 +274,50 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button11"
+            android:layout_above="@+id/raise"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="19dp"
             android:layout_marginRight="19dp"
+            android:onClick="openCallWindow"
             android:text="Call"
+            android:visibility="invisible"
             tools:layout_editor_absoluteX="293dp"
-            tools:layout_editor_absoluteY="457dp"
-            android:onClick="openCallWindow"/>
+            tools:layout_editor_absoluteY="457dp" />
 
         <Button
-            android:id="@+id/button11"
+            android:id="@+id/raise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button7"
-            android:layout_alignBottom="@+id/button7"
-            android:layout_alignLeft="@+id/button10"
-            android:layout_alignStart="@+id/button10"
+            android:layout_alignBaseline="@+id/check"
+            android:layout_alignBottom="@+id/check"
+            android:layout_alignLeft="@+id/call"
+            android:layout_alignStart="@+id/call"
+            android:onClick="openRaiseWindow"
             android:text="Raise"
+            android:visibility="invisible"
             tools:layout_editor_absoluteX="293dp"
-            tools:layout_editor_absoluteY="505dp"
-            android:onClick="openRaiseWindow"/>
+            tools:layout_editor_absoluteY="505dp" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/button5"
-            android:layout_alignStart="@+id/button5"
-            android:layout_below="@+id/button5"
+            android:layout_alignLeft="@+id/fold"
+            android:layout_alignStart="@+id/fold"
+            android:layout_below="@+id/fold"
             android:layout_marginTop="6dp"
+            android:onClick="openCheckWindow"
             android:text="Check"
+            android:visibility="invisible"
             tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="505dp"
-            android:onClick="openCheckWindow"/>
+            tools:layout_editor_absoluteY="505dp" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/fold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/card1"
@@ -282,10 +325,11 @@
             android:layout_marginRight="16dp"
             android:layout_toLeftOf="@+id/card1"
             android:layout_toStartOf="@+id/card1"
+            android:onClick="openFoldWindow"
             android:text="Fold"
+            android:visibility="invisible"
             tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="457dp"
-            android:onClick="openFoldWindow"/>
+            tools:layout_editor_absoluteY="457dp" />
 
         <ImageView
             android:id="@+id/card1"
