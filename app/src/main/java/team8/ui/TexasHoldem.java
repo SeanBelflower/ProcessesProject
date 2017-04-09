@@ -124,43 +124,52 @@ public class TexasHoldEm extends AppCompatActivity
     {
         currentPlayer = players[playerIndex % numPlayers];
 
-        // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
-        // currentPlayer.getPlayerID() gets the current ID of the player
-        int randAction = (int) (Math.random() * 4);
-        String action = "";
-        switch (randAction)
+        if(currentPlayer.getPlayerID() == 0) //user
         {
-            case 0:
-                action = "Fold";
-                showPlayerAction(currentPlayer.getPlayerID(), action);
-                fold();
-                break;
-            case 1:
-                action = "Call";
-                showPlayerAction(currentPlayer.getPlayerID(), action);
-                call();
-                break;
-            case 2:
-                action = "Check";
-                showPlayerAction(currentPlayer.getPlayerID(), action);
-                check();
-                break;
-            case 3:
-                action = "Raise: " + maxContribution + 10;
-                showPlayerAction(currentPlayer.getPlayerID(), action);
-                raise(maxContribution + 10);
-                break;
+            showUserOptions(0);
         }
+        else
+        {
+            hideUserOptions(0);
 
-        //DEBUG Simulate game
-        Log.w("DEBUG", "Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
-
-        thread.postDelayed(new Runnable(){
-            public void run()
+            // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
+            // currentPlayer.getPlayerID() gets the current ID of the player
+            int randAction = (int) (Math.random() * 4);
+            String action = "";
+            switch (randAction)
             {
-                if(!betsEqual())
-                    simulateTurns();
-            }}, 3000);
+                case 0:
+                    action = "Fold";
+                    showPlayerAction(currentPlayer.getPlayerID(), action);
+                    fold();
+                    break;
+                case 1:
+                    action = "Call";
+                    showPlayerAction(currentPlayer.getPlayerID(), action);
+                    call();
+                    break;
+                case 2:
+                    action = "Check";
+                    showPlayerAction(currentPlayer.getPlayerID(), action);
+                    check();
+                    break;
+                case 3:
+                    action = "Raise: " + maxContribution + 10;
+                    showPlayerAction(currentPlayer.getPlayerID(), action);
+                    raise(maxContribution + 10);
+                    break;
+            }
+
+            //DEBUG Simulate game
+            Log.w("DEBUG", "Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+
+            thread.postDelayed(new Runnable(){
+                public void run()
+                {
+                    if(!betsEqual())
+                        simulateTurns();
+                }}, 5000);
+        }
     }
 
 
@@ -174,7 +183,28 @@ public class TexasHoldEm extends AppCompatActivity
 
     public void showUserOptions(int round)
     {
+        Button raiseButton = (Button)findViewById(R.id.raise);
+        Button foldButton = (Button)findViewById(R.id.fold);
+        Button checkButton = (Button)findViewById(R.id.check);
+        Button callButton = (Button)findViewById(R.id.call);
 
+        raiseButton.setVisibility(View.VISIBLE);
+        foldButton.setVisibility(View.VISIBLE);
+        checkButton.setVisibility(View.VISIBLE);
+        callButton.setVisibility(View.VISIBLE);
+    }
+
+    public void hideUserOptions(int round)
+    {
+        Button raiseButton = (Button)findViewById(R.id.raise);
+        Button foldButton = (Button)findViewById(R.id.fold);
+        Button checkButton = (Button)findViewById(R.id.check);
+        Button callButton = (Button)findViewById(R.id.call);
+
+        raiseButton.setVisibility(View.INVISIBLE);
+        foldButton.setVisibility(View.INVISIBLE);
+        checkButton.setVisibility(View.INVISIBLE);
+        callButton.setVisibility(View.INVISIBLE);
     }
 
     public void showPlayerAction(int playerID, String action)
@@ -564,9 +594,11 @@ public class TexasHoldEm extends AppCompatActivity
                 if(!raiseText.getText().toString().isEmpty())
                 {
                     int result = raise(Integer.parseInt(raiseText.getText().toString()));
-                    Log.w("BEEF0", "" + currentPlayer.getChipStack() + " pot: " + pot);
                     if(result == 1)
+                    {
                         popupWindow.dismiss();
+                        simulateTurns();
+                    }
                     else
                     {
                         if(result == 0)
@@ -591,6 +623,7 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 fold();
                 popupWindow.dismiss();
+                simulateTurns();
             }
         });
 
@@ -619,7 +652,10 @@ public class TexasHoldEm extends AppCompatActivity
                 int result = call();
 
                 if(result == 1)
+                {
                     popupWindow.dismiss();
+                    simulateTurns();
+                }
                 else
                 {
                     final TextView warning = (TextView)popupView.findViewById(R.id.warning);
@@ -666,6 +702,7 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 check();
                 popupWindow.dismiss();
+                simulateTurns();
             }
         });
 
