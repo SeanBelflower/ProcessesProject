@@ -1,6 +1,7 @@
 package team8.ui;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.RunnableFuture;
 
 public class TexasHoldEm extends AppCompatActivity
 {
-    private Handler thread = new Handler();
+    private Handler thread;
 
     private Player bigBlind;
     private Player smallBlind;
@@ -61,7 +63,7 @@ public class TexasHoldEm extends AppCompatActivity
             // Ask if the player wants to continue Playing
             // PlayGame = their response
         }*/
-
+        thread = new Handler(Looper.getMainLooper());
         gamePlay();
         updatePlayerCards(deck.getCard(), deck.getCard());
         updateCommunityCards(deck.getCard(), deck.getCard(), deck.getCard(), deck.getCard(), null);
@@ -86,15 +88,13 @@ public class TexasHoldEm extends AppCompatActivity
     // Must be called after setUp()
     public void gamePlay()
     {
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if(i == 0)
-            {
+            if (i == 0) {
                 // PreFlop, all of this is taken care of in setUp()
                 setUp();
             }
-            if(i == 1)
-            {
+            if (i == 1) {
                 // Flop, Make cards on table visible, already added with setUp()
 
                 // New round reset maxContribution and start at smallBlind again
@@ -103,9 +103,9 @@ public class TexasHoldEm extends AppCompatActivity
                 playerIndex = dealerIndex + 1 % numPlayers;
                 // smallBlind makes initial bet
 
+                simulateTurns();
             }
-            if(i > 1)
-            {
+            if (i > 1) {
                 // The Turn and The River
 
                 // Add a card to cards on table
@@ -117,45 +117,52 @@ public class TexasHoldEm extends AppCompatActivity
                 // smallBlind makes initial bet
 
             }
+        }
+    }
 
-            while(!betsEqual())
-            {
-                currentPlayer = players[playerIndex % numPlayers];
+    public void simulateTurns()
+    {
+        currentPlayer = players[playerIndex % numPlayers];
 
-                // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
-                // currentPlayer.getPlayerID() gets the current ID of the player
-                int randAction = (int)(Math.random() * 4);
-                String action = "";
-                switch(randAction)
-                {
-                    case 0:
-                        action = "Fold";
-                        showPlayerAction(currentPlayer.getPlayerID(), action);
-                        fold();
-                        break;
-                    case 1:
-                        action = "Call";
-                        showPlayerAction(currentPlayer.getPlayerID(), action);
-                        call();
-                        break;
-                    case 2:
-                        action = "Check";
-                        showPlayerAction(currentPlayer.getPlayerID(), action);
-                        check();
-                        break;
-                    case 3:
-                        action = "Raise: " + maxContribution + 10;
-                        showPlayerAction(currentPlayer.getPlayerID(), action);
-                        raise(maxContribution + 10);
-                        break;
-                }
-
-                //DEBUG Simulate game
-                Log.w("DEBUG", "Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
-            }
+        // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
+        // currentPlayer.getPlayerID() gets the current ID of the player
+        int randAction = (int) (Math.random() * 4);
+        String action = "";
+        switch (randAction)
+        {
+            case 0:
+                action = "Fold";
+                showPlayerAction(currentPlayer.getPlayerID(), action);
+                fold();
+                break;
+            case 1:
+                action = "Call";
+                showPlayerAction(currentPlayer.getPlayerID(), action);
+                call();
+                break;
+            case 2:
+                action = "Check";
+                showPlayerAction(currentPlayer.getPlayerID(), action);
+                check();
+                break;
+            case 3:
+                action = "Raise: " + maxContribution + 10;
+                showPlayerAction(currentPlayer.getPlayerID(), action);
+                raise(maxContribution + 10);
+                break;
         }
 
+        //DEBUG Simulate game
+        Log.w("DEBUG", "Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+
+        thread.postDelayed(new Runnable(){
+            public void run()
+            {
+                if(!betsEqual())
+                    simulateTurns();
+            }}, 3000);
     }
+
 
     //adds value to pot
     public void updatePot(int value)
