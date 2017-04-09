@@ -62,14 +62,7 @@ public class TexasHoldEm extends AppCompatActivity
             // PlayGame = their response
         }*/
 
-        try
-        {
-            gamePlay();
-        } catch (InterruptedException e)
-        {
-
-        }
-
+        gamePlay();
         updatePlayerCards(deck.getCard(), deck.getCard());
         updateCommunityCards(deck.getCard(), deck.getCard(), deck.getCard(), deck.getCard(), null);
         showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
@@ -91,7 +84,7 @@ public class TexasHoldEm extends AppCompatActivity
     }*/
 
     // Must be called after setUp()
-    public void gamePlay() throws InterruptedException
+    public void gamePlay()
     {
         for(int i = 0; i < 4; i++)
         {
@@ -124,6 +117,7 @@ public class TexasHoldEm extends AppCompatActivity
                 // smallBlind makes initial bet
 
             }
+
             while(!betsEqual())
             {
                 currentPlayer = players[playerIndex % numPlayers];
@@ -150,15 +144,14 @@ public class TexasHoldEm extends AppCompatActivity
                         check();
                         break;
                     case 3:
-                        action = "Raise: " + maxContribution + randAction * 4;
+                        action = "Raise: " + maxContribution + 10;
                         showPlayerAction(currentPlayer.getPlayerID(), action);
-                        raise(maxContribution + randAction * 4);
+                        raise(maxContribution + 10);
                         break;
                 }
 
                 //DEBUG Simulate game
                 Log.w("DEBUG", "Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
-
             }
         }
 
@@ -355,7 +348,8 @@ public class TexasHoldEm extends AppCompatActivity
     public void resetContributions()
     {
 
-        for(int i = 0; i < numPlayers;i++){
+        for(int i = 0; i < numPlayers;i++)
+        {
             players[i].resetContribution();
         }
     }
