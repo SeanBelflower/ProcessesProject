@@ -1,5 +1,6 @@
 package team8.ui;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 
 public class TexasHoldEm extends AppCompatActivity
 {
+    private Handler thread = new Handler();
+
     private Player bigBlind;
     private Player smallBlind;
     private Player dealer;
@@ -125,6 +128,8 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 currentPlayer = players[playerIndex % numPlayers];
 
+                // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
+                // currentPlayer.getPlayerID() gets the current ID of the player
                 int randAction = (int)(Math.random() * 4);
                 String action = "";
                 switch(randAction)
@@ -151,11 +156,9 @@ public class TexasHoldEm extends AppCompatActivity
                         break;
                 }
 
-                // Give players the option to raise, call, fold, checking
-                // currentPlayer.getPlayerID() gets the current ID of the player
+                //DEBUG Simulate game
                 Log.w("DEBUG", "Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
 
-                //Thread.sleep(3000);
             }
         }
 
