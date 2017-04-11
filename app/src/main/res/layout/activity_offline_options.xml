@@ -83,7 +83,7 @@
 
 
         <EditText
-            android:id="@+id/bot1"
+            android:id="@+id/b3Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -96,10 +96,10 @@
             android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/bot2"
+            android:id="@+id/b2Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/bot1"
+            android:layout_below="@+id/b3Info"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="7dp"
             android:ems="10"
@@ -108,12 +108,12 @@
             android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/bot3"
+            android:id="@+id/b4Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/bot2"
+            android:layout_below="@+id/b2Info"
             android:layout_marginTop="12dp"
             android:ems="10"
             android:inputType="textPersonName"
@@ -121,12 +121,12 @@
             android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/bot4"
+            android:id="@+id/b1Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/bot3"
+            android:layout_below="@+id/b4Info"
             android:layout_marginTop="13dp"
             android:ems="10"
             android:inputType="textPersonName"

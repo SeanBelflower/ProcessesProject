@@ -51,8 +51,10 @@ public class TexasHoldEm extends AppCompatActivity
         setContentView(R.layout.activity_texas_holdem);
 
         thread = new Handler(Looper.getMainLooper());
+
         gamePlay();
         showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
+        //do not write anything under this line, gamePlay() starts a thread which must be the only remaining execution in this program
     }
 
     //--------GAME--------
@@ -63,63 +65,14 @@ public class TexasHoldEm extends AppCompatActivity
         currentRound = 0;
         preFlop();
         simulateTurns();
-       /* for (int i = 0; i < 4; i++)
-        {
-            currentRound = i;
-            if (i == 0)
-            {
-                // PreFlop, all of this is taken care of in preFlop()
-                //bb: fold/call/raise
-                //sb: bet
-                //better:
-                preFlop();
-                simulateTurns();
-            }
-            if(i == 1)
-            {
-                // Flop, Make cards on table visible, already added with preFlop()
-
-                // New round reset maxContribution and start at smallBlind again
-                // -1 to make sure player contribution does not equal maxContribution at 0
-                maxContribution = -1;
-                playerIndex = dealerIndex + 1 % numPlayers;
-                // smallBlind makes initial bet
-
-               // simulateTurns();
-            }
-            if (i > 1)
-            {
-                // The Turn and The River
-
-                //check/bet if no bet
-                // Add a card to cards on table
-                cardsOnTable.add(deck.getCard());
-
-                //if all-in or all but one -> show cards
-                // New round reset maxContribution and start at smallBlind again
-                maxContribution = -1;
-                playerIndex = dealerIndex + 1 % numPlayers;
-                // smallBlind makes initial bet
-
-              //  simulateTurns();
-            }
-
-        /*    thread.postDelayed(new Runnable(){
-                public void run(){
-                    if(!betsEqual())
-                        simulateTurns();
-                    thread.postDelayed(this, 5000);
-                }
-            }, 5000);*/
-
-       // }
+        //do not write anything under this line, simulateTurns() starts a thread which must be the only remaining execution in this program
     }
 
     // Sets up the game including picking the blinds, dealers, creating the deck, etc.
     public void preFlop()
     {
         //DEBUG
-        Log.w("DEBUG", "--------PREFLOP--------");
+        Log.w("GAME_DEBUG", "--------PREFLOP--------");
 
         int startingChips = Integer.parseInt(getIntent().getStringExtra("startingChips"));
 
@@ -176,7 +129,7 @@ public class TexasHoldEm extends AppCompatActivity
     public void flop()
     {
         //DEBUG
-        Log.w("DEBUG", "--------FLOP--------");
+        Log.w("GAME_DEBUG", "--------FLOP--------");
 
         //show the the first 3 cards
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), null, null);
@@ -195,7 +148,7 @@ public class TexasHoldEm extends AppCompatActivity
     public void turn()
     {
         //DEBUG
-        Log.w("DEBUG", "--------TURN--------");
+        Log.w("GAME_DEBUG", "--------TURN--------");
 
         cardsOnTable.add(deck.getCard());
 
@@ -219,7 +172,7 @@ public class TexasHoldEm extends AppCompatActivity
     public void river()
     {
         //DEBUG
-        Log.w("DEBUG", "--------RIVER--------");
+        Log.w("GAME_DEBUG", "--------RIVER--------");
 
         cardsOnTable.add(deck.getCard());
 
@@ -265,25 +218,25 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 case 0:
                     action = "Fold";
-                    Log.w("--------DEBUG--------", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
                     showPlayerAction(currentPlayer.getPlayerID(), action);
                     fold();
                     break;
                 case 1:
                     action = "Call";
-                    Log.w("--------DEBUG--------", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
                     showPlayerAction(currentPlayer.getPlayerID(), action);
                     call();
                     break;
                 case 2:
                     action = "Check";
-                    Log.w("--------DEBUG--------", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
                     showPlayerAction(currentPlayer.getPlayerID(), action);
                     check();
                     break;
                 case 3:
                     action = "Raise: " + (maxContribution + 10);
-                    Log.w("--------DEBUG--------", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
                     showPlayerAction(currentPlayer.getPlayerID(), action);
                     raise(maxContribution + 10);
                     break;
@@ -292,7 +245,7 @@ public class TexasHoldEm extends AppCompatActivity
             thread.postDelayed(new Runnable(){
                 public void run()
                 {
-                    Log.w("Bets Equal:", "" + betsEqual());
+                    Log.w("GAME_DEBUG", "Bets Equal: " + betsEqual());
                     if(!betsEqual())
                         simulateTurns();
                     else
@@ -348,6 +301,7 @@ public class TexasHoldEm extends AppCompatActivity
             return 0;
         }
         updatePot(maxContribution);
+        updatePlayerChips(currentPlayer.getPlayerID());
         playerIndex++;
 
         return 1;
@@ -413,16 +367,16 @@ public class TexasHoldEm extends AppCompatActivity
         switch(numBots)
         {
             case 4:
-                findViewById(R.id.layoutB4).setVisibility(View.VISIBLE);
+                findViewById(R.id.b4Cards).setVisibility(View.VISIBLE);
                 updatePlayerChips(BOT4_ID);
             case 3:
-                findViewById(R.id.layoutB3).setVisibility(View.VISIBLE);
+                findViewById(R.id.b3Cards).setVisibility(View.VISIBLE);
                 updatePlayerChips(BOT3_ID);
             case 2:
-                findViewById(R.id.layoutB2).setVisibility(View.VISIBLE);
+                findViewById(R.id.b2Cards).setVisibility(View.VISIBLE);
                 updatePlayerChips(BOT2_ID);
             case 1:
-                findViewById(R.id.layoutB1).setVisibility(View.VISIBLE);
+                findViewById(R.id.b1Cards).setVisibility(View.VISIBLE);
                 updatePlayerChips(BOT1_ID);
             default:
                 updatePlayerChips(USER_ID);
@@ -481,22 +435,22 @@ public class TexasHoldEm extends AppCompatActivity
                 userAction.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                TextView bot1Action = (TextView)findViewById(R.id.bot1Action);
+                TextView bot1Action = (TextView)findViewById(R.id.b1Action);
                 bot1Action.setText(action);
                 bot1Action.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                TextView bot2Action = (TextView)findViewById(R.id.bot2Action);
+                TextView bot2Action = (TextView)findViewById(R.id.b2Action);
                 bot2Action.setText(action);
                 bot2Action.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                TextView bot3Action = (TextView)findViewById(R.id.bot3Action);
+                TextView bot3Action = (TextView)findViewById(R.id.b3Action);
                 bot3Action.setText(action);
                 bot3Action.setVisibility(View.VISIBLE);
                 break;
             case 4:
-                TextView bot4Action = (TextView)findViewById(R.id.bot4Action);
+                TextView bot4Action = (TextView)findViewById(R.id.b4Action);
                 bot4Action.setText(action);
                 bot4Action.setVisibility(View.VISIBLE);
                 break;
@@ -557,19 +511,19 @@ public class TexasHoldEm extends AppCompatActivity
         switch(playerID)
         {
             case 4:
-                TextView bot4Name = (TextView)findViewById(R.id.bot4);
+                TextView bot4Name = (TextView)findViewById(R.id.b4Info);
                 bot4Name.setText(getIntent().getStringExtra("name4") + ": " + players[4].getChipStack());
                 break;
             case 3:
-                TextView bot3Name = (TextView)findViewById(R.id.bot3);
+                TextView bot3Name = (TextView)findViewById(R.id.b3Info);
                 bot3Name.setText(getIntent().getStringExtra("name3") + ": " + players[3].getChipStack());
                 break;
             case 2:
-                TextView bot2Name = (TextView)findViewById(R.id.bot2);
+                TextView bot2Name = (TextView)findViewById(R.id.b2Info);
                 bot2Name.setText(getIntent().getStringExtra("name2") + ": " + players[2].getChipStack());
                 break;
             case 1:
-                TextView bot1Name = (TextView)findViewById(R.id.bot1);
+                TextView bot1Name = (TextView)findViewById(R.id.b1Info);
                 bot1Name.setText(getIntent().getStringExtra("name1") + ": " + players[1].getChipStack());
                 break;
             case 0:
@@ -610,6 +564,10 @@ public class TexasHoldEm extends AppCompatActivity
                     if(result == 1)
                     {
                         popupWindow.dismiss();
+
+                        //DEBUG
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User: 0" + " action: Raise pot: " + pot);
+
                         hideUserOptions();
                         showPlayerAction(0, "Raise: " + raiseAmount);
                         thread.postDelayed(new Runnable(){
@@ -643,6 +601,10 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 fold();
                 popupWindow.dismiss();
+
+                //DEBUG
+                Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Fold pot: " + pot);
+
                 hideUserOptions();
                 showPlayerAction(0, "Fold");
                 thread.postDelayed(new Runnable(){
@@ -681,6 +643,10 @@ public class TexasHoldEm extends AppCompatActivity
                 if(result == 1)
                 {
                     popupWindow.dismiss();
+
+                    //DEBUG
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Call pot: " + pot);
+
                     hideUserOptions();
                     showPlayerAction(0, "Call");
                     thread.postDelayed(new Runnable(){
@@ -736,6 +702,10 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 check();
                 popupWindow.dismiss();
+
+                //DEBUG
+                Log.w("GAME_DEBUG", "Round: " + currentRound + "User action: Check pot: " + pot);
+
                 hideUserOptions();
                 showPlayerAction(0, "Check");
                 thread.postDelayed(new Runnable(){

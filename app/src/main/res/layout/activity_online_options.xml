@@ -52,7 +52,7 @@
 
         <EditText
             android:visibility="gone"
-            android:id="@+id/bot1"
+            android:id="@+id/b3Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -61,7 +61,7 @@
 
         <EditText
             android:visibility="gone"
-            android:id="@+id/bot2"
+            android:id="@+id/b2Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -70,7 +70,7 @@
 
         <EditText
             android:visibility="gone"
-            android:id="@+id/bot3"
+            android:id="@+id/b4Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -79,7 +79,7 @@
 
         <EditText
             android:visibility="gone"
-            android:id="@+id/bot4"
+            android:id="@+id/b1Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

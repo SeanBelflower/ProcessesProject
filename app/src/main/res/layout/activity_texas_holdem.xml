@@ -28,48 +28,48 @@
         android:layout_marginStart="8dp">
 
         <TextView
-            android:id="@+id/bot3Action"
+            android:id="@+id/b4Action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/layoutB3"
+            android:layout_alignBottom="@+id/b4Cards"
             android:layout_alignEnd="@+id/card2"
             android:layout_alignRight="@+id/card2"
             android:text="TextView"
             android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/bot4Action"
+            android:id="@+id/b1Action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:visibility="invisible"
-            android:layout_alignBottom="@+id/layoutB4"
+            android:layout_alignBottom="@+id/b1Cards"
             android:layout_alignLeft="@+id/player"
-            android:layout_alignStart="@+id/player" />
+            android:layout_alignStart="@+id/player"
+            android:text="TextView"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/bot2Action"
+            android:id="@+id/b2Action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:visibility="invisible"
-            android:layout_alignTop="@+id/layoutB2"
-            android:layout_toRightOf="@+id/layoutB2"
-            android:layout_toEndOf="@+id/layoutB2"
+            android:layout_alignTop="@+id/b2Cards"
             android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/b2Cards"
+            android:layout_toRightOf="@+id/b2Cards"
+            android:text="TextView"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/bot1Action"
+            android:id="@+id/b3Action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:visibility="invisible"
-            android:layout_alignTop="@+id/layoutB1"
-            android:layout_alignLeft="@+id/bot3Action"
-            android:layout_alignStart="@+id/bot3Action"
+            android:layout_alignLeft="@+id/b4Action"
+            android:layout_alignStart="@+id/b4Action"
+            android:layout_alignTop="@+id/b3Cards"
             android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp" />
+            android:layout_marginStart="20dp"
+            android:text="TextView"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/player"
@@ -96,7 +96,7 @@
             android:id="@+id/potLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/layoutB1"
+            android:layout_alignTop="@+id/b3Cards"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
             android:text="Pot:" />
@@ -111,51 +111,51 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/bot1"
+            android:id="@+id/b3Info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/bot2"
-            android:layout_alignBottom="@+id/bot2"
-            android:layout_alignLeft="@+id/bot3"
-            android:layout_alignStart="@+id/bot3"
+            android:layout_alignBaseline="@+id/b2Info"
+            android:layout_alignBottom="@+id/b2Info"
+            android:layout_alignLeft="@+id/b4Info"
+            android:layout_alignStart="@+id/b4Info"
             android:text="" />
 
         <TextView
-            android:id="@+id/bot2"
+            android:id="@+id/b2Info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/bot4"
-            android:layout_alignStart="@+id/bot4"
-            android:layout_below="@+id/layoutB2"
+            android:layout_alignLeft="@+id/b1Info"
+            android:layout_alignStart="@+id/b1Info"
+            android:layout_below="@+id/b2Cards"
             android:layout_marginTop="7dp"
             android:text="" />
 
         <TextView
-            android:id="@+id/bot3"
+            android:id="@+id/b4Info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/bot4"
-            android:layout_alignBottom="@+id/bot4"
-            android:layout_alignEnd="@+id/layoutB3"
-            android:layout_alignRight="@+id/layoutB3"
+            android:layout_alignBaseline="@+id/b1Info"
+            android:layout_alignBottom="@+id/b1Info"
+            android:layout_alignEnd="@+id/b4Cards"
+            android:layout_alignRight="@+id/b4Cards"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
             android:text="" />
 
         <TextView
-            android:id="@+id/bot4"
+            android:id="@+id/b1Info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/layoutB4"
-            android:layout_alignStart="@+id/layoutB4"
-            android:layout_below="@+id/layoutB4"
+            android:layout_alignLeft="@+id/b1Cards"
+            android:layout_alignStart="@+id/b1Cards"
+            android:layout_below="@+id/b1Cards"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="14dp"
             android:text="" />
 
         <RelativeLayout
-            android:id="@+id/layoutB3"
+            android:id="@+id/b4Cards"
             android:layout_width="80dp"
             android:layout_height="120dp"
 
@@ -191,12 +191,12 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/layoutB4"
+            android:id="@+id/b1Cards"
             android:layout_width="80dp"
             android:layout_height="120dp"
             android:layout_alignEnd="@+id/fold"
             android:layout_alignRight="@+id/fold"
-            android:layout_alignTop="@+id/layoutB3"
+            android:layout_alignTop="@+id/b4Cards"
             android:visibility="invisible"
             tools:layout_editor_absoluteX="285dp"
             tools:layout_editor_absoluteY="33dp">
@@ -226,12 +226,12 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/layoutB1"
+            android:id="@+id/b3Cards"
             android:layout_width="80dp"
             android:layout_height="120dp"
-            android:layout_alignLeft="@+id/layoutB3"
-            android:layout_alignStart="@+id/layoutB3"
-            android:layout_alignTop="@+id/layoutB2"
+            android:layout_alignLeft="@+id/b4Cards"
+            android:layout_alignStart="@+id/b4Cards"
+            android:layout_alignTop="@+id/b2Cards"
             android:visibility="invisible"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
@@ -259,12 +259,12 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/layoutB2"
+            android:id="@+id/b2Cards"
             android:layout_width="80dp"
             android:layout_height="120dp"
-            android:layout_alignLeft="@+id/layoutB4"
+            android:layout_alignLeft="@+id/b1Cards"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/layoutB4"
+            android:layout_alignStart="@+id/b1Cards"
             android:layout_marginTop="13dp"
             android:visibility="invisible">
 
@@ -373,12 +373,12 @@
             android:id="@+id/card2"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            android:layout_below="@+id/bot3"
+            android:layout_below="@+id/b4Info"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="20dp"
-            android:layout_toLeftOf="@+id/layoutB3"
-            android:layout_toStartOf="@+id/layoutB3"
+            android:layout_toLeftOf="@+id/b4Cards"
+            android:layout_toStartOf="@+id/b4Cards"
             app:srcCompat="@android:color/background_light" />
 
         <RelativeLayout
@@ -388,7 +388,7 @@
 
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/layoutB1"
+            android:layout_below="@+id/b3Cards"
             android:layout_marginTop="35dp"
             android:orientation="vertical">
 

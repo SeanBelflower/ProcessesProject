@@ -41,57 +41,57 @@ public class OnlineOptions extends AppCompatActivity
             {
                 if(botsSpinner.getSelectedItem().toString().equals("0"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
+                    EditText bot1Name = (EditText)findViewById(R.id.b3Info);
                     bot1Name.setVisibility(View.GONE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
+                    EditText bot2Name = (EditText)findViewById(R.id.b2Info);
                     bot2Name.setVisibility(View.GONE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
+                    EditText bot3Name = (EditText)findViewById(R.id.b4Info);
                     bot3Name.setVisibility(View.GONE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
+                    EditText bot4Name = (EditText)findViewById(R.id.b1Info);
                     bot4Name.setVisibility(View.GONE);
                 }
                 if(botsSpinner.getSelectedItem().toString().equals("1"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
+                    EditText bot1Name = (EditText)findViewById(R.id.b3Info);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
+                    EditText bot2Name = (EditText)findViewById(R.id.b2Info);
                     bot2Name.setVisibility(View.GONE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
+                    EditText bot3Name = (EditText)findViewById(R.id.b4Info);
                     bot3Name.setVisibility(View.GONE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
+                    EditText bot4Name = (EditText)findViewById(R.id.b1Info);
                     bot4Name.setVisibility(View.GONE);
                 }
                 if(botsSpinner.getSelectedItem().toString().equals("2"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
+                    EditText bot1Name = (EditText)findViewById(R.id.b3Info);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
+                    EditText bot2Name = (EditText)findViewById(R.id.b2Info);
                     bot2Name.setVisibility(View.VISIBLE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
+                    EditText bot3Name = (EditText)findViewById(R.id.b4Info);
                     bot3Name.setVisibility(View.GONE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
+                    EditText bot4Name = (EditText)findViewById(R.id.b1Info);
                     bot4Name.setVisibility(View.GONE);
                 }
                 if(botsSpinner.getSelectedItem().toString().equals("3"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
+                    EditText bot1Name = (EditText)findViewById(R.id.b3Info);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
+                    EditText bot2Name = (EditText)findViewById(R.id.b2Info);
                     bot2Name.setVisibility(View.VISIBLE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
+                    EditText bot3Name = (EditText)findViewById(R.id.b4Info);
                     bot3Name.setVisibility(View.VISIBLE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
+                    EditText bot4Name = (EditText)findViewById(R.id.b1Info);
                     bot4Name.setVisibility(View.GONE);
                 }
                 if(botsSpinner.getSelectedItem().toString().equals("4"))
                 {
-                    EditText bot1Name = (EditText)findViewById(R.id.bot1);
+                    EditText bot1Name = (EditText)findViewById(R.id.b3Info);
                     bot1Name.setVisibility(View.VISIBLE);
-                    EditText bot2Name = (EditText)findViewById(R.id.bot2);
+                    EditText bot2Name = (EditText)findViewById(R.id.b2Info);
                     bot2Name.setVisibility(View.VISIBLE);
-                    EditText bot3Name = (EditText)findViewById(R.id.bot3);
+                    EditText bot3Name = (EditText)findViewById(R.id.b4Info);
                     bot3Name.setVisibility(View.VISIBLE);
-                    EditText bot4Name = (EditText)findViewById(R.id.bot4);
+                    EditText bot4Name = (EditText)findViewById(R.id.b1Info);
                     bot4Name.setVisibility(View.VISIBLE);
                 }
             }
