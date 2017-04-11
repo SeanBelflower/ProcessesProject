@@ -89,8 +89,8 @@
             android:visibility="invisible"
             android:layout_alignBaseline="@+id/player"
             android:layout_alignBottom="@+id/player"
-            android:layout_alignRight="@+id/card2"
-            android:layout_alignEnd="@+id/card2" />
+            android:layout_toRightOf="@+id/card1"
+            android:layout_toEndOf="@+id/card1" />
 
         <TextView
             android:id="@+id/potLabel"
@@ -305,6 +305,17 @@
             tools:layout_editor_absoluteY="457dp" />
 
         <Button
+            android:id="@+id/bet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/call"
+            android:layout_alignBottom="@+id/call"
+            android:layout_alignLeft="@+id/call"
+            android:layout_alignStart="@+id/call"
+            android:text="Bet"
+            android:visibility="invisible" />
+
+        <Button
             android:id="@+id/raise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -390,7 +401,8 @@
                 android:layout_marginStart="15dp"
                 android:layout_toEndOf="@+id/commCard4"
                 android:layout_toRightOf="@+id/commCard4"
-                app:srcCompat="@android:color/background_light" />
+                app:srcCompat="@android:color/background_light"
+                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/commCard4"
@@ -401,7 +413,8 @@
                 android:layout_marginStart="14dp"
                 android:layout_toEndOf="@+id/commCard3"
                 android:layout_toRightOf="@+id/commCard3"
-                app:srcCompat="@android:color/background_light" />
+                app:srcCompat="@android:color/background_light"
+                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/commCard3"
@@ -409,7 +422,8 @@
                 android:layout_height="85dp"
                 android:layout_alignTop="@+id/commCard2"
                 android:layout_centerHorizontal="true"
-                app:srcCompat="@android:color/background_light" />
+                app:srcCompat="@android:color/background_light"
+                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/commCard2"
@@ -420,7 +434,8 @@
                 android:layout_marginStart="14dp"
                 android:layout_toEndOf="@+id/commCard1"
                 android:layout_toRightOf="@+id/commCard1"
-                app:srcCompat="@android:color/background_light" />
+                app:srcCompat="@android:color/background_light"
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/commCard1"
@@ -431,7 +446,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                app:srcCompat="@android:color/background_light" />
+                app:srcCompat="@android:color/background_light"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 

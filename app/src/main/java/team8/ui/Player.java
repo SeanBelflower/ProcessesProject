@@ -39,9 +39,11 @@ public class Player
   }
 
 // Takes multiple cards and adds them to the hand
-  public void addToHand(ArrayList<Card> cards){
-    for(int i = 0; i < cards.size(); i++){
-      this.Hand.add(cards.get(i));
+  public void addToHand(ArrayList<Card> cards)
+  {
+    for(int i = 0; i < cards.size(); i++)
+    {
+        this.Hand.add(cards.get(i));
     }
   }
 
