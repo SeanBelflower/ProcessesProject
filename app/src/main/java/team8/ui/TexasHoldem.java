@@ -113,6 +113,8 @@ public class TexasHoldEm extends AppCompatActivity
         // Must bet more than the small blind (I think its double)
         currentPlayer = bigBlind = players[dealerIndex + 2 % this.numPlayers];
 
+        showBlinds(smallBlind.getPlayerID(), bigBlind.getPlayerID());
+
         // playerIndex points to the current player, currently the player after the BigBlind
         playerIndex = dealerIndex + 3;
 
@@ -191,22 +193,21 @@ public class TexasHoldEm extends AppCompatActivity
     {
         currentPlayer = players[playerIndex % numPlayers];
 
-        if(currentPlayer.getPlayerID() == USER_ID) //user
+        if(currentPlayer.getPlayerID() == USER_ID) //user's turn
         {
-            if(!currentPlayer.hasFolded())
-                showUserOptions(currentRound);
+            if(!currentPlayer.hasFolded()) //show buttons if user has not folded
+                showUserOptions(currentRound); //show buttons based on the current round
             else
             {
                 playerIndex++;
                 simulateTurns();
             }
         }
-        else
+        else //bot turn
         {
-            hideUserOptions();
+            hideUserOptions(); //hide user's buttons
 
             // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
-            // currentPlayer.getPlayerID() gets the current ID of the player
             int randAction = (int) (Math.random() * 5);
             String action = "";
 
@@ -291,7 +292,7 @@ public class TexasHoldEm extends AppCompatActivity
         {
             maxContribution = value;
             updatePot(value);
-            updatePlayerChips(currentPlayer.getPlayerID());
+            updatePlayerInfo(currentPlayer.getPlayerID());
         }
 
         playerIndex++;
@@ -308,7 +309,7 @@ public class TexasHoldEm extends AppCompatActivity
             return 0;
         }
         updatePot(maxContribution);
-        updatePlayerChips(currentPlayer.getPlayerID());
+        updatePlayerInfo(currentPlayer.getPlayerID());
         playerIndex++;
 
         return 1;
@@ -375,19 +376,69 @@ public class TexasHoldEm extends AppCompatActivity
         {
             case 4:
                 findViewById(R.id.b4Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(4);
+                updatePlayerInfo(4);
             case 3:
                 findViewById(R.id.b3Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(3);
+                updatePlayerInfo(3);
             case 2:
                 findViewById(R.id.b2Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(2);
+                updatePlayerInfo(2);
             case 1:
                 findViewById(R.id.b1Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(1);
+                updatePlayerInfo(1);
             default:
-                updatePlayerChips(USER_ID);
+                updatePlayerInfo(USER_ID);
 
+        }
+    }
+
+    //shows who the blinds are
+    public void showBlinds(int smallBlindID, int bigBlindID)
+    {
+        TextView userBlind = (TextView)findViewById(R.id.userBlind);
+        TextView b1Blind = (TextView)findViewById(R.id.b1Blind);
+        TextView b2Blind = (TextView)findViewById(R.id.b2Blind);
+        TextView b3Blind = (TextView)findViewById(R.id.b3Blind);
+        TextView b4Blind = (TextView)findViewById(R.id.b4Blind);
+
+        String smallBlindString = "SB";
+        switch(smallBlindID)
+        {
+            case USER_ID:
+                userBlind.setText(smallBlindString);
+                break;
+            case 1:
+                b1Blind.setText(smallBlindString);
+                break;
+            case 2:
+                b2Blind.setText(smallBlindString);
+                break;
+            case 3:
+                b3Blind.setText(smallBlindString);
+                break;
+            case 4:
+                b4Blind.setText(smallBlindString);
+                break;
+        }
+
+        String bigBlindString = "BB";
+        switch(bigBlindID)
+        {
+            case USER_ID:
+                userBlind.setText(bigBlindString);
+                break;
+            case 1:
+                b1Blind.setText(bigBlindString);
+                break;
+            case 2:
+                b2Blind.setText(bigBlindString);
+                break;
+            case 3:
+                b3Blind.setText(bigBlindString);
+                break;
+            case 4:
+                b4Blind.setText(bigBlindString);
+                break;
         }
     }
 
@@ -554,7 +605,7 @@ public class TexasHoldEm extends AppCompatActivity
     }
 
     //used to update all player chips
-    public void updatePlayerChips(int playerID)
+    public void updatePlayerInfo(int playerID)
     {
         switch(playerID)
         {
@@ -696,7 +747,7 @@ public class TexasHoldEm extends AppCompatActivity
                     Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Call pot: " + pot);
 
                     hideUserOptions();
-                    showPlayerAction(0, "Call");
+                    showPlayerAction(0, "Call: " + maxContribution);
                     thread.postDelayed(new Runnable(){
                         public void run()
                         {
