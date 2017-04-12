@@ -359,6 +359,7 @@
             android:layout_alignLeft="@+id/call"
             android:layout_alignStart="@+id/call"
             android:text="Bet"
+            android:onClick="openBetWindow"
             android:visibility="invisible" />
 
         <Button

@@ -33,7 +33,7 @@ public class TexasHoldEm extends AppCompatActivity
     private int pot = 0;
     private int maxContribution = 0;
     private int playerIndex = 0; // Keeps track of the current player
-    private int dealerIndex = 0; // Keeps track of the dealer
+    private int dealerIndex = 4; // Keeps track of the dealer
     private Deck deck;
     private int currentRound;
 
@@ -86,9 +86,9 @@ public class TexasHoldEm extends AppCompatActivity
         updatePot(0);
 
         // picking the blinds and dealer
-        players[dealerIndex % this.numPlayers].setDealer();
-        players[dealerIndex + 1 % this.numPlayers].setSmallBlind();
-        players[dealerIndex + 2 % this.numPlayers].setBigBlind();
+       // players[dealerIndex % this.numPlayers].setDealer();
+       // players[dealerIndex + 1 % this.numPlayers].setSmallBlind();
+       // players[dealerIndex + 2 % this.numPlayers].setBigBlind();
 
         // Add two cards to each players hand
         for(int i = 0; i < numPlayers;i++)
@@ -108,15 +108,16 @@ public class TexasHoldEm extends AppCompatActivity
         dealer = players[dealerIndex % this.numPlayers];
 
         // Must make the initial bet
-        currentPlayer = smallBlind = players[dealerIndex + 1 % this.numPlayers];
+        currentPlayer = smallBlind = players[(dealerIndex + 1) % this.numPlayers];
+        playerIndex = (dealerIndex + 1) % this.numPlayers;
 
         // Must bet more than the small blind (I think its double)
-        currentPlayer = bigBlind = players[dealerIndex + 2 % this.numPlayers];
+        currentPlayer = bigBlind = players[(dealerIndex + 2) % this.numPlayers];
 
         showBlinds(smallBlind.getPlayerID(), bigBlind.getPlayerID());
 
         // playerIndex points to the current player, currently the player after the BigBlind
-        playerIndex = dealerIndex + 1;
+        //playerIndex = dealerIndex + 1;
 
         dealerIndex++;
 
@@ -132,7 +133,7 @@ public class TexasHoldEm extends AppCompatActivity
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), null, null);
 
         maxContribution = -1;
-        playerIndex = dealerIndex + 1 % numPlayers;
+        playerIndex = smallBlind.getPlayerID();
         resetContributions();
         thread.postDelayed(new Runnable(){
             public void run()
@@ -155,7 +156,7 @@ public class TexasHoldEm extends AppCompatActivity
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
         maxContribution = -1;
-        playerIndex = dealerIndex + 1 % numPlayers;
+        playerIndex = smallBlind.getPlayerID();
         resetContributions();
         //start turns
         thread.postDelayed(new Runnable(){
@@ -179,7 +180,7 @@ public class TexasHoldEm extends AppCompatActivity
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
         maxContribution = -1;
-        playerIndex = dealerIndex + 1 % numPlayers;
+        playerIndex = smallBlind.getPlayerID();
         resetContributions();
         //start turns
         thread.postDelayed(new Runnable(){
@@ -210,7 +211,7 @@ public class TexasHoldEm extends AppCompatActivity
                 if(!betsEqual())
                 {
                     playerIndex++;
-                    simulateTurns();
+                    simulateTurns(); //keep turns going
                 }
                 else
                 {
@@ -349,12 +350,12 @@ public class TexasHoldEm extends AppCompatActivity
         playerIndex++;
     }
 
-    public void bet(int value)
+    public int bet(int value)
     {
         // get value only should be visible at the start of a round
         if(!currentPlayer.bet(value)){
             // print insuffcient funds
-            return;
+            return 0;
         }
         else
         {
@@ -363,6 +364,8 @@ public class TexasHoldEm extends AppCompatActivity
             updatePlayerInfo(currentPlayer.getPlayerID());
         }
         playerIndex++;
+
+        return 1;
     }
 
     public void check()
@@ -479,26 +482,32 @@ public class TexasHoldEm extends AppCompatActivity
         Button checkButton = (Button)findViewById(R.id.check);
         Button callButton = (Button)findViewById(R.id.call);
         Button betButton = (Button)findViewById(R.id.bet);
-        round = 0;
-        switch(round)
+
+        if(round == 0)
         {
-            case 0:
+            if ((currentPlayer == smallBlind || currentPlayer == bigBlind) && maxContribution < 1)
+            {
+                betButton.setVisibility(View.VISIBLE);
+            }
+            else
+            {
                 raiseButton.setVisibility(View.VISIBLE);
                 foldButton.setVisibility(View.VISIBLE);
                 callButton.setVisibility(View.VISIBLE);
-                break;
-            case 1:
-                raiseButton.setVisibility(View.VISIBLE);
-                foldButton.setVisibility(View.VISIBLE);
-                if(maxContribution < 1)
-                {
-
-                }
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
+            }
+        }
+        else
+        {
+            raiseButton.setVisibility(View.VISIBLE);
+            foldButton.setVisibility(View.VISIBLE);
+            if(maxContribution < 1)
+            {
+                checkButton.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                callButton.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -509,11 +518,13 @@ public class TexasHoldEm extends AppCompatActivity
         Button foldButton = (Button)findViewById(R.id.fold);
         Button checkButton = (Button)findViewById(R.id.check);
         Button callButton = (Button)findViewById(R.id.call);
+        Button betButton = (Button)findViewById(R.id.bet);
 
         raiseButton.setVisibility(View.INVISIBLE);
         foldButton.setVisibility(View.INVISIBLE);
         checkButton.setVisibility(View.INVISIBLE);
         callButton.setVisibility(View.INVISIBLE);
+        betButton.setVisibility(View.INVISIBLE);
     }
 
     //updates the action of player with playerID to action
@@ -699,7 +710,7 @@ public class TexasHoldEm extends AppCompatActivity
                         popupWindow.dismiss();
 
                         //DEBUG
-                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User: 0" + " action: Raise pot: " + pot);
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User " + " action: Raise pot: " + pot);
                         logContributions();
 
                         hideUserOptions();
@@ -840,7 +851,7 @@ public class TexasHoldEm extends AppCompatActivity
                 popupWindow.dismiss();
 
                 //DEBUG
-                Log.w("GAME_DEBUG", "Round: " + currentRound + "User action: Check pot: " + pot);
+                Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Check pot: " + pot);
                 logContributions();
 
                 hideUserOptions();
@@ -860,6 +871,50 @@ public class TexasHoldEm extends AppCompatActivity
                 popupWindow.dismiss();
             }
         });
+    }
+
+    //handles user Raise option
+    public void openBetWindow(View view)
+    {
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        final TextView warning = (TextView)popupView.findViewById(R.id.warning);
+        warning.setText("");
+
+        Button betSave = (Button)popupView.findViewById(R.id.raiseSave);
+        final EditText betText = (EditText)popupView.findViewById(R.id.raiseText);
+        betSave.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                if(!betText.getText().toString().isEmpty())
+                {
+                    int betAmount = Integer.parseInt(betText.getText().toString());
+                    int result = raise(betAmount);
+                    if(result == 1)
+                    {
+                        popupWindow.dismiss();
+
+                        //DEBUG
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Bet pot: " + pot);
+                        logContributions();
+
+                        hideUserOptions();
+                        showPlayerAction(0, "Bet: " + betAmount);
+                        thread.postDelayed(new Runnable(){
+                            public void run()
+                            {
+                                simulateTurns();
+                            }}, 5000);
+                    }
+                    else
+                    {
+                        warning.setText("Insufficient funds.");
+                    }
+                }
+            }});
     }
 
     //----------AI----------
