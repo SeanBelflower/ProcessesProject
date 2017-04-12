@@ -116,7 +116,7 @@ public class TexasHoldEm extends AppCompatActivity
         showBlinds(smallBlind.getPlayerID(), bigBlind.getPlayerID());
 
         // playerIndex points to the current player, currently the player after the BigBlind
-        playerIndex = dealerIndex + 3;
+        playerIndex = dealerIndex + 1;
 
         dealerIndex++;
 
@@ -141,7 +141,7 @@ public class TexasHoldEm extends AppCompatActivity
             }}, 5000);
     }
 
-    //turn logic amd starts player turns
+    //turn logic and starts player turns
     public void turn()
     {
         //DEBUG
@@ -156,7 +156,7 @@ public class TexasHoldEm extends AppCompatActivity
         // New round reset maxContribution and start at smallBlind again
         maxContribution = -1;
         playerIndex = dealerIndex + 1 % numPlayers;
-
+        resetContributions();
         //start turns
         thread.postDelayed(new Runnable(){
             public void run()
@@ -173,14 +173,14 @@ public class TexasHoldEm extends AppCompatActivity
 
         cardsOnTable.add(deck.getCard());
 
-        //show 4th card
+        //show 5th card
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), cardsOnTable.get(3), cardsOnTable.get(4));
 
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
         maxContribution = -1;
         playerIndex = dealerIndex + 1 % numPlayers;
-
+        resetContributions();
         //start turns
         thread.postDelayed(new Runnable(){
             public void run()
@@ -197,7 +197,7 @@ public class TexasHoldEm extends AppCompatActivity
         {
             if(!currentPlayer.hasFolded()) //show buttons if user has not folded
                 showUserOptions(currentRound); //show buttons based on the current round
-            else
+            else //keep the bots playing
             {
                 playerIndex++;
                 simulateTurns();
@@ -205,74 +205,102 @@ public class TexasHoldEm extends AppCompatActivity
         }
         else //bot turn
         {
-            hideUserOptions(); //hide user's buttons
-
-            // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
-            int randAction = (int) (Math.random() * 5);
-            String action = "";
-
             if(currentPlayer.hasFolded())
-                randAction = 0; //keep folding
-
-            switch (randAction)
             {
-                case 0:
-                    action = "Fold";
-                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
-                    showPlayerAction(currentPlayer.getPlayerID(), action);
-                    fold();
-                    break;
-                case 1:
-                    action = "Call: " + maxContribution;
-                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + maxContribution));
-                    showPlayerAction(currentPlayer.getPlayerID(), action);
-                    call();
-                    break;
-                case 2:
-                    action = "Check";
-                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
-                    showPlayerAction(currentPlayer.getPlayerID(), action);
-                    check();
-                    break;
-                case 3:
-                    int raise = maxContribution + 10;
-                    action = "Raise: " + raise;
-                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + raise));
-                    showPlayerAction(currentPlayer.getPlayerID(), action);
-                    raise(maxContribution + 10);
-                    break;
-                case 4:
-                    int bet = maxContribution + 10;
-                    action = "Bet: " + bet;
-                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + bet));
-                    showPlayerAction(currentPlayer.getPlayerID(), action);
-                    bet(maxContribution + 10);
-                    break;
-            }
-
-            thread.postDelayed(new Runnable(){
-                public void run()
+                if(!betsEqual())
                 {
-                    Log.w("GAME_DEBUG", "Bets Equal: " + betsEqual());
-                    if(!betsEqual())
-                        simulateTurns();
-                    else
-                    {
-                        currentRound++;
-                        switch(currentRound)
+                    playerIndex++;
+                    simulateTurns();
+                }
+                else
+                {
+                    Log.w("GAME_DEBUG", "Bets Equal");
+                    currentRound++;
+                    switch (currentRound) {
+                        case 1:
+                            flop();
+                            break;
+                        case 2:
+                            turn();
+                            break;
+                        case 3:
+                            river();
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                hideUserOptions(); //hide user's buttons
+
+                // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
+                int randAction = (int) (Math.random() * 5);
+                String action = "";
+
+                if(currentPlayer.hasFolded())
+                    randAction = 0; //keep folding
+
+                switch (randAction)
+                {
+                    case 0:
+                        action = "Fold";
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot + " Contribution: " + currentPlayer);
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        fold();
+                        break;
+                    case 1:
+                        action = "Call: " + maxContribution;
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + maxContribution));
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        call();
+                        break;
+                    case 2:
+                        action = "Check";
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        check();
+                        break;
+                    case 3:
+                        int raise = maxContribution + 10;
+                        action = "Raise: " + raise;
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + raise));
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        raise(maxContribution + 10);
+                        break;
+                    case 4:
+                        int bet = maxContribution + 10;
+                        action = "Bet: " + bet;
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + bet));
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        bet(maxContribution + 10);
+                        break;
+                }
+
+                logContributions();
+
+                thread.postDelayed(new Runnable() {
+                    public void run() {
+                        if (!betsEqual())
+                            simulateTurns();
+                        else
                         {
-                            case 1:
-                                flop();
-                                break;
-                            case 2:
-                                turn();
-                                break;
-                            case 3:
-                                river();
-                                break;
+                            Log.w("GAME_DEBUG", "Bets Equal");
+                            currentRound++;
+                            switch (currentRound) {
+                                case 1:
+                                    flop();
+                                    break;
+                                case 2:
+                                    turn();
+                                    break;
+                                case 3:
+                                    river();
+                                    break;
+                            }
                         }
                     }
-                }}, 5000);
+                }, 5000);
+            }
         }
     }
 
@@ -332,6 +360,7 @@ public class TexasHoldEm extends AppCompatActivity
         {
             maxContribution = value;
             updatePot(value);
+            updatePlayerInfo(currentPlayer.getPlayerID());
         }
         playerIndex++;
     }
@@ -459,7 +488,12 @@ public class TexasHoldEm extends AppCompatActivity
                 callButton.setVisibility(View.VISIBLE);
                 break;
             case 1:
+                raiseButton.setVisibility(View.VISIBLE);
+                foldButton.setVisibility(View.VISIBLE);
+                if(maxContribution < 1)
+                {
 
+                }
                 break;
             case 2:
                 break;
@@ -666,6 +700,7 @@ public class TexasHoldEm extends AppCompatActivity
 
                         //DEBUG
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " User: 0" + " action: Raise pot: " + pot);
+                        logContributions();
 
                         hideUserOptions();
                         showPlayerAction(0, "Raise: " + raiseAmount);
@@ -703,6 +738,7 @@ public class TexasHoldEm extends AppCompatActivity
 
                 //DEBUG
                 Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Fold pot: " + pot);
+                logContributions();
 
                 hideUserOptions();
                 showPlayerAction(0, "Fold");
@@ -745,6 +781,7 @@ public class TexasHoldEm extends AppCompatActivity
 
                     //DEBUG
                     Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Call pot: " + pot);
+                    logContributions();
 
                     hideUserOptions();
                     showPlayerAction(0, "Call: " + maxContribution);
@@ -804,6 +841,7 @@ public class TexasHoldEm extends AppCompatActivity
 
                 //DEBUG
                 Log.w("GAME_DEBUG", "Round: " + currentRound + "User action: Check pot: " + pot);
+                logContributions();
 
                 hideUserOptions();
                 showPlayerAction(0, "Check");
@@ -947,4 +985,22 @@ public class TexasHoldEm extends AppCompatActivity
         return hand;
     }
 
+    //DEBUG functions
+    public void logContributions()
+    {
+        if(numPlayers < 4)
+        {
+            Log.w("GAME_DEBUG", "Player Contributions: User: " + players[0].getContribution() + " 1: " + players[1].getContribution() + " 2: " + players[2].getContribution());
+        }
+        if(numPlayers == 4)
+        {
+            Log.w("GAME_DEBUG", "Player Contributions: User: " + players[0].getContribution() + " 1: " + players[1].getContribution() + " 2: " + players[2].getContribution() + " 3: " + players[3].getContribution());
+        }
+        if(numPlayers == 5)
+        {
+            Log.w("GAME_DEBUG", "Player Contributions: User: " + players[0].getContribution() + " 1: " + players[1].getContribution() + " 2: " + players[2].getContribution() + " 3: " + players[3].getContribution() + " 4: " + players[4].getContribution());
+
+        }
+        Log.w("GAME_DEBUG", "Max Contribution: " + maxContribution);
+    }
 }

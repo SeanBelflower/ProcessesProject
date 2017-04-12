@@ -64,7 +64,7 @@ public class Player
     if(amount <= this.chipStack && !this.hasFolded)
     {
       this.chipStack -= amount;
-      this.contribution += amount;
+      this.contribution = amount;
       return true;
     }
     else
@@ -77,7 +77,7 @@ public class Player
     if(amount <= this.chipStack && !this.hasFolded)
     {
       this.chipStack -= amount;
-      this.contribution += amount;
+      this.contribution = amount;
       return true;
     }
     else
@@ -89,7 +89,7 @@ public class Player
   {
     if(amount <= this.chipStack && !this.hasFolded){
       this.chipStack -= amount;
-      this.contribution += amount;
+      this.contribution = amount;
       return true;
     }
     else
