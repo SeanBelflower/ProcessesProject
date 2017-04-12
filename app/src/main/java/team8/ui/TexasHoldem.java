@@ -37,12 +37,7 @@ public class TexasHoldEm extends AppCompatActivity
     private Deck deck;
     private int currentRound;
 
-    final int USER_ID = 0;
-    final int BOT1_ID = 1;
-    final int BOT2_ID = 2;
-    final int BOT3_ID = 3;
-    final int BOT4_ID = 4;
-
+    private final int USER_ID = 0;
 
     //main
     protected void onCreate(Bundle savedInstanceState)
@@ -102,7 +97,7 @@ public class TexasHoldEm extends AppCompatActivity
         }
 
         //show user's hand
-        updatePlayerCards(players[USER_ID].getHand().get(0), players[USER_ID].getHand().get(1));
+        showUserCards(players[USER_ID].getHand().get(0), players[USER_ID].getHand().get(1));
 
         // Add 3 cards to the table, only visible after the first round
         for(int i = 0; i < 3;i++)
@@ -212,8 +207,12 @@ public class TexasHoldEm extends AppCompatActivity
 
             // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
             // currentPlayer.getPlayerID() gets the current ID of the player
-            int randAction = (int) (Math.random() * 4);
+            int randAction = (int) (Math.random() * 5);
             String action = "";
+
+            if(currentPlayer.hasFolded())
+                randAction = 0; //keep folding
+
             switch (randAction)
             {
                 case 0:
@@ -223,8 +222,8 @@ public class TexasHoldEm extends AppCompatActivity
                     fold();
                     break;
                 case 1:
-                    action = "Call";
-                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+                    action = "Call: " + maxContribution;
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + maxContribution));
                     showPlayerAction(currentPlayer.getPlayerID(), action);
                     call();
                     break;
@@ -235,10 +234,18 @@ public class TexasHoldEm extends AppCompatActivity
                     check();
                     break;
                 case 3:
-                    action = "Raise: " + (maxContribution + 10);
-                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + pot);
+                    int raise = maxContribution + 10;
+                    action = "Raise: " + raise;
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + raise));
                     showPlayerAction(currentPlayer.getPlayerID(), action);
                     raise(maxContribution + 10);
+                    break;
+                case 4:
+                    int bet = maxContribution + 10;
+                    action = "Bet: " + bet;
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + bet));
+                    showPlayerAction(currentPlayer.getPlayerID(), action);
+                    bet(maxContribution + 10);
                     break;
             }
 
@@ -368,16 +375,16 @@ public class TexasHoldEm extends AppCompatActivity
         {
             case 4:
                 findViewById(R.id.b4Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(BOT4_ID);
+                updatePlayerChips(4);
             case 3:
                 findViewById(R.id.b3Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(BOT3_ID);
+                updatePlayerChips(3);
             case 2:
                 findViewById(R.id.b2Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(BOT2_ID);
+                updatePlayerChips(2);
             case 1:
                 findViewById(R.id.b1Cards).setVisibility(View.VISIBLE);
-                updatePlayerChips(BOT1_ID);
+                updatePlayerChips(1);
             default:
                 updatePlayerChips(USER_ID);
 
@@ -427,38 +434,79 @@ public class TexasHoldEm extends AppCompatActivity
     //updates the action of player with playerID to action
     public void showPlayerAction(int playerID, String action)
     {
+        hidePlayerActions();
+
+        TextView userAction = (TextView)findViewById(R.id.userAction);
+        TextView bot1Action = (TextView)findViewById(R.id.b1Action);
+        TextView bot2Action = (TextView)findViewById(R.id.b2Action);
+        TextView bot3Action = (TextView)findViewById(R.id.b3Action);
+        TextView bot4Action = (TextView)findViewById(R.id.b4Action);
+
         switch(playerID)
         {
-            case 0:
-                TextView userAction = (TextView)findViewById(R.id.userAction);
+            case USER_ID:
                 userAction.setText(action);
                 userAction.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                TextView bot1Action = (TextView)findViewById(R.id.b1Action);
                 bot1Action.setText(action);
                 bot1Action.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                TextView bot2Action = (TextView)findViewById(R.id.b2Action);
                 bot2Action.setText(action);
                 bot2Action.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                TextView bot3Action = (TextView)findViewById(R.id.b3Action);
                 bot3Action.setText(action);
                 bot3Action.setVisibility(View.VISIBLE);
                 break;
             case 4:
-                TextView bot4Action = (TextView)findViewById(R.id.b4Action);
                 bot4Action.setText(action);
                 bot4Action.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
-    //updates the user's cards
-    public void updatePlayerCards(Card card1, Card card2)
+    //hides all player actions
+    public void hidePlayerActions()
+    {
+        TextView userAction = (TextView)findViewById(R.id.userAction);
+        TextView bot1Action = (TextView)findViewById(R.id.b1Action);
+        TextView bot2Action = (TextView)findViewById(R.id.b2Action);
+        TextView bot3Action = (TextView)findViewById(R.id.b3Action);
+        TextView bot4Action = (TextView)findViewById(R.id.b4Action);
+
+        if(!players[USER_ID].hasFolded())
+        {
+            userAction.setText("");
+
+        }
+
+        if(!players[1].hasFolded())
+        {
+            bot1Action.setText("");
+        }
+
+        if(!players[2].hasFolded())
+        {
+            bot2Action.setText("");
+        }
+
+        if(numPlayers > 3)
+            if(!players[3].hasFolded())
+            {
+                bot3Action.setText("");
+            }
+
+        if(numPlayers > 4)
+            if(!players[4].hasFolded())
+            {
+                bot4Action.setText("");
+            }
+    }
+
+    //shows the user's cards
+    public void showUserCards(Card card1, Card card2)
     {
         ImageView card1View = (ImageView)findViewById(R.id.card1);
         card1View.setImageResource(getResources().getIdentifier(card1.getDrawableSource(), null, getPackageName()));
