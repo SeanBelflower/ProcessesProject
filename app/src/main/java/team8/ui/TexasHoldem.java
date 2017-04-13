@@ -47,7 +47,10 @@ public class TexasHoldEm extends AppCompatActivity
 
         thread = new Handler(Looper.getMainLooper());
 
-        gamePlay();
+        int startingChips = Integer.parseInt(getIntent().getStringExtra("startingChips"));
+        int[] startingChipsStacks = {startingChips, startingChips, startingChips, startingChips, startingChips};
+
+        gamePlay(startingChipsStacks);
         showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
         //do not write anything under this line, gamePlay() starts a thread which must be the only remaining execution in this program
     }
@@ -55,8 +58,19 @@ public class TexasHoldEm extends AppCompatActivity
     //--------GAME--------
 
     // Must be called after preFlop()
-    public void gamePlay()
+    public void gamePlay(int[] chipStacks)
     {
+        numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
+        this.players = new Player[numPlayers];
+
+        for(int i = 0; i < numPlayers; i++)
+        {
+            players[i] = new Player(i, chipStacks[i]);
+        }
+
+        pot = 0;
+        updatePot(0);
+
         currentRound = 0;
         preFlop();
         simulateTurns();
@@ -69,21 +83,8 @@ public class TexasHoldEm extends AppCompatActivity
         //DEBUG
         Log.w("GAME_DEBUG", "--------PREFLOP--------");
 
-        int startingChips = Integer.parseInt(getIntent().getStringExtra("startingChips"));
-
         deck = new Deck();
         deck.shuffle();
-
-        numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
-        this.players = new Player[numPlayers];
-
-        for(int i = 0; i < numPlayers;i++)
-        {
-            players[i] = new Player(i, startingChips);
-        }
-
-        // New game pot gets reset
-        updatePot(0);
 
         // picking the blinds and dealer
        // players[dealerIndex % this.numPlayers].setDealer();
@@ -316,7 +317,7 @@ public class TexasHoldEm extends AppCompatActivity
         hideBlinds(); //hide the old blinds
         cardsOnTable.clear(); //clear out the cards on the table
         hideCommunityCards(); //hide the community cards
-        gamePlay();
+        gamePlay(getAllChipStacks());
     }
 
     //returns whether user needs to contribute more, or if they can't, or 1 for success
@@ -411,6 +412,19 @@ public class TexasHoldEm extends AppCompatActivity
         {
             players[i].resetContribution();
         }
+    }
+
+    //returns array of all player chip stacks
+    public int[] getAllChipStacks()
+    {
+        int[] chipStacks = new int[numPlayers];
+
+        for(int i = 0; i < numPlayers; i++)
+        {
+            chipStacks[i] = players[i].getChipStack();
+        }
+
+        return chipStacks;
     }
 
     //----------UI----------
