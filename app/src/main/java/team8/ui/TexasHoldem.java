@@ -313,7 +313,9 @@ public class TexasHoldEm extends AppCompatActivity
 
     public void continueGame()
     {
-        hideBlinds();
+        hideBlinds(); //hide the old blinds
+        cardsOnTable.clear(); //clear out the cards on the table
+        hideCommunityCards(); //hide the community cards
         gamePlay();
     }
 
@@ -365,7 +367,8 @@ public class TexasHoldEm extends AppCompatActivity
     public int bet(int value)
     {
         // get value only should be visible at the start of a round
-        if(!currentPlayer.bet(value)){
+        if(!currentPlayer.bet(value))
+        {
             // print insuffcient funds
             return 0;
         }
@@ -513,7 +516,7 @@ public class TexasHoldEm extends AppCompatActivity
 
         if(round == 0)
         {
-            if ((currentPlayer == smallBlind || currentPlayer == bigBlind) && maxContribution < 1)
+            if((currentPlayer == smallBlind && maxContribution < 1) || (currentPlayer == bigBlind && currentPlayer.getContribution() == 0))
             {
                 betButton.setVisibility(View.VISIBLE);
             }
@@ -655,26 +658,36 @@ public class TexasHoldEm extends AppCompatActivity
         commCard3View.setVisibility(View.VISIBLE);
 
         ImageView commCard4View = (ImageView)findViewById(R.id.commCard4);
-        if(card4 == null)
-        {
-            //commCard4View.setVisibility(View.INVISIBLE);
-        }
-        else
+        if(card4 != null)
         {
             commCard4View.setImageResource(getResources().getIdentifier(card4.getDrawableSource(), null, getPackageName()));
             commCard4View.setVisibility(View.VISIBLE);
         }
 
         ImageView commCard5View = (ImageView)findViewById(R.id.commCard5);
-        if(card5 == null)
-        {
-            //commCard5View.setVisibility(View.INVISIBLE);
-        }
-        else
+        if(card5 != null)
         {
             commCard5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
             commCard5View.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void hideCommunityCards()
+    {
+        ImageView commCard1View = (ImageView)findViewById(R.id.commCard1);
+        commCard1View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard2View = (ImageView)findViewById(R.id.commCard2);
+        commCard2View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard3View = (ImageView)findViewById(R.id.commCard3);
+        commCard3View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard4View = (ImageView)findViewById(R.id.commCard4);
+        commCard4View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard5View = (ImageView)findViewById(R.id.commCard5);
+        commCard5View.setVisibility(View.INVISIBLE);
     }
 
     //used to update all player chips

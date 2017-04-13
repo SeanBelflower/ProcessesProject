@@ -10,7 +10,6 @@ import team8.ui.Player;
 public class AI_Player extends Player
 {
 
-    //commented out for building, needs fixing
     public String name;
     public int chips;
     public int bet;
@@ -20,7 +19,7 @@ public class AI_Player extends Player
     private ArrayList<Card> allCards;
     private Card a;
     private Card b;
-    public int decision;
+    private int decision;
     public int boldness;
 
     //Needed for finding Suit constants
@@ -41,6 +40,30 @@ public class AI_Player extends Player
         boldness = rand.nextInt(9)+1;
         confidence = (float)0.05*boldness;
         this.allCards = allCards;
+    }
+
+    //Needs fix
+ /*   public int getRaiseAmount()
+    {
+        if(chips > 10 && confidence < .95)
+        {
+            return bet * 1.5;
+        }
+        else
+        {
+            return chips;
+        }
+    }*/
+
+    @Override
+    public int getChipStack()
+    {
+        return chips;
+    }
+
+    public int getDecision()
+    {
+        return decision;
     }
 
     // calculate confidence based on what cards have been played so far

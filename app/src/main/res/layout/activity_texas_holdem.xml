@@ -26,25 +26,24 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.806">
+        app:layout_constraintVertical_bias="0.0">
 
 
         <TextView
             android:id="@+id/userBlind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/userAction"
-            android:layout_toEndOf="@+id/b2Action"
-            android:layout_toRightOf="@+id/b2Action" />
+            android:layout_alignLeft="@+id/potLabel"
+            android:layout_alignTop="@id/card2"
+            android:text="dd"/>
 
         <TextView
             android:id="@+id/b4Blind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/b1Blind"
-            android:layout_alignBottom="@+id/b1Blind"
-            android:layout_alignLeft="@+id/b4Action"
-            android:layout_alignStart="@+id/b4Action" />
+            android:layout_below="@+id/b1Blind"
+            android:layout_alignRight="@+id/b4Action"
+            android:layout_alignEnd="@+id/b4Action" />
 
         <TextView
             android:id="@+id/b1Blind"
@@ -61,8 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/b2Blind"
             android:layout_alignBottom="@+id/b2Blind"
-            android:layout_alignLeft="@+id/b3Action"
-            android:layout_alignStart="@+id/b3Action" />
+            android:layout_alignRight="@+id/b4Action"
+            android:layout_alignEnd="@+id/b4Action"/>
 
         <TextView
             android:id="@+id/b2Blind"
