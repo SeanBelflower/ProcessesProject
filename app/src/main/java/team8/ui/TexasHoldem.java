@@ -68,12 +68,17 @@ public class TexasHoldEm extends AppCompatActivity
             players[i] = new Player(i, chipStacks[i]);
         }
 
-        pot = 0;
-        updatePot(0);
-
         currentRound = 0;
+
         preFlop();
-        simulateTurns();
+
+        thread.postDelayed(new Runnable(){
+
+            public void run()
+            {
+                simulateTurns();
+            }
+        }, 5000);
         //do not write anything under this line, simulateTurns() starts a thread which must be the only remaining execution in this program
     }
 
@@ -121,7 +126,6 @@ public class TexasHoldEm extends AppCompatActivity
         //playerIndex = dealerIndex + 1;
 
         dealerIndex++;
-
     }
 
     //flop logic and starts player turns
@@ -315,9 +319,14 @@ public class TexasHoldEm extends AppCompatActivity
     public void continueGame()
     {
         hideBlinds(); //hide the old blinds
+
         cardsOnTable.clear(); //clear out the cards on the table
         hideCommunityCards(); //hide the community cards
-        gamePlay(getAllChipStacks());
+
+        pot = 0; //reset the pot
+        updatePot(0);
+
+        openContinueWindow(); //start new game with current player chips
     }
 
     //returns whether user needs to contribute more, or if they can't, or 1 for success
@@ -575,7 +584,7 @@ public class TexasHoldEm extends AppCompatActivity
     //updates the action of player with playerID to action
     public void showPlayerAction(int playerID, String action)
     {
-        hidePlayerActions();
+        hidePlayerActions(false);
 
         TextView userAction = (TextView)findViewById(R.id.userAction);
         TextView bot1Action = (TextView)findViewById(R.id.b1Action);
@@ -608,14 +617,25 @@ public class TexasHoldEm extends AppCompatActivity
         }
     }
 
-    //hides all player actions
-    public void hidePlayerActions()
+    //hides all player actions if they haven't fold or if it is a new round
+    public void hidePlayerActions(boolean newRound)
     {
         TextView userAction = (TextView)findViewById(R.id.userAction);
         TextView bot1Action = (TextView)findViewById(R.id.b1Action);
         TextView bot2Action = (TextView)findViewById(R.id.b2Action);
         TextView bot3Action = (TextView)findViewById(R.id.b3Action);
         TextView bot4Action = (TextView)findViewById(R.id.b4Action);
+
+        if(newRound)
+        {
+            userAction.setText("");
+            bot1Action.setText("");
+            bot2Action.setText("");
+            bot3Action.setText("");
+            bot4Action.setText("");
+
+            return;
+        }
 
         if(!players[USER_ID].hasFolded())
         {
@@ -970,6 +990,33 @@ public class TexasHoldEm extends AppCompatActivity
                     }
                 }
             }});
+    }
+
+    public void openContinueWindow()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.continue_game_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        Button continueButton = (Button)popupView.findViewById(R.id.continueButton);
+        continueButton.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+                
+                hidePlayerActions(true); //hides player actions after user continues
+
+                //DEBUG
+                Log.w("GAME_DEBUG", "NEW GAME");
+
+                thread.postDelayed(new Runnable(){
+                    public void run()
+                    {
+                        gamePlay(getAllChipStacks());
+                    }}, 5000);
+            }
+        });
     }
 
     //----------AI----------
