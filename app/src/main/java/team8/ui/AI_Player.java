@@ -9,37 +9,37 @@ import team8.ui.Player;
 
 public class AI_Player extends Player
 {
-    //required because main code is commented out
-    AI_Player(int playerID, int chipStack)
-    {
-        super(playerID, chipStack);
-    }
 
     //commented out for building, needs fixing
-    /*
     public String name;
-    public decision;
     public int chips;
     public int bet;
     private Random rand;
     private float confidence;
-    private Card myHand[5];
+    private Card[] myHand = new Card[5];
     private ArrayList<Card> allCards;
-    private char handValueIndex = 0;
     private Card a;
     private Card b;
     public int decision;
+    public int boldness;
 
-    private final float callConfidenceThreshold = 0.4;
-    private final float betConfidenceThreshold = 0.6;
+    //Needed for finding Suit constants
+    private final Suit SPADES = Suit.SPADES;
+    private final Suit DIAMONDS = Suit.DIAMONDS;
+    private final Suit HEARTS = Suit.HEARTS;
+    private final Suit CLUBS = Suit.CLUBS;
+
+    private final float callConfidenceThreshold = (float)0.4;
+    private final float betConfidenceThreshold = (float)0.6;
 
 
-    public AI_Player(String name, int chips, ArrayList<Card> allCards)
+    public AI_Player(int playerID, int chips, String name, ArrayList<Card> allCards)
     {
-        this.name = name;
+        super(playerID, chips);
         this.chips = chips;
+        this.name = name;
         boldness = rand.nextInt(9)+1;
-        confidence = 0.05*boldness;
+        confidence = (float)0.05*boldness;
         this.allCards = allCards;
     }
 
@@ -59,7 +59,7 @@ public class AI_Player extends Player
             float startVal = startingHandValue();
             if(startVal > 2)
             {
-                confidence += (2^(startVal - 6);
+                confidence += (Math.pow((startVal - 6), 2));
             }
             else if (startVal < 2)
             {
@@ -90,7 +90,6 @@ public class AI_Player extends Player
         else
         {
             score = scoreHand(myHand);
-            allCards[6] = cards[4];
             myHand = bestHand(allCards,7);
             float newScore = scoreHand(myHand);
             recalcConfidence(0, score, newScore);
@@ -102,12 +101,12 @@ public class AI_Player extends Player
     // max is 5, min is 0
     private float startingHandValue()
     {
-        float value = 0.0;
+        float value = (float)0.0;
         Card high, low;
-        char diff;
+        int diff;
+        int diff2;
         if(a.value == b.value)
         {
-            handValueIndex = 1;
             value += 2.0;
             // 0 = Two, 1 = Three, and so on
             char cnt = 2;
@@ -118,6 +117,8 @@ public class AI_Player extends Player
                 value += 0.25;
                 cnt++;
             }
+            high = a;
+            low = high;
         }
         else if (a.value > b.value)
         {
@@ -129,8 +130,8 @@ public class AI_Player extends Player
             high = b;
             low = a;
         }
-        diff = high.value - low.value;
-        diff2 = low.value - high.value;
+        diff = high.getValue() - low.getValue();
+        diff2 = low.getValue() - high.getValue();
         if(diff < 5)
         {
             value += 2^(1-diff) + 1^(12 - high.value) + 1^(11-low.value);
@@ -139,7 +140,7 @@ public class AI_Player extends Player
         {
             value += 2^(1-diff) + 1^(12 - high.value) + 1^(11-low.value);
         }
-        if(a.suit == b.suit)
+        if(a.getSuit() == b.getSuit())
         {
             value += 0.5;
         }
@@ -161,13 +162,13 @@ public class AI_Player extends Player
             }
             else
             {
-                confidence -= (float)(bet/chips * 100) * .33 * (3-cardsLeft)
+                confidence -= (float)(bet/chips * 100) * .33 * (3-cardsLeft);
             }
         }
 
         if(confidence > 1.0)
         {
-            confidence = 1.0;
+            confidence = (float)1.0;
         }
         if(confidence < 0)
         {
@@ -178,17 +179,19 @@ public class AI_Player extends Player
     // when a new card is given to the ai when the Turn and River cards are dealt
     private Card [] bestHand (ArrayList<Card> all, int cardsPlayed)
     {
-        Card [] base = {all[0],all[1],all[2],all[3],all[4]};
+        Card [] base = {allCards.get(0),allCards.get(1),allCards.get(2),allCards.get(3),allCards.get(4)};
         Card [] bestWithOne, bestWithTwo;
-        int score = scoreHand(base);
-        int score2 = score;
+        bestWithOne = base;
+        bestWithTwo = base;
+        float score = scoreHand(base);
+        float score2 = score;
         for(int i = 5; i < cardsPlayed; i++)
         {
             for(int j = 0; j < 5; j++)
             {
                 Card [] temp = base;
                 temp[j] = all.get(i);
-                int tempScore = scoreHand(temp);
+                float tempScore = scoreHand(temp);
                 if(tempScore > score)
                 {
                     bestWithOne = temp;
@@ -198,14 +201,14 @@ public class AI_Player extends Player
         }
         if(cardsPlayed > 6)
         {
-            base = {all[5],all[6],all[0],all[1],all[2]};
+            Card[] base2 = {allCards.get(5),allCards.get(6),allCards.get(0),allCards.get(1),allCards.get(2)};
             for(int i = 3; i < cardsPlayed - 2; i++)
             {
                 for(int j = 2; j < 5; j++)
                 {
-                    Card [] temp = base;
+                    Card [] temp = base2;
                     temp[j] = all.get(i);
-                    int tempScore = scoreHand(temp);
+                    float tempScore = scoreHand(temp);
                     if(tempScore > score2)
                     {
                         bestWithTwo = temp;
@@ -217,9 +220,12 @@ public class AI_Player extends Player
             if (score == score2) return base;
             return (score > score2) ? bestWithOne : bestWithTwo;
         }
+        return bestWithOne;
+    }
 
     private void bettingPhase(int bet)
     {
+        float score = scoreHand(myHand);
         // if the amount betted is less than the amount required to continue
         boolean hasMadeChoice = false;
         if(this.bet < bet && confidence < betConfidenceThreshold)
@@ -294,8 +300,11 @@ public class AI_Player extends Player
     //scores a hand
     public float scoreHand (Card[] hand)
     {
+        int valueCheck;
+        int counter;
+
         //primitive boolean defaults to false
-        boolean flush, straight, pair, three, four, twoPair, fullHouse;
+        boolean flush = false, straight = false, pair = false, three = false, four = false, twoPair = false, fullHouse = false;
 
         //sort the hand to make it easier to rank
         hand = sortHand(hand);
@@ -304,7 +313,7 @@ public class AI_Player extends Player
         for(int i = 1; i < 5; i++)
         {
             //can see wraparound straights
-            if(hand[i].getValue() - 2 != hand[i-1].getValue - 1 % 13)
+            if(hand[i].getValue() - 2 != hand[i-1].getValue() - 1 % 13)
             {
                 break;
             }
@@ -317,7 +326,7 @@ public class AI_Player extends Player
         //check for flush
         for (int i=0; i<hand.length-1; i++)
         {
-            if (hand[i].getSuit() != hand[i+1])
+            if (hand[i].getSuit() != hand[i+1].getSuit())
             {
                 break;
             }
@@ -328,7 +337,7 @@ public class AI_Player extends Player
         if(flush && straight)
         {
             //royal flush
-            if(card[0] == 8)
+            if(hand[0].getValue() == 8)
             {
                 return calculateScore (10, hand[0].getSuit(), hand[4].getValue());
             }
@@ -344,13 +353,13 @@ public class AI_Player extends Player
         valueCheck = hand[0].getValue();
         counter = 1;
         //keep track of what pair we have
-        int pairValue;
+        int pairValue = 0;
         int twoPairValue;
         //one loop through hand
         for(int i = 1; i <= 5; i++)
         {
             //when non-matching card is encountered, decide rank
-            if(hand[i] != valueCheck || i == 5)
+            if(hand[i].getValue() != valueCheck || i == 5)
             {
                 switch (counter)
                 {
@@ -379,7 +388,7 @@ public class AI_Player extends Player
             else counter++;
         }
 
-        Card[2] pair;
+        Card[] pairOfCards = new Card[2];
         //return score of the rest of the hands
         if (four)
             return calculateScore (8, SPADES, hand[1].getValue());
@@ -423,10 +432,9 @@ public class AI_Player extends Player
                         (suitToFloat(hand[4].getSuit()) / 12);
             }
         }
-        return ;
         if (twoPair)//3
         {
-            if (hand[3].getValue == hand[4].getValue())
+            if (hand[3].getValue() == hand[4].getValue())
             {
                 return (7 * 10) + (9 * (hand[3].getValue() / 12)) +
                         (suitToFloat(hand[3].getSuit()) / 8) +
@@ -438,22 +446,23 @@ public class AI_Player extends Player
                         (suitToFloat(hand[2].getSuit()) / 8) +
                         (suitToFloat(hand[3].getSuit()) / 8);
             }
+
         }
-        return 3;
+
         if (pair)
         {
             for (int i=0; i<hand.length; i++)
             {
-                if (hand[i].getValue() = pairValue)
+                if (hand[i].getValue() == pairValue)
                 {
-                    pair[0] = hand[i];
-                    pair[1] = hand[i+1];
+                    pairOfCards[0] = hand[i];
+                    pairOfCards[1] = hand[i+1];
                     break;
                 }
             }
-            return (7 * 10) + (9 * (pair[0].getValue() / 12)) +
-                    (suitToFloat(pair[0].getSuit()) / 8) +
-                    (suitToFloat(pair[1].getSuit()) / 8);
+            return (7 * 10) + (9 * (pairOfCards[0].getValue() / 12)) +
+                    (suitToFloat(pairOfCards[0].getSuit()) / 8) +
+                    (suitToFloat(pairOfCards[1].getSuit()) / 8);
         }
         return calculateScore (1, hand[4].getSuit(), hand[4].getValue());
     }
@@ -474,7 +483,7 @@ public class AI_Player extends Player
     }
 
     //ghetto bubblesort
-    public sortHand (Card[] hand)
+    public Card[] sortHand (Card[] hand)
     {
         int bound = 4;
         Card temp;
@@ -482,7 +491,7 @@ public class AI_Player extends Player
         {
             for (int i=0; i<bound-1; i++)
             {
-                if (hand[i].compareTo(hand[i+1] > 0)
+                if (hand[i].compareTo(hand[i+1]) > 0)
                 {
                     temp = hand[i];
                     hand[i] = hand[i+1];
@@ -491,10 +500,11 @@ public class AI_Player extends Player
             }
             bound--;
         }
+        return hand;
     }
 
     //calculate the score of a given hand after finding its rank
-    private calculateScore (float handRank, Suit suit, float cardValue)
+    private float calculateScore (float handRank, Suit suit, float cardValue)
     {
         //the return value
         float handScore;
@@ -512,5 +522,4 @@ public class AI_Player extends Player
         //return the score
         return handScore;
     }
-}*/
 }

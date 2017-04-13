@@ -227,6 +227,9 @@ public class TexasHoldEm extends AppCompatActivity
                         case 3:
                             river();
                             break;
+                        case 4:
+                            continueGame();
+                            break;
                     }
                 }
             }
@@ -297,12 +300,21 @@ public class TexasHoldEm extends AppCompatActivity
                                 case 3:
                                     river();
                                     break;
+                                case 4:
+                                    continueGame();
+                                    break;
                             }
                         }
                     }
                 }, 5000);
             }
         }
+    }
+
+    public void continueGame()
+    {
+        hideBlinds();
+        gamePlay();
     }
 
     //returns whether user needs to contribute more, or if they can't, or 1 for success
@@ -472,6 +484,22 @@ public class TexasHoldEm extends AppCompatActivity
                 b4Blind.setText(bigBlindString);
                 break;
         }
+    }
+
+    //hides who the blinds are
+    public void hideBlinds()
+    {
+        TextView userBlind = (TextView)findViewById(R.id.userBlind);
+        TextView b1Blind = (TextView)findViewById(R.id.b1Blind);
+        TextView b2Blind = (TextView)findViewById(R.id.b2Blind);
+        TextView b3Blind = (TextView)findViewById(R.id.b3Blind);
+        TextView b4Blind = (TextView)findViewById(R.id.b4Blind);
+
+        userBlind.setText("");
+        b1Blind.setText("");
+        b2Blind.setText("");
+        b3Blind.setText("");
+        b4Blind.setText("");
     }
 
     //show user their options based on int round

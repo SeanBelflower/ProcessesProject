@@ -17,14 +17,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a6d7cc3-7a2e-48df-b2ef-8326449a3f01" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_draw_poker.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldem.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
     </list>
     <ignored path="ProcessesProject-master.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,21 +62,41 @@
       <file leaf-file-name="TexasHoldEm.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2899">
-              <caret line="896" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="1061" selection-end-column="0" />
+            <state relative-caret-position="4148">
+              <caret line="315" column="21" selection-start-line="315" selection-start-column="21" selection-end-line="315" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#check#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#resetContributions#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#showPlayers#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#showBlinds#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#hideBlinds#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#showUserOptions#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#showPlayerAction#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#hidePlayerActions#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#showUserCards#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#updateCommunityCards#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#updatePlayerInfo#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#updatePot#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#openRaiseWindow#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#openFoldWindow#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#openCallWindow#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#openCheckWindow#0;class#TexasHoldEm#0" expanded="false" />
+                <element signature="method#openBetWindow#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#rankHand#0;class#TexasHoldEm#0" expanded="false" />
                 <element signature="method#sortHand#0;class#TexasHoldEm#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AI_Player.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="52">
+              <caret line="355" column="25" selection-start-line="355" selection-start-column="25" selection-end-line="355" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -92,7 +115,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DrawPoker.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DrawPoker.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
@@ -1924,12 +1947,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/check_popup.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/call_popup.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/OfflineOptions.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_texas_holdem.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java" />
       </list>
     </option>
   </component>
@@ -2375,7 +2398,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34868422" sideWeight="0.52928257" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3651877" sideWeight="0.77891654" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45051193" sideWeight="0.77891654" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31089258" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.49573562" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -2424,14 +2447,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#check#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#resetContributions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayers#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#hideBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showUserOptions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayerAction#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#hidePlayerActions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showUserCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updateCommunityCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePlayerInfo#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePot#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openRaiseWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openFoldWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCallWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCheckWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openBetWindow#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#rankHand#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#sortHand#0;class#TexasHoldEm#0" expanded="false" />
           </folding>
@@ -2474,14 +2505,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#check#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#resetContributions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayers#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#hideBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showUserOptions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayerAction#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#hidePlayerActions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showUserCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updateCommunityCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePlayerInfo#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePot#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openRaiseWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openFoldWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCallWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCheckWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openBetWindow#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#rankHand#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#sortHand#0;class#TexasHoldEm#0" expanded="false" />
           </folding>
@@ -2520,14 +2559,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#check#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#resetContributions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayers#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#hideBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showUserOptions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayerAction#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#hidePlayerActions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showUserCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updateCommunityCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePlayerInfo#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePot#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openRaiseWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openFoldWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCallWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCheckWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openBetWindow#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#rankHand#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#sortHand#0;class#TexasHoldEm#0" expanded="false" />
           </folding>
@@ -2563,14 +2610,22 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#check#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#resetContributions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayers#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#hideBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showUserOptions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showPlayerAction#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#hidePlayerActions#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#showUserCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updateCommunityCards#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePlayerInfo#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#updatePot#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openRaiseWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openFoldWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCallWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCheckWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openBetWindow#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#rankHand#0;class#TexasHoldEm#0" expanded="false" />
             <element signature="method#sortHand#0;class#TexasHoldEm#0" expanded="false" />
           </folding>
@@ -2854,14 +2909,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-193">
-          <caret line="222" column="72" selection-start-line="222" selection-start-column="68" selection-end-line="222" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -2897,27 +2944,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2899">
-          <caret line="896" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="1061" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#check#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#showPlayers#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#showBlinds#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#showPlayerAction#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#hidePlayerActions#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#showUserCards#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#updateCommunityCards#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#updatePlayerInfo#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#updatePot#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#rankHand#0;class#TexasHoldEm#0" expanded="false" />
-            <element signature="method#sortHand#0;class#TexasHoldEm#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -2935,6 +2961,45 @@
             <element signature="method#updatePot#0;class#DrawPoker#0" expanded="false" />
             <element signature="method#rankHand#0;class#DrawPoker#0" expanded="false" />
             <element signature="method#sortHand#0;class#DrawPoker#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4148">
+          <caret line="315" column="21" selection-start-line="315" selection-start-column="21" selection-end-line="315" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#check#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#resetContributions#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showPlayers#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#hideBlinds#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showUserOptions#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showPlayerAction#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#hidePlayerActions#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#showUserCards#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#updateCommunityCards#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#updatePlayerInfo#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#updatePot#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openRaiseWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openFoldWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCallWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openCheckWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#openBetWindow#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#rankHand#0;class#TexasHoldEm#0" expanded="false" />
+            <element signature="method#sortHand#0;class#TexasHoldEm#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="355" column="25" selection-start-line="355" selection-start-column="25" selection-end-line="355" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
