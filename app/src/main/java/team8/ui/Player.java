@@ -9,7 +9,7 @@ public class Player
 {
 
   private int playerID;
-  private int chipStack;
+    protected int chipStack;
   private ArrayList<Card> Hand = new ArrayList<>();
   private int contribution = 0;
   private boolean bigBlind = false;

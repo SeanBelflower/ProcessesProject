@@ -65,7 +65,13 @@ public class TexasHoldEm extends AppCompatActivity
 
         for(int i = 0; i < numPlayers; i++)
         {
-            players[i] = new Player(i, chipStacks[i]);
+            if(i == 0)
+                players[i] = new Player(i, chipStacks[i]);
+            else
+            {
+                String name = getIntent().getStringExtra("name" + i);
+                players[i] = new AI_Player(i, chipStacks[i], name);
+            }
         }
 
         currentRound = 0;
@@ -92,14 +98,23 @@ public class TexasHoldEm extends AppCompatActivity
         deck.shuffle();
 
         // picking the blinds and dealer
-       // players[dealerIndex % this.numPlayers].setDealer();
-       // players[dealerIndex + 1 % this.numPlayers].setSmallBlind();
-       // players[dealerIndex + 2 % this.numPlayers].setBigBlind();
+        players[dealerIndex % this.numPlayers].setDealer();
+        players[(dealerIndex + 1) % this.numPlayers].setSmallBlind();
+        players[(dealerIndex + 2) % this.numPlayers].setBigBlind();
 
         // Add two cards to each players hand
         for(int i = 0; i < numPlayers;i++)
         {
             players[i].addToHand(deck.getCard(2));
+
+            if(i > 0)
+            {
+                players[i].addToHand(deck.getCard(2));
+                ((AI_Player)players[i]).addToCards(players[i].getHand().get(0));
+                ((AI_Player)players[i]).addToCards(players[i].getHand().get(1));
+
+                ((AI_Player)players[i]).observeHand(0, maxContribution, true);
+            }
         }
 
         //show user's hand
@@ -109,6 +124,11 @@ public class TexasHoldEm extends AppCompatActivity
         for(int i = 0; i < 3;i++)
         {
             cardsOnTable.add(deck.getCard());
+
+            for(int j = 1; j < numPlayers; j++)
+            {
+                ((AI_Player)players[j]).addToCards(cardsOnTable.get(i));
+            }
         }
 
         dealer = players[dealerIndex % this.numPlayers];
@@ -222,6 +242,7 @@ public class TexasHoldEm extends AppCompatActivity
                 {
                     Log.w("GAME_DEBUG", "Bets Equal");
                     currentRound++;
+                    ((AI_Player)currentPlayer).observeHand(cardsOnTable.size(), maxContribution, true);
                     switch (currentRound) {
                         case 1:
                             flop();
@@ -243,13 +264,16 @@ public class TexasHoldEm extends AppCompatActivity
                 hideUserOptions(); //hide user's buttons
 
                 // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
-                int randAction = (int) (Math.random() * 5);
+
+                ((AI_Player)currentPlayer).observeHand(cardsOnTable.size(), maxContribution, false);
+                int botAction = ((AI_Player)currentPlayer).getDecision();
+
                 String action = "";
 
                 if(currentPlayer.hasFolded())
-                    randAction = 0; //keep folding
+                    botAction = 0; //keep folding
 
-                switch (randAction)
+                switch (botAction)
                 {
                     case 0:
                         action = "Fold";
@@ -405,6 +429,17 @@ public class TexasHoldEm extends AppCompatActivity
     public boolean betsEqual()
     {
         boolean equal = true;
+
+        int numFolded = 0;
+        for(int i = 0; i < numPlayers; i++)
+        {
+            if(players[i].hasFolded())
+                numFolded++;
+        }
+
+        if(numFolded == (numPlayers - 1))
+            return true;
+
         for(int i = 0; i < this.numPlayers; i++)
         {
             equal &= ((players[i].getContribution() == this.maxContribution) ||
@@ -974,7 +1009,7 @@ public class TexasHoldEm extends AppCompatActivity
 
                         //DEBUG
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Bet pot: " + pot);
-                        logContributions();
+                        //logContributions();
 
                         hideUserOptions();
                         showPlayerAction(0, "Bet: " + betAmount);
@@ -1004,7 +1039,7 @@ public class TexasHoldEm extends AppCompatActivity
             public void onClick(View v)
             {
                 popupWindow.dismiss();
-                
+
                 hidePlayerActions(true); //hides player actions after user continues
 
                 //DEBUG
@@ -1145,6 +1180,7 @@ public class TexasHoldEm extends AppCompatActivity
     //DEBUG functions
     public void logContributions()
     {
+        /*
         if(numPlayers < 4)
         {
             Log.w("GAME_DEBUG", "Player Contributions: User: " + players[0].getContribution() + " 1: " + players[1].getContribution() + " 2: " + players[2].getContribution());
@@ -1159,5 +1195,6 @@ public class TexasHoldEm extends AppCompatActivity
 
         }
         Log.w("GAME_DEBUG", "Max Contribution: " + maxContribution);
+        */
     }
 }
