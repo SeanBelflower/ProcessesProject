@@ -1,9 +1,9 @@
 package team8.ui;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -691,7 +690,7 @@ public class DrawPoker extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         final TextView warning = (TextView)popupView.findViewById(R.id.warning);
         warning.setText("");
@@ -738,7 +737,7 @@ public class DrawPoker extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.fold_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         yesOpt.setOnClickListener(new Button.OnClickListener(){
@@ -776,7 +775,7 @@ public class DrawPoker extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.call_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         final Button noOpt = (Button)popupView.findViewById(R.id.no);
@@ -841,7 +840,7 @@ public class DrawPoker extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.check_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         yesOpt.setOnClickListener(new Button.OnClickListener(){
@@ -879,7 +878,7 @@ public class DrawPoker extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         final TextView warning = (TextView)popupView.findViewById(R.id.warning);
         warning.setText("");

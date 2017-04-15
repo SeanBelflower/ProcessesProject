@@ -2,7 +2,8 @@ package team8.ui;
 
 import android.util.Log;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class AI_Player extends Player
@@ -18,6 +19,7 @@ public class AI_Player extends Player
     private Card b;
     private int decision;
     public int boldness;
+    private boolean newRound = true;
 
     //Needed for finding Suit constants
     private final Suit SPADES = Suit.SPADES;
@@ -35,15 +37,19 @@ public class AI_Player extends Player
         rand = new Random();
         this.name = name;
         boldness = rand.nextInt(9)+1;
-        confidence = (float)0.05*boldness;
+        confidence = 0;
         allCards = new ArrayList<Card>();
     }
 
     public int getRaiseAmount()
     {
+        Log.w("GAME_DEBUG", "Bot's chipStack is " + chipStack + " and confidence is " + confidence);
         if(chipStack > 10 && confidence < .95)
         {
-            return (int)(bet * 1.5);
+            if(bet * 1.5 < chipStack)
+                return (int)(bet * 1.5);
+            else
+                return chipStack;
         }
         else
         {
@@ -65,7 +71,7 @@ public class AI_Player extends Player
     }
 
     // calculate confidence based on what cards have been played so far
-    public void observeHand(int cardsPlayed, int bet, boolean newRound)
+    public void observeHand(int cardsPlayed, int bet, boolean newRound2)
     {
         float score;
         if(a == null || b == null)
@@ -77,7 +83,10 @@ public class AI_Player extends Player
         // pre-flop
         if(cardsPlayed == 0 && newRound)
         {
+            newRound = false;
             float startVal = startingHandValue();
+
+
             if(startVal > 2)
             {
                 confidence += Math.pow(2, (startVal - 6));
@@ -89,8 +98,9 @@ public class AI_Player extends Player
         }
 
         // flop
-        else if(cardsPlayed == 3 && newRound)
+        else if(cardsPlayed == 3)
         {
+
             myHand[2] = allCards.get(2);
             myHand[3] = allCards.get(3);
             myHand[4] = allCards.get(4);
@@ -99,7 +109,7 @@ public class AI_Player extends Player
         }
 
         // 4th card
-        else if(cardsPlayed == 4 && newRound)
+        else if(cardsPlayed == 4)
         {
             score = scoreHand(myHand);
             myHand = bestHand(allCards,6);
@@ -108,7 +118,7 @@ public class AI_Player extends Player
         }
 
         // river
-        else if(newRound)
+        else
         {
             score = scoreHand(myHand);
             myHand = bestHand(allCards,7);
@@ -130,7 +140,6 @@ public class AI_Player extends Player
         if(a.value == b.value)
         {
             value += 2.0;
-            // 0 = Two, 1 = Three, and so on
             char cnt = 2;
 
             // if pocket aces, this goes up by 3
@@ -154,22 +163,23 @@ public class AI_Player extends Player
         }
         diff = high.getValue() - low.getValue();
         diff2 = low.getValue() - high.getValue();
-        if(diff < 5)
+        if(diff < 5 && diff > 0)
         {
-            value += Math.pow(2, 2 - diff) + Math.pow(1.5, high.value - 12) + Math.pow(1.5, high.value - 11);
+            value += Math.pow(2, 2 - diff) + Math.pow(1.5, high.value - 14) + Math.pow(1.5, high.value - 13);
         }
-        else if (diff2 + 13 < 5)
+        else if (diff2 + 13 < 5 && diff > 0)
         {
-            value += Math.pow(2, 2 - diff) + Math.pow(1.5, high.value - 12) + Math.pow(1.5, high.value - 11);
+            value += Math.pow(2, 2 - diff) + Math.pow(1.5, high.value - 14) + Math.pow(1.5, high.value - 13);
         }
         if(a.getSuit() == b.getSuit())
         {
             value += 0.5;
         }
-        if(high.value > 7)
+        if(high.value > 9 && diff != 0)
         {
-            value += 2^(high.value-13);
+            value += 2^(high.value-15);
         }
+        Log.w("GAME_DEBUG", "AI " + getPlayerID() + " Starting Hand is valued at " + value);
         return value;
     }
 
@@ -182,6 +192,7 @@ public class AI_Player extends Player
         }
         else
         {
+            if(chipStack == 0) return;
             if(oldScore >= (float)(bet/chipStack * 100))
             {
                 confidence += oldScore * .01;
@@ -225,7 +236,7 @@ public class AI_Player extends Player
                 }
             }
         }
-        if(cardsPlayed > 6)
+        if(cardsPlayed > 4)
         {
             Card[] base2 = {allCards.get(5),allCards.get(6),allCards.get(0),allCards.get(1),allCards.get(2)};
             for(int i = 3; i < cardsPlayed - 2; i++)
@@ -251,6 +262,11 @@ public class AI_Player extends Player
 
     private void bettingPhase(int bet)
     {
+        if(chipStack == 0)
+        {
+            decision = 2;
+            return;
+        }
         float score = 0;
         if(myHand[2] != null)
             score = scoreHand(myHand);
@@ -322,6 +338,11 @@ public class AI_Player extends Player
 
         if(!hasMadeChoice)
         {
+            if(this.bet < bet)
+            {
+                decision = 0;
+                return;
+            }
             decision = 2;
         }
     }

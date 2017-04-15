@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="/home/noah/Desktop/ProcessesProject/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="fc364f969a4b93ec643018ab5a58f912bf2d7f53">
-        <dex dex="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_c89b1da6fcdb406dac5ac096cddf210934cf0828\classes.dex" />
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="/home/noah/Desktop/ProcessesProject/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_ec652188ce6570fd719b9d050803c56ed9391dca/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="/home/noah/Desktop/ProcessesProject/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="C:\Users\mateo\Poker\ProcessesProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_95413d2e91787eb86aafd329a8ad486ab478c2f8\classes.dex" />
+        sha1="a19cbfac3fdf2287f97fdf4ca31f04f838795726">
+        <dex dex="/home/noah/Desktop/ProcessesProject/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_cee92ede2e280816fd5f77f6bdf307a7d4512b58/classes.dex" />
     </item>
 
 </items>

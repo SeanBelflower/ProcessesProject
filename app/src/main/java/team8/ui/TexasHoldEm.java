@@ -1,9 +1,9 @@
 package team8.ui;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -294,11 +293,11 @@ public class TexasHoldEm extends AppCompatActivity
                         check();
                         break;
                     case 3:
-                        int raise = maxContribution + 10;
+                        int raise = ((AI_Player) currentPlayer).getRaiseAmount();
                         action = "Raise: " + raise;
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + raise));
                         showPlayerAction(currentPlayer.getPlayerID(), action);
-                        raise(maxContribution + 10);
+                        raise(raise);
                         break;
                     case 4:
                         int bet = maxContribution + 10;
@@ -380,7 +379,7 @@ public class TexasHoldEm extends AppCompatActivity
     public int call()
     {
 
-        if(!currentPlayer.call(maxContribution))
+        if(!currentPlayer.call(maxContribution - currentPlayer.getContribution()))
         {
             // print call was not possible
             return 0;
@@ -801,7 +800,7 @@ public class TexasHoldEm extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         final TextView warning = (TextView)popupView.findViewById(R.id.warning);
         warning.setText("");
@@ -848,7 +847,7 @@ public class TexasHoldEm extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.fold_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         yesOpt.setOnClickListener(new Button.OnClickListener(){
@@ -886,7 +885,7 @@ public class TexasHoldEm extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.call_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         final Button noOpt = (Button)popupView.findViewById(R.id.no);
@@ -951,7 +950,7 @@ public class TexasHoldEm extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.check_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         yesOpt.setOnClickListener(new Button.OnClickListener(){
@@ -989,7 +988,7 @@ public class TexasHoldEm extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         final TextView warning = (TextView)popupView.findViewById(R.id.warning);
         warning.setText("");
@@ -1032,7 +1031,7 @@ public class TexasHoldEm extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.continue_game_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation((RelativeLayout)findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
         Button continueButton = (Button)popupView.findViewById(R.id.continueButton);
         continueButton.setOnClickListener(new Button.OnClickListener(){

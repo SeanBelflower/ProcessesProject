@@ -1,9 +1,6 @@
 package team8.ui;
 
-import android.util.Log;
-
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Player
 {
@@ -104,7 +101,7 @@ public class Player
 // Makes this player the big Blind
   public void setBigBlind()
   {
-    this.bigBlind = true;;
+    this.bigBlind = true;
   }
 // Make this player the small blind
   public void setSmallBlind(){
