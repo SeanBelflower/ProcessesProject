@@ -3,10 +3,6 @@ package team8.ui;
 import android.util.Log;
 
 import java.util.*;
-import team8.ui.Card;
-import team8.ui.hand;
-import team8.ui.Suit;
-import team8.ui.Player;
 
 
 public class AI_Player extends Player
@@ -84,11 +80,11 @@ public class AI_Player extends Player
             float startVal = startingHandValue();
             if(startVal > 2)
             {
-                confidence += (Math.pow((startVal - 6), 2));
+                confidence += Math.pow(2, (startVal - 6));
             }
             else if (startVal < 2)
             {
-                confidence -= Math.pow(2, (startVal - 2)) * confidence;
+                confidence *= (float)Math.pow(2, (startVal - 2));
             }
         }
 
@@ -160,15 +156,19 @@ public class AI_Player extends Player
         diff2 = low.getValue() - high.getValue();
         if(diff < 5)
         {
-            value += 2^(1-diff) + (2^(high.value-11))/2 + (2^(high.value-10))/2;
+            value += Math.pow(2, 2 - diff) + Math.pow(1.5, high.value - 12) + Math.pow(1.5, high.value - 11);
         }
         else if (diff2 + 13 < 5)
         {
-            value += 2^(1-diff) + (2^(high.value-11))/2 + (2^(high.value-10))/2;
+            value += Math.pow(2, 2 - diff) + Math.pow(1.5, high.value - 12) + Math.pow(1.5, high.value - 11);
         }
         if(a.getSuit() == b.getSuit())
         {
             value += 0.5;
+        }
+        if(high.value > 7)
+        {
+            value += 2^(high.value-13);
         }
         return value;
     }
@@ -274,6 +274,10 @@ public class AI_Player extends Player
                 }
                 hasMadeChoice = true;
             }
+            else
+            {
+                decision = 0;
+            }
         }
         else
         {
@@ -289,7 +293,7 @@ public class AI_Player extends Player
                             decision = 1;
                         hasMadeChoice = true;
                     }
-                    else if(bet < bet)
+                    else if(this.bet < bet)
                     {
                         if(bet/chipStack > confidence)
                         {

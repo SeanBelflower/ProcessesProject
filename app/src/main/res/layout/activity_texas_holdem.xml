@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context="team8.ui.TexasHoldEm"
-    tools:fillViewport="true">
+    tools:fillViewport="true"
+    android:screenOrientation="portrait"
+    >
 
 
     <RelativeLayout
