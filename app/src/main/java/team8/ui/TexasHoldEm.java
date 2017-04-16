@@ -155,7 +155,12 @@ public class TexasHoldEm extends AppCompatActivity
 
         //show the the first 3 cards
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), null, null);
-
+        for(int i = 0; i < players.length; i++)
+        {
+            for(Card c : cardsOnTable)
+                if(!players[i].allCards.contains(c))
+                    players[i].allCards.add(c);
+        }
         maxContribution = -1;
         playerIndex = smallBlind.getPlayerID();
         resetContributions();
@@ -177,11 +182,19 @@ public class TexasHoldEm extends AppCompatActivity
         //show 4th card
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), cardsOnTable.get(3), null);
 
+        for(int i = 0; i < players.length; i++)
+        {
+            for(Card c : cardsOnTable)
+                if(!players[i].allCards.contains(c))
+                    players[i].allCards.add(c);
+        }
+
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
         maxContribution = -1;
         playerIndex = smallBlind.getPlayerID();
         resetContributions();
+
         //start turns
         thread.postDelayed(new Runnable(){
             public void run()
@@ -200,6 +213,13 @@ public class TexasHoldEm extends AppCompatActivity
 
         //show 5th card
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), cardsOnTable.get(3), cardsOnTable.get(4));
+
+        for(int i = 0; i < players.length; i++)
+        {
+            for(Card c : cardsOnTable)
+                if(!players[i].allCards.contains(c))
+                    players[i].allCards.add(c);
+        }
 
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again

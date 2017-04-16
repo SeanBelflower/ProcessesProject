@@ -14,7 +14,6 @@ public class AI_Player extends Player
     private Random rand;
     private float confidence;
     private Card[] myHand = new Card[5];
-    private ArrayList<Card> allCards;
     private Card a;
     private Card b;
     private int decision;
@@ -128,7 +127,6 @@ public class AI_Player extends Player
         bettingPhase(bet);
     }
 
-
     // determines the perceived value of the (starting cards
     // max is 5, min is 0
     private float startingHandValue()
@@ -221,6 +219,10 @@ public class AI_Player extends Player
         bestWithOne = base;
         bestWithTwo = base;
         float score = scoreHand(base);
+        for(Card c : all)
+        {
+            Log.w("GAME_DEBUG", c.toString());
+        }
         float score2 = score;
         for(int i = 5; i < cardsPlayed; i++)
         {
@@ -236,7 +238,7 @@ public class AI_Player extends Player
                 }
             }
         }
-        if(cardsPlayed > 4)
+        if(cardsPlayed > 6)
         {
             Card[] base2 = {allCards.get(5),allCards.get(6),allCards.get(0),allCards.get(1),allCards.get(2)};
             for(int i = 3; i < cardsPlayed - 2; i++)

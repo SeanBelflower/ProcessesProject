@@ -6,7 +6,8 @@ public class Player
 {
 
   private int playerID;
-    protected int chipStack;
+  protected int chipStack;
+  public ArrayList<Card> allCards = new ArrayList<>();
   private ArrayList<Card> Hand = new ArrayList<>();
   private int contribution = 0;
   private boolean bigBlind = false;
@@ -23,6 +24,11 @@ public class Player
     this.chipStack = chipStack;
   }
 
+
+  public void addToAllCards(Card c)
+  {
+    allCards.add(c);
+  }
 // chipStack is automatically set to 100 if not set Manually
   Player(int playerID)
   {
