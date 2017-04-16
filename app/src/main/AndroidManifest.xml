@@ -19,13 +19,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register"
-            android:screenOrientation="portrait"/>/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".MainMenu"
-            android:screenOrientation="portrait"/>/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".GameMode"
-            android:screenOrientation="portrait"/>/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".OnlineOptions"
-            android:screenOrientation="portrait"/>/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".TexasHoldEm"
             android:screenOrientation="portrait"/>
         <activity android:name=".DrawPoker"></activity>
