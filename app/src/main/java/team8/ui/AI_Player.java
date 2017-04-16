@@ -46,7 +46,7 @@ public class AI_Player extends Player
         if(chipStack > 10 && confidence < .95)
         {
             if(bet * 1.5 < chipStack)
-                return (int)(bet * 1.5);
+                return bet;
             else
                 return chipStack;
         }
@@ -70,7 +70,7 @@ public class AI_Player extends Player
     }
 
     // calculate confidence based on what cards have been played so far
-    public void observeHand(int cardsPlayed, int bet, boolean newRound2)
+    public void observeHand(int cardsPlayed, int bet, boolean newRound)
     {
         double score;
         if(a == null || b == null)
@@ -79,14 +79,15 @@ public class AI_Player extends Player
             b = myHand[1] = allCards.get(1);
         }
 
+        Log.w("GAME_DEBUG", "cardsPlayed = " + cardsPlayed);
         // pre-flop
-        if(cardsPlayed == 0 && newRound)
+        if(cardsPlayed == 0)
         {
             newRound = false;
             double startVal = startingHandValue();
 
 
-            if(startVal > 2)
+            if(startVal > 2 && newRound)
             {
                 confidence += Math.pow(2, (startVal - 6));
             }
@@ -97,7 +98,7 @@ public class AI_Player extends Player
         }
 
         // flop
-        else if(cardsPlayed == 3)
+        else if(cardsPlayed == 3 && newRound)
         {
 
             myHand[2] = allCards.get(2);
@@ -117,7 +118,7 @@ public class AI_Player extends Player
         }
 
         // river
-        else
+        else if(cardsPlayed == 5)
         {
             score = scoreHand(myHand);
             myHand = bestHand(allCards,7);

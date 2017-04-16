@@ -35,6 +35,7 @@ public class TexasHoldEm extends AppCompatActivity
     private int dealerIndex = 4; // Keeps track of the dealer
     private Deck deck;
     private int currentRound;
+    private boolean isPreFlop;
 
     private final int USER_ID = 0;
 
@@ -76,6 +77,7 @@ public class TexasHoldEm extends AppCompatActivity
         currentRound = 0;
 
         preFlop();
+        isPreFlop = true;
 
         thread.postDelayed(new Runnable(){
 
@@ -261,7 +263,7 @@ public class TexasHoldEm extends AppCompatActivity
                 {
                     Log.w("GAME_DEBUG", "Bets Equal");
                     currentRound++;
-                    ((AI_Player)currentPlayer).observeHand(cardsOnTable.size(), maxContribution, true);
+                    ((AI_Player)currentPlayer).observeHand(isPreFlop ? 0 : cardsOnTable.size(), maxContribution, true);
                     switch (currentRound) {
                         case 1:
                             flop();
@@ -284,7 +286,7 @@ public class TexasHoldEm extends AppCompatActivity
 
                 // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
 
-                ((AI_Player)currentPlayer).observeHand(cardsOnTable.size(), maxContribution, false);
+                ((AI_Player)currentPlayer).observeHand(isPreFlop ? 0 : cardsOnTable.size(), maxContribution, false);
                 int botAction = ((AI_Player)currentPlayer).getDecision();
 
                 String action = "";
