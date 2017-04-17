@@ -265,7 +265,8 @@ public class TexasHoldEm extends AppCompatActivity
                     Log.w("GAME_DEBUG", "Bets Equal");
                     currentRound++;
                     ((AI_Player)currentPlayer).observeHand(isPreFlop ? 0 : cardsOnTable.size(), maxContribution, true);
-                    switch (currentRound) {
+                    switch(currentRound)
+                    {
                         case 1:
                             flop();
                             break;
@@ -361,10 +362,6 @@ public class TexasHoldEm extends AppCompatActivity
                                     river();
                                     break;
                                 case 4:
-                                    for(Player player : players)
-                                    {
-
-                                    }
                                     continueGame();
                                     break;
                             }
@@ -377,6 +374,12 @@ public class TexasHoldEm extends AppCompatActivity
 
     public void continueGame()
     {
+       /* for(Player player : players)
+        {
+            int rank = rankHand(player.getHand().toArray(new Card[player.getHand().size()]));
+            Log.w("GAME_DEBUG", "Player " + player.getPlayerID() + " rank: " + rank);
+        }*/
+
         hideBlinds(); //hide the old blinds
 
         cardsOnTable.clear(); //clear out the cards on the table

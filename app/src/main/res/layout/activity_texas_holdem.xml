@@ -13,18 +13,18 @@
 
 
     <RelativeLayout
-        android:gravity="center_horizontal"
         android:id="@+id/layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="395dp"
+        android:layout_height="587dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="23dp"
         android:background="#3c903c"
-        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.489">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/potLabel"
             android:layout_alignTop="@id/card2"
-            android:text="dd" />
+            android:text="" />
 
         <TextView
             android:id="@+id/b4Blind"
@@ -434,6 +434,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/b3Cards"
             android:layout_marginTop="35dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="8dp"
             android:orientation="vertical">
 
             <ImageView
