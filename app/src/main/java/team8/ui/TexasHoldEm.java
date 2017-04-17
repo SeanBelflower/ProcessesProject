@@ -39,6 +39,8 @@ public class TexasHoldEm extends AppCompatActivity
     private boolean isPreFlop;
 
     private final int USER_ID = 0;
+    private final int threadDelay = 2200;
+
 
     //main
     protected void onCreate(Bundle savedInstanceState)
@@ -86,7 +88,7 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 simulateTurns();
             }
-        }, 5000);
+        }, threadDelay);
         //do not write anything under this line, simulateTurns() starts a thread which must be the only remaining execution in this program
     }
 
@@ -171,7 +173,7 @@ public class TexasHoldEm extends AppCompatActivity
             public void run()
             {
                 simulateTurns();
-            }}, 5000);
+            }}, threadDelay);
     }
 
     //turn logic and starts player turns
@@ -203,7 +205,7 @@ public class TexasHoldEm extends AppCompatActivity
             public void run()
             {
                 simulateTurns();
-            }}, 5000);
+            }}, threadDelay);
     }
 
     //river logic and starts player turns
@@ -234,7 +236,7 @@ public class TexasHoldEm extends AppCompatActivity
             public void run()
             {
                 simulateTurns();
-            }}, 5000);
+            }}, threadDelay);
     }
 
     public void simulateTurns()
@@ -243,7 +245,7 @@ public class TexasHoldEm extends AppCompatActivity
 
         if(currentPlayer.getPlayerID() == USER_ID) //user's turn
         {
-            if(!currentPlayer.hasFolded()) //show buttons if user has not folded
+            if(!currentPlayer.hasFolded() && !allBotsFolded()) //show buttons if user has not folded
                 showUserOptions(currentRound); //show buttons based on the current round
             else //keep the bots playing
             {
@@ -367,7 +369,7 @@ public class TexasHoldEm extends AppCompatActivity
                             }
                         }
                     }
-                }, 5000);
+                }, threadDelay);
             }
         }
     }
@@ -507,6 +509,22 @@ public class TexasHoldEm extends AppCompatActivity
         }
 
         return chipStacks;
+    }
+
+    //returns whether or not all bots have folded
+    public boolean allBotsFolded()
+    {
+        boolean allFolded = true;
+        for(int i = 1; i < players.length; i++)
+        {
+            if(!players[i].hasFolded())
+            {
+                allFolded = false;
+                break;
+            }
+        }
+
+        return allFolded;
     }
 
     //----------UI----------
@@ -874,7 +892,7 @@ public class TexasHoldEm extends AppCompatActivity
                                 public void run()
                                 {
                                     simulateTurns();
-                                }}, 5000);
+                                }}, threadDelay);
                         }
                         else
                         {
@@ -917,7 +935,7 @@ public class TexasHoldEm extends AppCompatActivity
                     public void run()
                     {
                         simulateTurns();
-                    }}, 5000);
+                    }}, threadDelay);
             }
         });
 
@@ -963,7 +981,7 @@ public class TexasHoldEm extends AppCompatActivity
                         public void run()
                         {
                             simulateTurns();
-                        }}, 5000);
+                        }}, threadDelay);
                 }
                 else
                 {
@@ -1023,7 +1041,7 @@ public class TexasHoldEm extends AppCompatActivity
                     public void run()
                     {
                         simulateTurns();
-                    }}, 5000);
+                    }}, threadDelay);
             }
         });
 
@@ -1073,7 +1091,7 @@ public class TexasHoldEm extends AppCompatActivity
                         public void run()
                         {
                             simulateTurns();
-                        }}, 5000);
+                        }}, threadDelay);
                 }
                 else
                 {
@@ -1130,7 +1148,7 @@ public class TexasHoldEm extends AppCompatActivity
                     public void run()
                     {
                         gamePlay(getAllChipStacks());
-                    }}, 5000);
+                    }}, threadDelay);
             }
         });
     }

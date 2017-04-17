@@ -37,6 +37,7 @@ public class DrawPoker extends AppCompatActivity
     private int currentRound;
 
     private final int USER_ID = 0;
+    private final int threadDelay = 2200;
 
     //main
     protected void onCreate(Bundle savedInstanceState)
@@ -138,7 +139,7 @@ public class DrawPoker extends AppCompatActivity
             public void run()
             {
                 simulateTurns();
-            }}, 5000);
+            }}, threadDelay);
     }
 
     //turn logic and starts player turns
@@ -162,7 +163,7 @@ public class DrawPoker extends AppCompatActivity
             public void run()
             {
                 simulateTurns();
-            }}, 5000);
+            }}, threadDelay);
     }
 
     //river logic and starts player turns
@@ -186,7 +187,7 @@ public class DrawPoker extends AppCompatActivity
             public void run()
             {
                 simulateTurns();
-            }}, 5000);
+            }}, threadDelay);
     }
 
     public void simulateTurns()
@@ -299,7 +300,7 @@ public class DrawPoker extends AppCompatActivity
                             }
                         }
                     }
-                }, 5000);
+                }, threadDelay);
             }
         }
     }
@@ -718,7 +719,7 @@ public class DrawPoker extends AppCompatActivity
                             public void run()
                             {
                                 simulateTurns();
-                            }}, 5000);
+                            }}, threadDelay);
                     }
                     else
                     {
@@ -756,7 +757,7 @@ public class DrawPoker extends AppCompatActivity
                     public void run()
                     {
                         simulateTurns();
-                    }}, 5000);
+                    }}, threadDelay);
             }
         });
 
@@ -799,7 +800,7 @@ public class DrawPoker extends AppCompatActivity
                         public void run()
                         {
                             simulateTurns();
-                        }}, 5000);
+                        }}, threadDelay);
                 }
                 else
                 {
@@ -859,7 +860,7 @@ public class DrawPoker extends AppCompatActivity
                     public void run()
                     {
                         simulateTurns();
-                    }}, 5000);
+                    }}, threadDelay);
             }
         });
 
@@ -906,7 +907,7 @@ public class DrawPoker extends AppCompatActivity
                             public void run()
                             {
                                 simulateTurns();
-                            }}, 5000);
+                            }}, threadDelay);
                     }
                     else
                     {
