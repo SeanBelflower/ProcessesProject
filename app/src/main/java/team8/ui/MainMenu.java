@@ -28,6 +28,7 @@ public class MainMenu extends AppCompatActivity
         }
         Intent intent = new Intent(MainMenu.this, GameMode.class);
         intent.putExtra("mode", mode);
+        intent.putExtra("username", getIntent().getStringExtra("username"));
         startActivity(intent);
     }
 }

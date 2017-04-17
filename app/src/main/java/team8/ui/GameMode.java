@@ -21,6 +21,7 @@ public class GameMode extends AppCompatActivity
         {
             Intent intent = new Intent(GameMode.this, OfflineOptions.class);
             intent.putExtra("mode", mode);
+            intent.putExtra("username", getIntent().getStringExtra("username"));
             startActivity(intent);
         }
         else

@@ -361,6 +361,10 @@ public class TexasHoldEm extends AppCompatActivity
                                     river();
                                     break;
                                 case 4:
+                                    for(Player player : players)
+                                    {
+
+                                    }
                                     continueGame();
                                     break;
                             }
@@ -812,8 +816,8 @@ public class TexasHoldEm extends AppCompatActivity
                 bot1Name.setText(getIntent().getStringExtra("name1") + ": " + players[1].getChipStack());
                 break;
             case 0:
-                TextView bot0Name = (TextView)findViewById(R.id.player);
-                bot0Name.setText("Player: " + players[0].getChipStack());
+                TextView username = (TextView)findViewById(R.id.player);
+                username.setText(getIntent().getStringExtra("username") + ": " + players[0].getChipStack());
                 break;
         }
     }

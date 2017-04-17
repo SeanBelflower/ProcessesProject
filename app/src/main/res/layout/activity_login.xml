@@ -21,7 +21,7 @@
         android:layout_marginBottom="8dp">
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -55,12 +55,21 @@
             android:id="@+id/editText3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText4"
-            android:layout_alignStart="@+id/editText4"
-            android:layout_below="@+id/editText4"
+            android:layout_alignLeft="@+id/username"
+            android:layout_alignStart="@+id/username"
+            android:layout_below="@+id/username"
             android:layout_marginTop="32dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="47dp"
+            android:visibility="visible" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

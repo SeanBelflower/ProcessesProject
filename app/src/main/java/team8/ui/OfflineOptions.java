@@ -102,6 +102,7 @@ public class OfflineOptions extends AppCompatActivity
 
         intent.putExtra("numBots", botsSpinner.getSelectedItem().toString());
         intent.putExtra("startingChips", chipsSpinner.getSelectedItem().toString());
+        intent.putExtra("username", getIntent().getStringExtra("username"));
         intent.putExtra("mode", getIntent().getStringExtra("mode"));
         intent.putExtra("name1", bot1Name.getText().toString());
         intent.putExtra("name2", bot2Name.getText().toString());

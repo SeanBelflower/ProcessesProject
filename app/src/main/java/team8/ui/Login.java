@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class Login extends AppCompatActivity
 {
@@ -21,7 +22,19 @@ public class Login extends AppCompatActivity
 
     public void goToMainMenu(View view)
     {
-        Intent intent = new Intent(Login.this, MainMenu.class);
-        startActivity(intent);
+        TextView usernameView = (TextView)findViewById(R.id.username);
+        String username = usernameView.getText().toString();
+
+        if(!username.isEmpty())
+        {
+            Intent intent = new Intent(Login.this, MainMenu.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
+        else
+        {
+            TextView warning = (TextView)findViewById(R.id.warning);
+            warning.setText("Please enter your username.");
+        }
     }
 }
