@@ -35,21 +35,21 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="70dp"
             android:onClick="goToMainMenu"
-            android:text="Login" />
+            android:text="Login"
+            android:layout_below="@+id/warning"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="59dp" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="53dp"
+            android:layout_marginBottom="78dp"
             android:onClick="goToRegister"
-            android:text="New? Register" />
+            android:text="New? Register"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
         <EditText
             android:id="@+id/editText3"
