@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -831,7 +832,10 @@ public class TexasHoldEm extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
 
         final TextView warning = (TextView)popupView.findViewById(R.id.warning);
         warning.setText("");
@@ -844,29 +848,38 @@ public class TexasHoldEm extends AppCompatActivity
                 if(!raiseText.getText().toString().isEmpty())
                 {
                     int raiseAmount = Integer.parseInt(raiseText.getText().toString());
-                    int result = raise(raiseAmount);
-                    if(result == 1)
+
+                    if(raiseAmount > 0)
                     {
-                        popupWindow.dismiss();
 
-                        //DEBUG
-                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User " + " action: Raise pot: " + pot);
-                        logContributions();
+                        int result = raise(raiseAmount);
+                        if(result == 1)
+                        {
+                            popupWindow.dismiss();
 
-                        hideUserOptions();
-                        showPlayerAction(0, "Raise: " + raiseAmount);
-                        thread.postDelayed(new Runnable(){
-                            public void run()
-                            {
-                                simulateTurns();
-                            }}, 5000);
+                            //DEBUG
+                            Log.w("GAME_DEBUG", "Round: " + currentRound + " User " + " action: Raise pot: " + pot);
+                            logContributions();
+
+                            hideUserOptions();
+                            showPlayerAction(0, "Raise: " + raiseAmount);
+                            thread.postDelayed(new Runnable(){
+                                public void run()
+                                {
+                                    simulateTurns();
+                                }}, 5000);
+                        }
+                        else
+                        {
+                            if(result == 0)
+                                warning.setText("Must match or exceed max contribution.");
+                            else
+                                warning.setText("Not enough chips.");
+                        }
                     }
                     else
                     {
-                        if(result == 0)
-                            warning.setText("Must match or exceed max contribution.");
-                        else
-                            warning.setText("Not enough chips.");
+                        warning.setText("Must raise more than 0 chips.");
                     }
                 }
             }});
