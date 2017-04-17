@@ -32,7 +32,7 @@ public class TexasHoldEm extends AppCompatActivity
     private int pot = 0;
     private int maxContribution = 0;
     private int playerIndex = 0; // Keeps track of the current player
-    private int dealerIndex = 4; // Keeps track of the dealer
+    private int dealerIndex = 4; // Keeps track of the dealer, initialized to make user the smallBlind on start
     private Deck deck;
     private int currentRound;
     private boolean isPreFlop;
@@ -293,6 +293,8 @@ public class TexasHoldEm extends AppCompatActivity
 
                 if(currentPlayer.hasFolded())
                     botAction = 0; //keep folding
+                else if((currentPlayer == smallBlind || currentPlayer == bigBlind) && currentPlayer.getContribution() < 1)
+                    botAction = 4; //force bet (5-10 style)
 
                 switch (botAction)
                 {
@@ -323,10 +325,17 @@ public class TexasHoldEm extends AppCompatActivity
                         break;
                     case 4:
                         int bet = maxContribution + 10;
+
+                        //force 5-10 bets
+                        if(currentPlayer == smallBlind)
+                            bet = 5;
+                        if(currentPlayer == bigBlind)
+                            bet = 10;
+
                         action = "Bet: " + bet;
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + bet));
                         showPlayerAction(currentPlayer.getPlayerID(), action);
-                        bet(maxContribution + 10);
+                        bet(bet);
                         break;
                 }
 
@@ -912,6 +921,9 @@ public class TexasHoldEm extends AppCompatActivity
         final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         final Button noOpt = (Button)popupView.findViewById(R.id.no);
 
+        TextView prompt = (TextView)popupView.findViewById(R.id.prompt);
+        prompt.setText("Call?");
+
         yesOpt.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v)
             {
@@ -941,7 +953,7 @@ public class TexasHoldEm extends AppCompatActivity
                     noOpt.setVisibility(View.GONE);
 
                     final Button ok = (Button)popupView.findViewById(R.id.ok);
-                    final TextView callPrompt = (TextView)popupView.findViewById(R.id.callPrompt);
+                    final TextView callPrompt = (TextView)popupView.findViewById(R.id.prompt);
                     callPrompt.setVisibility(View.GONE);
                     ok.setVisibility(View.VISIBLE);
                     ok.setOnClickListener(new Button.OnClickListener(){
@@ -1008,44 +1020,72 @@ public class TexasHoldEm extends AppCompatActivity
     public void openBetWindow(View view)
     {
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
+        final View popupView = layoutInflater.inflate(R.layout.call_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
-        final TextView warning = (TextView)popupView.findViewById(R.id.warning);
-        warning.setText("");
+        final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
+        final Button noOpt = (Button)popupView.findViewById(R.id.no);
 
-        Button betSave = (Button)popupView.findViewById(R.id.raiseSave);
-        final EditText betText = (EditText)popupView.findViewById(R.id.raiseText);
-        betSave.setOnClickListener(new Button.OnClickListener(){
+        TextView prompt = (TextView)popupView.findViewById(R.id.prompt);
+        prompt.setText("Bet?");
+
+        yesOpt.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v)
             {
-                if(!betText.getText().toString().isEmpty())
+                int betAmount = 5;
+                if(currentPlayer == bigBlind)
+                    betAmount = 10;
+
+                int result = bet(betAmount);
+
+                if(result == 1)
                 {
-                    int betAmount = Integer.parseInt(betText.getText().toString());
-                    int result = raise(betAmount);
-                    if(result == 1)
-                    {
-                        popupWindow.dismiss();
+                    popupWindow.dismiss();
 
-                        //DEBUG
-                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Bet pot: " + pot);
-                        //logContributions();
+                    //DEBUG
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Call pot: " + pot);
+                    logContributions();
 
-                        hideUserOptions();
-                        showPlayerAction(0, "Bet: " + betAmount);
-                        thread.postDelayed(new Runnable(){
-                            public void run()
-                            {
-                                simulateTurns();
-                            }}, 5000);
-                    }
-                    else
-                    {
-                        warning.setText("Insufficient funds.");
-                    }
+                    hideUserOptions();
+                    showPlayerAction(0, "Bet: " + betAmount);
+                    thread.postDelayed(new Runnable(){
+                        public void run()
+                        {
+                            simulateTurns();
+                        }}, 5000);
                 }
-            }});
+                else
+                {
+                    final TextView warning = (TextView)popupView.findViewById(R.id.warning);
+                    warning.setVisibility(View.VISIBLE);
+                    yesOpt.setVisibility(View.GONE);
+                    noOpt.setVisibility(View.GONE);
+
+                    final Button ok = (Button)popupView.findViewById(R.id.ok);
+                    final TextView callPrompt = (TextView)popupView.findViewById(R.id.prompt);
+                    callPrompt.setVisibility(View.GONE);
+                    ok.setVisibility(View.VISIBLE);
+                    ok.setOnClickListener(new Button.OnClickListener(){
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                            warning.setVisibility(View.GONE);
+                            yesOpt.setVisibility(View.VISIBLE);
+                            noOpt.setVisibility(View.VISIBLE);
+                            ok.setVisibility(View.GONE);
+                            callPrompt.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+        });
+
+        noOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+            }
+        });
     }
 
     public void openContinueWindow()

@@ -809,7 +809,7 @@ public class DrawPoker extends AppCompatActivity
                     noOpt.setVisibility(View.GONE);
 
                     final Button ok = (Button)popupView.findViewById(R.id.ok);
-                    final TextView callPrompt = (TextView)popupView.findViewById(R.id.callPrompt);
+                    final TextView callPrompt = (TextView)popupView.findViewById(R.id.prompt);
                     callPrompt.setVisibility(View.GONE);
                     ok.setVisibility(View.VISIBLE);
                     ok.setOnClickListener(new Button.OnClickListener(){
