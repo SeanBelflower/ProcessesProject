@@ -153,7 +153,7 @@ public class DrawPoker extends AppCompatActivity
     public void deal()
     {
         //DEBUG
-        Log.w("GAME_DEBUG", "--------FLOP--------");
+        Log.w("GAME_DEBUG", "--------DEAL--------");
 
         showPlayerCards(numPlayers);
 
@@ -174,10 +174,10 @@ public class DrawPoker extends AppCompatActivity
     }
 
     //turn logic and starts player turns
-    public void turn()
+    public void draw()
     {
         //DEBUG
-        Log.w("GAME_DEBUG", "--------TURN--------");
+        Log.w("GAME_DEBUG", "--------DRAW--------");
 
         cardsOnTable.add(deck.getCard());
 
@@ -187,6 +187,8 @@ public class DrawPoker extends AppCompatActivity
                 if(!players[i].allCards.contains(c))
                     players[i].allCards.add(c);
         }
+
+        //TODO: code for replacing cards
 
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
@@ -216,6 +218,7 @@ public class DrawPoker extends AppCompatActivity
                 if(!players[i].allCards.contains(c))
                     players[i].allCards.add(c);
         }
+
 
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
@@ -264,7 +267,7 @@ public class DrawPoker extends AppCompatActivity
                             deal();
                             break;
                         case 2:
-                            turn();
+                            draw();
                             break;
                         case 3:
                             river();
@@ -290,6 +293,9 @@ public class DrawPoker extends AppCompatActivity
                     botAction = 0; //keep folding
                 else if((currentPlayer == smallBlind || currentPlayer == bigBlind) && currentPlayer.getContribution() < 1)
                     botAction = 4; //force bet (5-10 style)
+
+                if(currentRound == 2)
+                    botAction = 5;
 
                 switch (botAction)
                 {
@@ -332,6 +338,12 @@ public class DrawPoker extends AppCompatActivity
                         showPlayerAction(currentPlayer.getPlayerID(), action);
                         bet(bet);
                         break;
+                    //TODO: draw from AI and player
+                    case 5:
+                        action = "Draw ";
+                        Log.w("GAME_DEBUG", "Round: " + currentRound + " Player " + currentPlayer.getPlayerID() + ": action: " + action);
+                        showPlayerAction(currentPlayer.getPlayerID(), action);
+                        playerIndex++;
                 }
 
                 logContributions();
@@ -349,7 +361,7 @@ public class DrawPoker extends AppCompatActivity
                                     deal();
                                     break;
                                 case 2:
-                                    turn();
+                                    draw();
                                     break;
                                 case 3:
                                     river();
@@ -565,6 +577,30 @@ public class DrawPoker extends AppCompatActivity
         }
     }
 
+    //shows the user's cards
+    public void showUserCards(Card card1, Card card2, Card card3, Card card4, Card card5)
+    {
+        ImageView card1View = (ImageView)findViewById(R.id.card1);
+        card1View.setImageResource(getResources().getIdentifier(card1.getDrawableSource(), null, getPackageName()));
+        card1View.setVisibility(View.VISIBLE);
+
+        ImageView card2View = (ImageView)findViewById(R.id.card2);
+        card2View.setImageResource(getResources().getIdentifier(card2.getDrawableSource(), null, getPackageName()));
+        card2View.setVisibility(View.VISIBLE);
+
+        ImageView card3View = (ImageView)findViewById(R.id.card3);
+        card3View.setImageResource(getResources().getIdentifier(card3.getDrawableSource(), null, getPackageName()));
+        card3View.setVisibility(View.VISIBLE);
+
+        ImageView card4View = (ImageView)findViewById(R.id.card4);
+        card4View.setImageResource(getResources().getIdentifier(card4.getDrawableSource(), null, getPackageName()));
+        card4View.setVisibility(View.VISIBLE);
+
+        ImageView card5View = (ImageView)findViewById(R.id.card5);
+        card5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
+        card5View.setVisibility(View.VISIBLE);
+    }
+
     //shows who the blinds are
     public void showBlinds(int smallBlindID, int bigBlindID)
     {
@@ -653,6 +689,13 @@ public class DrawPoker extends AppCompatActivity
                 callButton.setVisibility(View.VISIBLE);
             }
         }
+        else if(round == 2)
+        {
+            hideUserOptions();
+
+            //TODO: user draw (make cards clickable)
+            startUserDraw();
+        }
         else
         {
             raiseButton.setVisibility(View.VISIBLE);
@@ -682,6 +725,55 @@ public class DrawPoker extends AppCompatActivity
         checkButton.setVisibility(View.INVISIBLE);
         callButton.setVisibility(View.INVISIBLE);
         betButton.setVisibility(View.INVISIBLE);
+    }
+
+    //allows user to draw cards
+    public void startUserDraw()
+    {
+        final ImageView card1View = (ImageView)findViewById(R.id.card1);
+        card1View.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openDrawWindow(1);
+            }
+        });
+        card1View.setVisibility(View.VISIBLE);
+
+        final ImageView card2View = (ImageView)findViewById(R.id.card2);
+        card2View.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openDrawWindow(2);
+            }
+        });
+        card2View.setVisibility(View.VISIBLE);
+
+        final ImageView card3View = (ImageView)findViewById(R.id.card3);
+        card3View.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openDrawWindow(3);
+            }
+        });
+        card3View.setVisibility(View.VISIBLE);
+
+        final ImageView card4View = (ImageView)findViewById(R.id.card4);
+        card4View.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openDrawWindow(4);
+            }
+        });
+        card4View.setVisibility(View.VISIBLE);
+
+        final ImageView card5View = (ImageView)findViewById(R.id.card5);
+        card5View.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openDrawWindow(5);
+            }
+        });
+        card5View.setVisibility(View.VISIBLE);
     }
 
     //updates the action of player with playerID to action
@@ -767,30 +859,6 @@ public class DrawPoker extends AppCompatActivity
             {
                 bot4Action.setText("");
             }
-    }
-
-    //shows the user's cards
-    public void showUserCards(Card card1, Card card2, Card card3, Card card4, Card card5)
-    {
-        ImageView card1View = (ImageView)findViewById(R.id.card1);
-        card1View.setImageResource(getResources().getIdentifier(card1.getDrawableSource(), null, getPackageName()));
-        card1View.setVisibility(View.VISIBLE);
-
-        ImageView card2View = (ImageView)findViewById(R.id.card2);
-        card2View.setImageResource(getResources().getIdentifier(card2.getDrawableSource(), null, getPackageName()));
-        card2View.setVisibility(View.VISIBLE);
-
-        ImageView card3View = (ImageView)findViewById(R.id.card3);
-        card3View.setImageResource(getResources().getIdentifier(card3.getDrawableSource(), null, getPackageName()));
-        card3View.setVisibility(View.VISIBLE);
-
-        ImageView card4View = (ImageView)findViewById(R.id.card4);
-        card4View.setImageResource(getResources().getIdentifier(card4.getDrawableSource(), null, getPackageName()));
-        card4View.setVisibility(View.VISIBLE);
-
-        ImageView card5View = (ImageView)findViewById(R.id.card5);
-        card5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
-        card5View.setVisibility(View.VISIBLE);
     }
 
     //used to update all player chips
@@ -1093,6 +1161,62 @@ public class DrawPoker extends AppCompatActivity
                         }
                     });
                 }
+            }
+        });
+
+        noOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    public void openDrawWindow(final int cardNum)
+    {
+        final ImageView card1View = (ImageView)findViewById(R.id.card1);
+        final ImageView card2View = (ImageView)findViewById(R.id.card2);
+        final ImageView card3View = (ImageView)findViewById(R.id.card3);
+        final ImageView card4View = (ImageView)findViewById(R.id.card4);
+        final ImageView card5View = (ImageView)findViewById(R.id.card5);
+
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.call_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
+        final Button noOpt = (Button)popupView.findViewById(R.id.no);
+
+        TextView prompt = (TextView)popupView.findViewById(R.id.prompt);
+        prompt.setText("Draw?");
+
+        yesOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                Card newCard = deck.getCard();
+                players[0].getHand().set(cardNum - 1, newCard);
+
+                switch(cardNum)
+                {
+                    case 1:
+                        card1View.setImageResource(getResources().getIdentifier(newCard.getDrawableSource(), null, getPackageName()));
+                        break;
+                    case 2:
+                        card2View.setImageResource(getResources().getIdentifier(newCard.getDrawableSource(), null, getPackageName()));
+                        break;
+                    case 3:
+                        card3View.setImageResource(getResources().getIdentifier(newCard.getDrawableSource(), null, getPackageName()));
+                        break;
+                    case 4:
+                        card4View.setImageResource(getResources().getIdentifier(newCard.getDrawableSource(), null, getPackageName()));
+                        break;
+                    case 5:
+                        card5View.setImageResource(getResources().getIdentifier(newCard.getDrawableSource(), null, getPackageName()));
+                        break;
+                }
+
+                popupWindow.dismiss();
             }
         });
 

@@ -519,11 +519,13 @@
             android:id="@+id/card2"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            android:layout_alignEnd="@+id/player"
-            android:layout_alignRight="@+id/player"
-            android:layout_below="@+id/player"
             android:visibility="invisible"
-            app:srcCompat="@android:color/background_light" />
+            app:srcCompat="@android:color/background_light"
+            android:layout_alignTop="@+id/card4"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/card1"
+            android:layout_toRightOf="@+id/card1" />
 
         <ImageView
             android:id="@+id/card1"
