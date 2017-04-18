@@ -52,15 +52,16 @@ public class DrawPoker extends AppCompatActivity
 
         int startingChips = Integer.parseInt(getIntent().getStringExtra("startingChips"));
         int[] startingChipsStacks = {startingChips, startingChips, startingChips, startingChips, startingChips};
+        int numBots = Integer.parseInt(getIntent().getStringExtra("numBots"));
 
         gamePlay(startingChipsStacks);
-        showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
+        showPlayers(numBots);
         //do not write anything under this line, gamePlay() starts a thread which must be the only remaining execution in this program
     }
 
     //--------GAME--------
 
-    // Must be called after preFlop()
+    // Must be called after firstBetRound()
     public void gamePlay(int[] chipStacks)
     {
         numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
@@ -79,7 +80,7 @@ public class DrawPoker extends AppCompatActivity
 
         currentRound = 0;
 
-        preFlop();
+        firstBetRound();
         isPreFlop = true;
 
         thread.postDelayed(new Runnable(){
@@ -93,10 +94,10 @@ public class DrawPoker extends AppCompatActivity
     }
 
     // Sets up the game including picking the blinds, dealers, creating the deck, etc.
-    public void preFlop()
+    public void firstBetRound()
     {
         //DEBUG
-        Log.w("GAME_DEBUG", "--------PREFLOP--------");
+        Log.w("GAME_DEBUG", "--------DEAL--------");
 
         deck = new Deck();
         deck.shuffle();
@@ -119,9 +120,6 @@ public class DrawPoker extends AppCompatActivity
                 ((AI_Player)players[i]).observeHand(0, maxContribution, true);
             }
         }
-
-        //show user's hand
-        showUserCards(players[USER_ID].getHand().get(0), players[USER_ID].getHand().get(1), players[USER_ID].getHand().get(2), players[USER_ID].getHand().get(3), players[USER_ID].getHand().get(4));
 
         // Add 3 cards to the table, only visible after the first round
         for(int i = 0; i < 3;i++)
@@ -152,10 +150,12 @@ public class DrawPoker extends AppCompatActivity
     }
 
     //flop logic and starts player turns
-    public void flop()
+    public void deal()
     {
         //DEBUG
         Log.w("GAME_DEBUG", "--------FLOP--------");
+
+        showPlayerCards(numPlayers);
 
         for(int i = 0; i < players.length; i++)
         {
@@ -261,7 +261,7 @@ public class DrawPoker extends AppCompatActivity
                     switch(currentRound)
                     {
                         case 1:
-                            flop();
+                            deal();
                             break;
                         case 2:
                             turn();
@@ -346,7 +346,7 @@ public class DrawPoker extends AppCompatActivity
                             currentRound++;
                             switch (currentRound) {
                                 case 1:
-                                    flop();
+                                    deal();
                                     break;
                                 case 2:
                                     turn();
@@ -520,26 +520,48 @@ public class DrawPoker extends AppCompatActivity
     //----------UI----------
 
     //shows bot cards ands chips, as well as user chips
-    //called by preFlop()
+    //called by firstBetRound()
     public void showPlayers(int numBots)
     {
         switch(numBots)
         {
             case 4:
-                findViewById(R.id.b4Cards).setVisibility(View.VISIBLE);
+                //findViewById(R.id.b4Cards).setVisibility(View.VISIBLE);
                 updatePlayerInfo(4);
             case 3:
-                findViewById(R.id.b3Cards).setVisibility(View.VISIBLE);
+               // findViewById(R.id.b3Cards).setVisibility(View.VISIBLE);
                 updatePlayerInfo(3);
             case 2:
-                findViewById(R.id.b2Cards).setVisibility(View.VISIBLE);
+               // findViewById(R.id.b2Cards).setVisibility(View.VISIBLE);
                 updatePlayerInfo(2);
             case 1:
-                findViewById(R.id.b1Cards).setVisibility(View.VISIBLE);
+              //  findViewById(R.id.b1Cards).setVisibility(View.VISIBLE);
                 updatePlayerInfo(1);
             default:
                 updatePlayerInfo(USER_ID);
 
+        }
+    }
+
+    public void showPlayerCards(int numPlayers)
+    {
+        Log.w("GAME_DEBUG", "players to show: " + numPlayers);
+        switch(numPlayers - 1)
+        {
+            case 4:
+                findViewById(R.id.b4Cards).setVisibility(View.VISIBLE);
+                //updatePlayerInfo(4);
+            case 3:
+                findViewById(R.id.b3Cards).setVisibility(View.VISIBLE);
+                //updatePlayerInfo(3);
+            case 2:
+                findViewById(R.id.b2Cards).setVisibility(View.VISIBLE);
+                //updatePlayerInfo(2);
+            case 1:
+                findViewById(R.id.b1Cards).setVisibility(View.VISIBLE);
+                //updatePlayerInfo(1);
+            default:
+                showUserCards(players[USER_ID].getHand().get(0), players[USER_ID].getHand().get(1), players[USER_ID].getHand().get(2), players[USER_ID].getHand().get(3), players[USER_ID].getHand().get(4));
         }
     }
 
@@ -752,18 +774,23 @@ public class DrawPoker extends AppCompatActivity
     {
         ImageView card1View = (ImageView)findViewById(R.id.card1);
         card1View.setImageResource(getResources().getIdentifier(card1.getDrawableSource(), null, getPackageName()));
+        card1View.setVisibility(View.VISIBLE);
 
         ImageView card2View = (ImageView)findViewById(R.id.card2);
         card2View.setImageResource(getResources().getIdentifier(card2.getDrawableSource(), null, getPackageName()));
+        card2View.setVisibility(View.VISIBLE);
 
         ImageView card3View = (ImageView)findViewById(R.id.card3);
         card3View.setImageResource(getResources().getIdentifier(card3.getDrawableSource(), null, getPackageName()));
+        card3View.setVisibility(View.VISIBLE);
 
         ImageView card4View = (ImageView)findViewById(R.id.card4);
         card4View.setImageResource(getResources().getIdentifier(card4.getDrawableSource(), null, getPackageName()));
+        card4View.setVisibility(View.VISIBLE);
 
         ImageView card5View = (ImageView)findViewById(R.id.card5);
         card5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
+        card5View.setVisibility(View.VISIBLE);
     }
 
     //used to update all player chips
