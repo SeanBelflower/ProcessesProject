@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/potLabel"
-            android:layout_alignTop="@+id/card2"
+            android:layout_alignTop="@+id/card4"
             android:text="" />
 
         <TextView
@@ -75,8 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/b4Cards"
-            android:layout_alignEnd="@+id/card2"
-            android:layout_alignRight="@+id/card2"
+            android:layout_alignEnd="@+id/card4"
+            android:layout_alignRight="@+id/card4"
             android:text="TextView"
             android:visibility="invisible" />
 
@@ -106,8 +106,8 @@
             android:id="@+id/b3Action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/card2"
-            android:layout_alignRight="@+id/card2"
+            android:layout_alignEnd="@+id/card4"
+            android:layout_alignRight="@+id/card4"
             android:layout_alignTop="@+id/b3Cards"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
@@ -118,7 +118,7 @@
             android:id="@+id/player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/card1"
+            android:layout_above="@+id/card3"
             android:layout_marginBottom="9dp"
             android:layout_toEndOf="@+id/fold"
             android:layout_toRightOf="@+id/fold"
@@ -130,8 +130,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/player"
             android:layout_alignBottom="@+id/player"
-            android:layout_toEndOf="@+id/card1"
-            android:layout_toRightOf="@+id/card1"
+            android:layout_toEndOf="@+id/card3"
+            android:layout_toRightOf="@+id/card3"
             android:text="TextView"
             android:visibility="invisible" />
 
@@ -391,11 +391,11 @@
             android:id="@+id/fold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/card1"
+            android:layout_alignTop="@+id/card3"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@+id/card1"
-            android:layout_toStartOf="@+id/card1"
+            android:layout_toLeftOf="@+id/card3"
+            android:layout_toStartOf="@+id/card3"
             android:onClick="openFoldWindow"
             android:text="Fold"
             android:visibility="invisible"
@@ -403,18 +403,18 @@
             tools:layout_editor_absoluteY="457dp" />
 
         <ImageView
-            android:id="@+id/card1"
+            android:id="@+id/card3"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            android:layout_alignTop="@+id/card2"
+            android:layout_alignTop="@+id/card4"
             android:layout_marginEnd="31dp"
             android:layout_marginRight="31dp"
-            android:layout_toLeftOf="@+id/card2"
-            android:layout_toStartOf="@+id/card2"
+            android:layout_toLeftOf="@+id/card4"
+            android:layout_toStartOf="@+id/card4"
             app:srcCompat="@android:color/background_light" />
 
         <ImageView
-            android:id="@+id/card2"
+            android:id="@+id/card4"
             android:layout_width="60dp"
             android:layout_height="85dp"
             android:layout_below="@+id/b4Info"

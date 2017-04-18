@@ -9,14 +9,14 @@
     >
 
     <ImageView
-        android:id="@+id/card1"
+        android:id="@+id/card3"
         android:layout_width="81dp"
         android:layout_height="127dp"
         tools:layout_editor_absoluteX="210dp"
         tools:layout_editor_absoluteY="304dp" />
 
     <ImageView
-        android:id="@+id/card2"
+        android:id="@+id/card4"
         android:layout_width="81dp"
         android:layout_height="127dp"
         tools:layout_editor_absoluteX="93dp"

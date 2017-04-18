@@ -113,7 +113,6 @@ public class TexasHoldEm extends AppCompatActivity
 
             if(i > 0)
             {
-                players[i].addToHand(deck.getCard(2));
                 ((AI_Player)players[i]).addToCards(players[i].getHand().get(0));
                 ((AI_Player)players[i]).addToCards(players[i].getHand().get(1));
 
@@ -760,10 +759,10 @@ public class TexasHoldEm extends AppCompatActivity
     //shows the user's cards
     public void showUserCards(Card card1, Card card2)
     {
-        ImageView card1View = (ImageView)findViewById(R.id.card1);
+        ImageView card1View = (ImageView)findViewById(R.id.card3);
         card1View.setImageResource(getResources().getIdentifier(card1.getDrawableSource(), null, getPackageName()));
 
-        ImageView card2View = (ImageView)findViewById(R.id.card2);
+        ImageView card2View = (ImageView)findViewById(R.id.card4);
         card2View.setImageResource(getResources().getIdentifier(card2.getDrawableSource(), null, getPackageName()));
     }
 
