@@ -510,9 +510,10 @@
             android:id="@+id/card3"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            app:srcCompat="@android:color/background_light"
             android:layout_alignTop="@+id/userBlind"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            app:srcCompat="@android:color/background_light" />
 
         <ImageView
             android:id="@+id/card2"
@@ -521,6 +522,7 @@
             android:layout_alignEnd="@+id/player"
             android:layout_alignRight="@+id/player"
             android:layout_below="@+id/player"
+            android:visibility="invisible"
             app:srcCompat="@android:color/background_light" />
 
         <ImageView
@@ -530,28 +532,31 @@
             android:layout_alignLeft="@+id/fold"
             android:layout_alignStart="@+id/fold"
             android:layout_below="@+id/player"
+            android:visibility="invisible"
             app:srcCompat="@android:color/background_light" />
 
         <ImageView
             android:id="@+id/card4"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            android:layout_marginBottom="27dp"
-            app:srcCompat="@android:color/background_light"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="27dp"
+            android:layout_toEndOf="@+id/check"
             android:layout_toRightOf="@+id/check"
-            android:layout_toEndOf="@+id/check" />
+            android:visibility="invisible"
+            app:srcCompat="@android:color/background_light" />
 
         <ImageView
             android:id="@+id/card5"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            app:srcCompat="@android:color/background_light"
             android:layout_alignTop="@+id/card4"
-            android:layout_toRightOf="@+id/card4"
-            android:layout_toEndOf="@+id/card4"
             android:layout_marginLeft="7dp"
-            android:layout_marginStart="7dp" />
+            android:layout_marginStart="7dp"
+            android:layout_toEndOf="@+id/card4"
+            android:layout_toRightOf="@+id/card4"
+            android:visibility="invisible"
+            app:srcCompat="@android:color/background_light" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
