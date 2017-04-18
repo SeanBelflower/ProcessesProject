@@ -420,7 +420,7 @@ public class TexasHoldEm extends AppCompatActivity
     public int call()
     {
 
-        if(!currentPlayer.call(maxContribution - currentPlayer.getContribution()))
+        if(!currentPlayer.call(maxContribution))
         {
             // print call was not possible
             return 0;

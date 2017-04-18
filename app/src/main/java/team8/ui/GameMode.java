@@ -20,14 +20,36 @@ public class GameMode extends AppCompatActivity
         if(mode.equals("Offline"))
         {
             Intent intent = new Intent(GameMode.this, OfflineOptions.class);
+
             intent.putExtra("mode", mode);
             intent.putExtra("username", getIntent().getStringExtra("username"));
+
+            if(view.getId() == R.id.TexasHoldEm)
+            {
+                intent.putExtra("style", "texas");
+            }
+            else
+            {
+                intent.putExtra("style", "five");
+            }
+
             startActivity(intent);
         }
         else
         {
             Intent intent = new Intent(GameMode.this, OnlineOptions.class);
+
             intent.putExtra("mode", mode);
+
+            if(view.getId() == R.id.TexasHoldEm)
+            {
+                intent.putExtra("style", "texas");
+            }
+            else
+            {
+                intent.putExtra("style", "five");
+            }
+
             startActivity(intent);
         }
     }

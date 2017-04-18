@@ -21,13 +21,13 @@ public class AI_Player extends Player
     private boolean newRound = true;
 
     //Needed for finding Suit constants
-    private final Suit SPADES = Suit.SPADES;
-    private final Suit DIAMONDS = Suit.DIAMONDS;
-    private final Suit HEARTS = Suit.HEARTS;
-    private final Suit CLUBS = Suit.CLUBS;
+    private static final Suit SPADES = Suit.SPADES;
+    private static final Suit DIAMONDS = Suit.DIAMONDS;
+    private static final Suit HEARTS = Suit.HEARTS;
+    private static final Suit CLUBS = Suit.CLUBS;
 
-    private final double callConfidenceThreshold = 0.4;
-    private final double betConfidenceThreshold = 0.6;
+    private final double callConfidenceThreshold = 0.15;
+    private final double betConfidenceThreshold = 0.5;
 
 
     public AI_Player(int playerID, int chips, String name)
@@ -36,7 +36,7 @@ public class AI_Player extends Player
         rand = new Random();
         this.name = name;
         boldness = rand.nextInt(9)+1;
-        confidence = 0;
+        confidence = 0.05 * boldness;
         allCards = new ArrayList<Card>();
     }
 
@@ -79,19 +79,17 @@ public class AI_Player extends Player
             b = myHand[1] = allCards.get(1);
         }
 
-        Log.w("GAME_DEBUG", "cardsPlayed = " + cardsPlayed);
         // pre-flop
-        if(cardsPlayed == 0)
+        if(cardsPlayed == 0 && newRound)
         {
             newRound = false;
             double startVal = startingHandValue();
 
-
-            if(startVal > 2 && newRound)
+            if(startVal > 1)
             {
                 confidence += Math.pow(2, (startVal - 6));
             }
-            else if (startVal < 2)
+            else if (startVal < 1)
             {
                 confidence *= Math.pow(2, (startVal - 2));
             }
@@ -219,56 +217,7 @@ public class AI_Player extends Player
         }
     }
 
-    // when a new card is given to the ai when the Turn and River cards are dealt
-    private Card [] bestHand (ArrayList<Card> all, int cardsPlayed)
-    {
-        Card [] base = {allCards.get(0),allCards.get(1),allCards.get(2),allCards.get(3),allCards.get(4)};
-        Card [] bestWithOne, bestWithTwo;
-        bestWithOne = base;
-        bestWithTwo = base;
-        double score = scoreHand(base);
-        for(Card c : all)
-        {
-            Log.w("GAME_DEBUG", c.toString());
-        }
-        double score2 = score;
-        for(int i = 5; i < cardsPlayed; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                Card [] temp = base;
-                temp[j] = all.get(i);
-                double tempScore = scoreHand(temp);
-                if(tempScore > score)
-                {
-                    bestWithOne = temp;
-                    score = tempScore;
-                }
-            }
-        }
-        if(cardsPlayed > 6)
-        {
-            Card[] base2 = {allCards.get(5),allCards.get(6),allCards.get(0),allCards.get(1),allCards.get(2)};
-            for(int i = 3; i < cardsPlayed - 2; i++)
-            {
-                for(int j = 2; j < 5; j++)
-                {
-                    Card [] temp = base2;
-                    temp[j] = all.get(i);
-                    double tempScore = scoreHand(temp);
-                    if(tempScore > score2)
-                    {
-                        bestWithTwo = temp;
-                        score2 = tempScore;
-                    }
-                }
-            }
 
-            if (score == score2) return base;
-            return (score > score2) ? bestWithOne : bestWithTwo;
-        }
-        return bestWithOne;
-    }
 
     private void bettingPhase(int bet)
     {
@@ -369,7 +318,7 @@ public class AI_Player extends Player
         }
     }
     //scores a hand
-    public double scoreHand (Card[] hand)
+    public static double scoreHand (Card[] hand)
     {
         int valueCheck;
         int counter;
@@ -566,7 +515,7 @@ public class AI_Player extends Player
     }
 
     //converts suit to value, name is a lie
-    double suitToFloat (Suit suit)
+    public static double suitToFloat (Suit suit)
     {
         double suitValue;
         if (suit == CLUBS)
@@ -581,7 +530,7 @@ public class AI_Player extends Player
     }
 
     //ghetto bubblesort
-    public Card[] sortHand (Card[] hand)
+    public static Card[] sortHand (Card[] hand)
     {
         int bound = 4;
         Card temp;
@@ -602,7 +551,7 @@ public class AI_Player extends Player
     }
 
     //calculate the score of a given hand after finding its rank
-    private double calculateScore (double handRank, Suit suit, double cardValue)
+    private static double calculateScore (double handRank, Suit suit, double cardValue)
     {
         //the return value
         double handScore;

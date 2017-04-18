@@ -98,7 +98,14 @@ public class OfflineOptions extends AppCompatActivity
         EditText bot3Name = (EditText)findViewById(R.id.b4Info);
         EditText bot4Name = (EditText)findViewById(R.id.b1Info);
 
-        Intent intent = new Intent(OfflineOptions.this, TexasHoldEm.class);
+        String style = getIntent().getStringExtra("style");
+
+        Intent intent;
+
+        if(style.equals("texas"))
+            intent = new Intent(OfflineOptions.this, TexasHoldEm.class);
+        else
+            intent = new Intent(OfflineOptions.this, DrawPoker.class);
 
         intent.putExtra("numBots", botsSpinner.getSelectedItem().toString());
         intent.putExtra("startingChips", chipsSpinner.getSelectedItem().toString());

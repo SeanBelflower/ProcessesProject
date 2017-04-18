@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/potLabel"
-            android:layout_alignTop="@id/card2"
+            android:layout_alignTop="@+id/card2"
             android:text="" />
 
         <TextView
@@ -159,8 +159,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/b2Info"
             android:layout_alignBottom="@+id/b2Info"
-            android:layout_alignLeft="@+id/b4Info"
-            android:layout_alignStart="@+id/b4Info"
+            android:layout_alignLeft="@+id/b3Cards"
+            android:layout_alignStart="@+id/b3Cards"
             android:text="" />
 
         <TextView
@@ -179,8 +179,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/b1Info"
             android:layout_alignBottom="@+id/b1Info"
-            android:layout_alignEnd="@+id/b4Cards"
-            android:layout_alignRight="@+id/b4Cards"
+            android:layout_alignStart="@+id/b4Cards"
+            android:layout_alignLeft="@+id/b4Cards"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
             android:text="" />
@@ -245,7 +245,7 @@
             tools:layout_editor_absoluteY="33dp">
 
             <ImageView
-                android:id="@+id/b4card1"
+                android:id="@+id/b1c2"
                 android:layout_width="60dp"
                 android:layout_height="85dp"
 

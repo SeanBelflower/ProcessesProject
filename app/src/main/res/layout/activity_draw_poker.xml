@@ -159,8 +159,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/b2Info"
             android:layout_alignBottom="@+id/b2Info"
-            android:layout_alignLeft="@+id/b4Info"
-            android:layout_alignStart="@+id/b4Info"
+            android:layout_alignLeft="@+id/b3Cards"
+            android:layout_alignStart="@+id/b3Cards"
             android:text="" />
 
         <TextView
@@ -179,8 +179,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/b1Info"
             android:layout_alignBottom="@+id/b1Info"
-            android:layout_alignEnd="@+id/b4Cards"
-            android:layout_alignRight="@+id/b4Cards"
+            android:layout_alignStart="@+id/b4Cards"
+            android:layout_alignLeft="@+id/b4Cards"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
             android:text="" />
@@ -199,8 +199,8 @@
 
         <RelativeLayout
             android:id="@+id/b4Cards"
-            android:layout_width="80dp"
-            android:layout_height="120dp"
+            android:layout_width="110dp"
+            android:layout_height="150dp"
 
             android:layout_alignEnd="@+id/call"
             android:layout_alignRight="@+id/call"
@@ -211,67 +211,128 @@
             android:visibility="invisible">
 
             <ImageView
-                android:id="@+id/b2card1"
+                android:id="@+id/b4c5"
                 android:layout_width="60dp"
                 android:layout_height="85dp"
-
-
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                app:srcCompat="@drawable/back" />
-
-            <ImageView
-                android:id="@+id/b2card2"
-                android:layout_width="60dp"
-                android:layout_height="85dp"
-
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                app:srcCompat="@drawable/back" />
+
+            <ImageView
+                android:id="@+id/b4c4"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:id="@+id/b4c3"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_marginTop="11dp"
+                android:layout_alignTop="@+id/b4c4"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/b4c2"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_centerVertical="true"
+                android:layout_alignRight="@+id/b4c3"
+                android:layout_alignEnd="@+id/b4c3"
+                android:layout_marginRight="11dp"
+                android:layout_marginEnd="11dp" />
+
+            <ImageView
+                android:id="@+id/b4c1"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/b4c2"
+                android:layout_marginTop="12dp"
                 app:srcCompat="@drawable/back" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/b1Cards"
-            android:layout_width="80dp"
-            android:layout_height="120dp"
-            android:layout_alignEnd="@+id/fold"
-            android:layout_alignRight="@+id/fold"
-            android:layout_alignTop="@+id/b4Cards"
+            android:layout_width="110dp"
+            android:layout_height="150dp"
             android:visibility="invisible"
             tools:layout_editor_absoluteX="285dp"
-            tools:layout_editor_absoluteY="33dp">
+            tools:layout_editor_absoluteY="33dp"
+            android:layout_alignTop="@+id/b4Cards"
+            android:layout_alignLeft="@+id/relativeLayout"
+            android:layout_alignStart="@+id/relativeLayout">
 
             <ImageView
-                android:id="@+id/b4card1"
+                android:id="@+id/b1c1"
                 android:layout_width="60dp"
                 android:layout_height="85dp"
-
-
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/back" />
-
-            <ImageView
-                android:id="@+id/b4card2"
-                android:layout_width="60dp"
-                android:layout_height="85dp"
-
-
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 app:srcCompat="@drawable/back" />
 
+            <ImageView
+                android:id="@+id/b1c2"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="11dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="12dp" />
+
+            <ImageView
+                android:id="@+id/b1c3"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_alignTop="@+id/b1c2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="14dp" />
+
+            <ImageView
+                android:id="@+id/b1c4"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/b1c3"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="14dp"
+                app:srcCompat="@drawable/back" />
+
+            <ImageView
+                android:id="@+id/b1c5"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/b1c4"
+                android:layout_marginTop="11dp"
+                app:srcCompat="@drawable/back" />
+
+
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/b3Cards"
-            android:layout_width="80dp"
-            android:layout_height="120dp"
+            android:layout_width="110dp"
+            android:layout_height="150dp"
             android:layout_alignLeft="@+id/b4Cards"
             android:layout_alignStart="@+id/b4Cards"
             android:layout_alignTop="@+id/b2Cards"
@@ -279,32 +340,64 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
+
             <ImageView
-                android:id="@+id/b1card2"
+                android:id="@+id/b3c5"
                 android:layout_width="60dp"
                 android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
-                android:layout_alignParentBottom="true"
+            <ImageView
+                android:id="@+id/b3c4"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:id="@+id/b3c3"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_marginTop="11dp"
+                android:layout_alignTop="@+id/b3c4"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/b3c2"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_centerVertical="true"
+                android:layout_alignRight="@+id/b3c3"
+                android:layout_alignEnd="@+id/b3c3"
+                android:layout_marginRight="11dp"
+                android:layout_marginEnd="11dp" />
+
+            <ImageView
+                android:id="@+id/b3c1"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_alignTop="@+id/b3c2"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                app:srcCompat="@drawable/back" />
-
-            <ImageView
-                android:id="@+id/b1card1"
-                android:layout_width="60dp"
-                android:layout_height="85dp"
-
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                app:srcCompat="@drawable/back" />
+                android:layout_marginTop="12dp" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/b2Cards"
-            android:layout_width="80dp"
-            android:layout_height="120dp"
+            android:layout_width="110dp"
+            android:layout_height="150dp"
             android:layout_alignLeft="@+id/b1Cards"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/b1Cards"
@@ -312,22 +405,55 @@
             android:visibility="invisible">
 
             <ImageView
-                android:id="@+id/b3card2"
+                android:id="@+id/b2c1"
                 android:layout_width="60dp"
                 android:layout_height="85dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/back" />
-
-            <ImageView
-                android:id="@+id/b3card1"
-                android:layout_width="60dp"
-                android:layout_height="85dp"
-
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                app:srcCompat="@drawable/back" />
+
+            <ImageView
+                android:id="@+id/b2c2"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="11dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="12dp" />
+
+            <ImageView
+                android:id="@+id/b2c3"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                app:srcCompat="@drawable/back"
+                android:layout_alignTop="@+id/b2c2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="14dp" />
+
+            <ImageView
+                android:id="@+id/b2c4"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/b2c3"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="14dp"
+                app:srcCompat="@drawable/back" />
+
+            <ImageView
+                android:id="@+id/b2c5"
+                android:layout_width="60dp"
+                android:layout_height="85dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/b2c4"
+                android:layout_marginTop="11dp"
                 app:srcCompat="@drawable/back" />
 
         </RelativeLayout>
@@ -433,7 +559,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/b3Cards"
-            android:layout_marginTop="35dp"
+            android:visibility="invisible"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="8dp"
             android:orientation="vertical">
