@@ -28,7 +28,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".TexasHoldEm"
             android:screenOrientation="portrait"/>
-        <activity android:name=".DrawPoker"></activity>
+        <activity android:name=".DrawPoker"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

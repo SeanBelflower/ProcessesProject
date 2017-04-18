@@ -157,8 +157,6 @@ public class DrawPoker extends AppCompatActivity
         //DEBUG
         Log.w("GAME_DEBUG", "--------FLOP--------");
 
-        //show the the first 3 cards
-        updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), null, null);
         for(int i = 0; i < players.length; i++)
         {
             for(Card c : cardsOnTable)
@@ -182,9 +180,6 @@ public class DrawPoker extends AppCompatActivity
         Log.w("GAME_DEBUG", "--------TURN--------");
 
         cardsOnTable.add(deck.getCard());
-
-        //show 4th card
-        updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), cardsOnTable.get(3), null);
 
         for(int i = 0; i < players.length; i++)
         {
@@ -214,9 +209,6 @@ public class DrawPoker extends AppCompatActivity
         Log.w("GAME_DEBUG", "--------RIVER--------");
 
         cardsOnTable.add(deck.getCard());
-
-        //show 5th card
-        updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), cardsOnTable.get(3), cardsOnTable.get(4));
 
         for(int i = 0; i < players.length; i++)
         {
@@ -384,7 +376,6 @@ public class DrawPoker extends AppCompatActivity
         hideBlinds(); //hide the old blinds
 
         cardsOnTable.clear(); //clear out the cards on the table
-        hideCommunityCards(); //hide the community cards
 
         pot = 0; //reset the pot
         updatePot(0);
@@ -773,54 +764,6 @@ public class DrawPoker extends AppCompatActivity
 
         ImageView card5View = (ImageView)findViewById(R.id.card5);
         card5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
-    }
-
-    //updates the cards on the table
-    public void updateCommunityCards(Card card1, Card card2, Card card3, Card card4, Card card5)
-    {
-        ImageView commCard1View = (ImageView)findViewById(R.id.commCard1);
-        commCard1View.setImageResource(getResources().getIdentifier(card1.getDrawableSource(), null, getPackageName()));
-        commCard1View.setVisibility(View.VISIBLE);
-
-        ImageView commCard2View = (ImageView)findViewById(R.id.commCard2);
-        commCard2View.setImageResource(getResources().getIdentifier(card2.getDrawableSource(), null, getPackageName()));
-        commCard2View.setVisibility(View.VISIBLE);
-
-        ImageView commCard3View = (ImageView)findViewById(R.id.commCard3);
-        commCard3View.setImageResource(getResources().getIdentifier(card3.getDrawableSource(), null, getPackageName()));
-        commCard3View.setVisibility(View.VISIBLE);
-
-        ImageView commCard4View = (ImageView)findViewById(R.id.commCard4);
-        if(card4 != null)
-        {
-            commCard4View.setImageResource(getResources().getIdentifier(card4.getDrawableSource(), null, getPackageName()));
-            commCard4View.setVisibility(View.VISIBLE);
-        }
-
-        ImageView commCard5View = (ImageView)findViewById(R.id.commCard5);
-        if(card5 != null)
-        {
-            commCard5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
-            commCard5View.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void hideCommunityCards()
-    {
-        ImageView commCard1View = (ImageView)findViewById(R.id.commCard1);
-        commCard1View.setVisibility(View.INVISIBLE);
-
-        ImageView commCard2View = (ImageView)findViewById(R.id.commCard2);
-        commCard2View.setVisibility(View.INVISIBLE);
-
-        ImageView commCard3View = (ImageView)findViewById(R.id.commCard3);
-        commCard3View.setVisibility(View.INVISIBLE);
-
-        ImageView commCard4View = (ImageView)findViewById(R.id.commCard4);
-        commCard4View.setVisibility(View.INVISIBLE);
-
-        ImageView commCard5View = (ImageView)findViewById(R.id.commCard5);
-        commCard5View.setVisibility(View.INVISIBLE);
     }
 
     //used to update all player chips
