@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,22 +33,27 @@ public class DrawPoker extends AppCompatActivity
     private int pot = 0;
     private int maxContribution = 0;
     private int playerIndex = 0; // Keeps track of the current player
-    private int dealerIndex = 4; // Keeps track of the dealer
+    private int dealerIndex = 4; // Keeps track of the dealer, initialized to make user the smallBlind on start
     private Deck deck;
     private int currentRound;
+    private boolean isPreFlop;
 
     private final int USER_ID = 0;
     private final int threadDelay = 2200;
+
 
     //main
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_texas_holdem);
+        setContentView(R.layout.activity_draw_poker);
 
         thread = new Handler(Looper.getMainLooper());
 
-        gamePlay();
+        int startingChips = Integer.parseInt(getIntent().getStringExtra("startingChips"));
+        int[] startingChipsStacks = {startingChips, startingChips, startingChips, startingChips, startingChips};
+
+        gamePlay(startingChipsStacks);
         showPlayers(Integer.parseInt(getIntent().getStringExtra("numBots")));
         //do not write anything under this line, gamePlay() starts a thread which must be the only remaining execution in this program
     }
@@ -55,11 +61,34 @@ public class DrawPoker extends AppCompatActivity
     //--------GAME--------
 
     // Must be called after preFlop()
-    public void gamePlay()
+    public void gamePlay(int[] chipStacks)
     {
+        numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
+        this.players = new Player[numPlayers];
+
+        for(int i = 0; i < numPlayers; i++)
+        {
+            if(i == 0)
+                players[i] = new Player(i, chipStacks[i]);
+            else
+            {
+                String name = getIntent().getStringExtra("name" + i);
+                players[i] = new AI_Player(i, chipStacks[i], name);
+            }
+        }
+
         currentRound = 0;
+
         preFlop();
-        simulateTurns();
+        isPreFlop = true;
+
+        thread.postDelayed(new Runnable(){
+
+            public void run()
+            {
+                simulateTurns();
+            }
+        }, threadDelay);
         //do not write anything under this line, simulateTurns() starts a thread which must be the only remaining execution in this program
     }
 
@@ -69,40 +98,40 @@ public class DrawPoker extends AppCompatActivity
         //DEBUG
         Log.w("GAME_DEBUG", "--------PREFLOP--------");
 
-        int startingChips = Integer.parseInt(getIntent().getStringExtra("startingChips"));
-
         deck = new Deck();
         deck.shuffle();
 
-        numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
-        this.players = new Player[numPlayers];
-
-        for(int i = 0; i < numPlayers;i++)
-        {
-            players[i] = new Player(i, startingChips);
-        }
-
-        // New game pot gets reset
-        updatePot(0);
-
         // picking the blinds and dealer
-        // players[dealerIndex % this.numPlayers].setDealer();
-        // players[dealerIndex + 1 % this.numPlayers].setSmallBlind();
-        // players[dealerIndex + 2 % this.numPlayers].setBigBlind();
+        players[dealerIndex % this.numPlayers].setDealer();
+        players[(dealerIndex + 1) % this.numPlayers].setSmallBlind();
+        players[(dealerIndex + 2) % this.numPlayers].setBigBlind();
 
         // Add two cards to each players hand
         for(int i = 0; i < numPlayers;i++)
         {
-            players[i].addToHand(deck.getCard(2));
+            players[i].addToHand(deck.getCard(5));
+
+            if(i > 0)
+            {
+                ((AI_Player)players[i]).addToCards(players[i].getHand().get(0));
+                ((AI_Player)players[i]).addToCards(players[i].getHand().get(1));
+
+                ((AI_Player)players[i]).observeHand(0, maxContribution, true);
+            }
         }
 
         //show user's hand
-        showUserCards(players[USER_ID].getHand().get(0), players[USER_ID].getHand().get(1));
+        showUserCards(players[USER_ID].getHand().get(0), players[USER_ID].getHand().get(1), players[USER_ID].getHand().get(2), players[USER_ID].getHand().get(3), players[USER_ID].getHand().get(4));
 
         // Add 3 cards to the table, only visible after the first round
         for(int i = 0; i < 3;i++)
         {
             cardsOnTable.add(deck.getCard());
+
+            for(int j = 1; j < numPlayers; j++)
+            {
+                ((AI_Player)players[j]).addToCards(cardsOnTable.get(i));
+            }
         }
 
         dealer = players[dealerIndex % this.numPlayers];
@@ -120,7 +149,6 @@ public class DrawPoker extends AppCompatActivity
         //playerIndex = dealerIndex + 1;
 
         dealerIndex++;
-
     }
 
     //flop logic and starts player turns
@@ -131,7 +159,12 @@ public class DrawPoker extends AppCompatActivity
 
         //show the the first 3 cards
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), null, null);
-
+        for(int i = 0; i < players.length; i++)
+        {
+            for(Card c : cardsOnTable)
+                if(!players[i].allCards.contains(c))
+                    players[i].allCards.add(c);
+        }
         maxContribution = -1;
         playerIndex = smallBlind.getPlayerID();
         resetContributions();
@@ -153,11 +186,19 @@ public class DrawPoker extends AppCompatActivity
         //show 4th card
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), cardsOnTable.get(3), null);
 
+        for(int i = 0; i < players.length; i++)
+        {
+            for(Card c : cardsOnTable)
+                if(!players[i].allCards.contains(c))
+                    players[i].allCards.add(c);
+        }
+
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
         maxContribution = -1;
         playerIndex = smallBlind.getPlayerID();
         resetContributions();
+
         //start turns
         thread.postDelayed(new Runnable(){
             public void run()
@@ -176,6 +217,13 @@ public class DrawPoker extends AppCompatActivity
 
         //show 5th card
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), cardsOnTable.get(3), cardsOnTable.get(4));
+
+        for(int i = 0; i < players.length; i++)
+        {
+            for(Card c : cardsOnTable)
+                if(!players[i].allCards.contains(c))
+                    players[i].allCards.add(c);
+        }
 
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
@@ -196,7 +244,7 @@ public class DrawPoker extends AppCompatActivity
 
         if(currentPlayer.getPlayerID() == USER_ID) //user's turn
         {
-            if(!currentPlayer.hasFolded()) //show buttons if user has not folded
+            if(!currentPlayer.hasFolded() && !allBotsFolded()) //show buttons if user has not folded
                 showUserOptions(currentRound); //show buttons based on the current round
             else //keep the bots playing
             {
@@ -217,7 +265,9 @@ public class DrawPoker extends AppCompatActivity
                 {
                     Log.w("GAME_DEBUG", "Bets Equal");
                     currentRound++;
-                    switch (currentRound) {
+                    ((AI_Player)currentPlayer).observeHand(isPreFlop ? 0 : cardsOnTable.size(), maxContribution, true);
+                    switch(currentRound)
+                    {
                         case 1:
                             flop();
                             break;
@@ -227,6 +277,9 @@ public class DrawPoker extends AppCompatActivity
                         case 3:
                             river();
                             break;
+                        case 4:
+                            continueGame();
+                            break;
                     }
                 }
             }
@@ -235,13 +288,18 @@ public class DrawPoker extends AppCompatActivity
                 hideUserOptions(); //hide user's buttons
 
                 // Give players the option to raise, call, fold, checking (dumb for now, needs AI and user input)
-                int randAction = (int) (Math.random() * 5);
+
+                ((AI_Player)currentPlayer).observeHand(isPreFlop ? 0 : cardsOnTable.size(), maxContribution, false);
+                int botAction = ((AI_Player)currentPlayer).getDecision();
+
                 String action = "";
 
                 if(currentPlayer.hasFolded())
-                    randAction = 0; //keep folding
+                    botAction = 0; //keep folding
+                else if((currentPlayer == smallBlind || currentPlayer == bigBlind) && currentPlayer.getContribution() < 1)
+                    botAction = 4; //force bet (5-10 style)
 
-                switch (randAction)
+                switch (botAction)
                 {
                     case 0:
                         action = "Fold";
@@ -262,18 +320,25 @@ public class DrawPoker extends AppCompatActivity
                         check();
                         break;
                     case 3:
-                        int raise = maxContribution + 10;
+                        int raise = ((AI_Player) currentPlayer).getRaiseAmount();
                         action = "Raise: " + raise;
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + raise));
                         showPlayerAction(currentPlayer.getPlayerID(), action);
-                        raise(maxContribution + 10);
+                        raise(raise);
                         break;
                     case 4:
                         int bet = maxContribution + 10;
+
+                        //force 5-10 bets
+                        if(currentPlayer == smallBlind)
+                            bet = 5;
+                        if(currentPlayer == bigBlind)
+                            bet = 10;
+
                         action = "Bet: " + bet;
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + bet));
                         showPlayerAction(currentPlayer.getPlayerID(), action);
-                        bet(maxContribution + 10);
+                        bet(bet);
                         break;
                 }
 
@@ -297,12 +362,34 @@ public class DrawPoker extends AppCompatActivity
                                 case 3:
                                     river();
                                     break;
+                                case 4:
+                                    continueGame();
+                                    break;
                             }
                         }
                     }
                 }, threadDelay);
             }
         }
+    }
+
+    public void continueGame()
+    {
+       /* for(Player player : players)
+        {
+            int rank = rankHand(player.getHand().toArray(new Card[player.getHand().size()]));
+            Log.w("GAME_DEBUG", "Player " + player.getPlayerID() + " rank: " + rank);
+        }*/
+
+        hideBlinds(); //hide the old blinds
+
+        cardsOnTable.clear(); //clear out the cards on the table
+        hideCommunityCards(); //hide the community cards
+
+        pot = 0; //reset the pot
+        updatePot(0);
+
+        openContinueWindow(); //start new game with current player chips
     }
 
     //returns whether user needs to contribute more, or if they can't, or 1 for success
@@ -353,7 +440,8 @@ public class DrawPoker extends AppCompatActivity
     public int bet(int value)
     {
         // get value only should be visible at the start of a round
-        if(!currentPlayer.bet(value)){
+        if(!currentPlayer.bet(value))
+        {
             // print insuffcient funds
             return 0;
         }
@@ -380,6 +468,17 @@ public class DrawPoker extends AppCompatActivity
     public boolean betsEqual()
     {
         boolean equal = true;
+
+        int numFolded = 0;
+        for(int i = 0; i < numPlayers; i++)
+        {
+            if(players[i].hasFolded())
+                numFolded++;
+        }
+
+        if(numFolded == (numPlayers - 1))
+            return true;
+
         for(int i = 0; i < this.numPlayers; i++)
         {
             equal &= ((players[i].getContribution() == this.maxContribution) ||
@@ -396,6 +495,35 @@ public class DrawPoker extends AppCompatActivity
         {
             players[i].resetContribution();
         }
+    }
+
+    //returns array of all player chip stacks
+    public int[] getAllChipStacks()
+    {
+        int[] chipStacks = new int[numPlayers];
+
+        for(int i = 0; i < numPlayers; i++)
+        {
+            chipStacks[i] = players[i].getChipStack();
+        }
+
+        return chipStacks;
+    }
+
+    //returns whether or not all bots have folded
+    public boolean allBotsFolded()
+    {
+        boolean allFolded = true;
+        for(int i = 1; i < players.length; i++)
+        {
+            if(!players[i].hasFolded())
+            {
+                allFolded = false;
+                break;
+            }
+        }
+
+        return allFolded;
     }
 
     //----------UI----------
@@ -474,6 +602,22 @@ public class DrawPoker extends AppCompatActivity
         }
     }
 
+    //hides who the blinds are
+    public void hideBlinds()
+    {
+        TextView userBlind = (TextView)findViewById(R.id.userBlind);
+        TextView b1Blind = (TextView)findViewById(R.id.b1Blind);
+        TextView b2Blind = (TextView)findViewById(R.id.b2Blind);
+        TextView b3Blind = (TextView)findViewById(R.id.b3Blind);
+        TextView b4Blind = (TextView)findViewById(R.id.b4Blind);
+
+        userBlind.setText("");
+        b1Blind.setText("");
+        b2Blind.setText("");
+        b3Blind.setText("");
+        b4Blind.setText("");
+    }
+
     //show user their options based on int round
     public void showUserOptions(int round)
     {
@@ -485,7 +629,7 @@ public class DrawPoker extends AppCompatActivity
 
         if(round == 0)
         {
-            if ((currentPlayer == smallBlind || currentPlayer == bigBlind) && maxContribution < 1)
+            if((currentPlayer == smallBlind && maxContribution < 1) || (currentPlayer == bigBlind && currentPlayer.getContribution() == 0))
             {
                 betButton.setVisibility(View.VISIBLE);
             }
@@ -530,7 +674,7 @@ public class DrawPoker extends AppCompatActivity
     //updates the action of player with playerID to action
     public void showPlayerAction(int playerID, String action)
     {
-        hidePlayerActions();
+        hidePlayerActions(false);
 
         TextView userAction = (TextView)findViewById(R.id.userAction);
         TextView bot1Action = (TextView)findViewById(R.id.b1Action);
@@ -563,14 +707,25 @@ public class DrawPoker extends AppCompatActivity
         }
     }
 
-    //hides all player actions
-    public void hidePlayerActions()
+    //hides all player actions if they haven't fold or if it is a new round
+    public void hidePlayerActions(boolean newRound)
     {
         TextView userAction = (TextView)findViewById(R.id.userAction);
         TextView bot1Action = (TextView)findViewById(R.id.b1Action);
         TextView bot2Action = (TextView)findViewById(R.id.b2Action);
         TextView bot3Action = (TextView)findViewById(R.id.b3Action);
         TextView bot4Action = (TextView)findViewById(R.id.b4Action);
+
+        if(newRound)
+        {
+            userAction.setText("");
+            bot1Action.setText("");
+            bot2Action.setText("");
+            bot3Action.setText("");
+            bot4Action.setText("");
+
+            return;
+        }
 
         if(!players[USER_ID].hasFolded())
         {
@@ -602,13 +757,22 @@ public class DrawPoker extends AppCompatActivity
     }
 
     //shows the user's cards
-    public void showUserCards(Card card1, Card card2)
+    public void showUserCards(Card card1, Card card2, Card card3, Card card4, Card card5)
     {
         ImageView card1View = (ImageView)findViewById(R.id.card1);
         card1View.setImageResource(getResources().getIdentifier(card1.getDrawableSource(), null, getPackageName()));
 
         ImageView card2View = (ImageView)findViewById(R.id.card2);
         card2View.setImageResource(getResources().getIdentifier(card2.getDrawableSource(), null, getPackageName()));
+
+        ImageView card3View = (ImageView)findViewById(R.id.card3);
+        card3View.setImageResource(getResources().getIdentifier(card3.getDrawableSource(), null, getPackageName()));
+
+        ImageView card4View = (ImageView)findViewById(R.id.card4);
+        card4View.setImageResource(getResources().getIdentifier(card4.getDrawableSource(), null, getPackageName()));
+
+        ImageView card5View = (ImageView)findViewById(R.id.card5);
+        card5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
     }
 
     //updates the cards on the table
@@ -627,26 +791,36 @@ public class DrawPoker extends AppCompatActivity
         commCard3View.setVisibility(View.VISIBLE);
 
         ImageView commCard4View = (ImageView)findViewById(R.id.commCard4);
-        if(card4 == null)
-        {
-            //commCard4View.setVisibility(View.INVISIBLE);
-        }
-        else
+        if(card4 != null)
         {
             commCard4View.setImageResource(getResources().getIdentifier(card4.getDrawableSource(), null, getPackageName()));
             commCard4View.setVisibility(View.VISIBLE);
         }
 
         ImageView commCard5View = (ImageView)findViewById(R.id.commCard5);
-        if(card5 == null)
-        {
-            //commCard5View.setVisibility(View.INVISIBLE);
-        }
-        else
+        if(card5 != null)
         {
             commCard5View.setImageResource(getResources().getIdentifier(card5.getDrawableSource(), null, getPackageName()));
             commCard5View.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void hideCommunityCards()
+    {
+        ImageView commCard1View = (ImageView)findViewById(R.id.commCard1);
+        commCard1View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard2View = (ImageView)findViewById(R.id.commCard2);
+        commCard2View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard3View = (ImageView)findViewById(R.id.commCard3);
+        commCard3View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard4View = (ImageView)findViewById(R.id.commCard4);
+        commCard4View.setVisibility(View.INVISIBLE);
+
+        ImageView commCard5View = (ImageView)findViewById(R.id.commCard5);
+        commCard5View.setVisibility(View.INVISIBLE);
     }
 
     //used to update all player chips
@@ -671,8 +845,8 @@ public class DrawPoker extends AppCompatActivity
                 bot1Name.setText(getIntent().getStringExtra("name1") + ": " + players[1].getChipStack());
                 break;
             case 0:
-                TextView bot0Name = (TextView)findViewById(R.id.player);
-                bot0Name.setText("Player: " + players[0].getChipStack());
+                TextView username = (TextView)findViewById(R.id.player);
+                username.setText(getIntent().getStringExtra("username") + ": " + players[0].getChipStack());
                 break;
         }
     }
@@ -691,7 +865,10 @@ public class DrawPoker extends AppCompatActivity
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
 
         final TextView warning = (TextView)popupView.findViewById(R.id.warning);
         warning.setText("");
@@ -704,29 +881,38 @@ public class DrawPoker extends AppCompatActivity
                 if(!raiseText.getText().toString().isEmpty())
                 {
                     int raiseAmount = Integer.parseInt(raiseText.getText().toString());
-                    int result = raise(raiseAmount);
-                    if(result == 1)
+
+                    if(raiseAmount > 0)
                     {
-                        popupWindow.dismiss();
 
-                        //DEBUG
-                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User " + " action: Raise pot: " + pot);
-                        logContributions();
+                        int result = raise(raiseAmount);
+                        if(result == 1)
+                        {
+                            popupWindow.dismiss();
 
-                        hideUserOptions();
-                        showPlayerAction(0, "Raise: " + raiseAmount);
-                        thread.postDelayed(new Runnable(){
-                            public void run()
-                            {
-                                simulateTurns();
-                            }}, threadDelay);
+                            //DEBUG
+                            Log.w("GAME_DEBUG", "Round: " + currentRound + " User " + " action: Raise pot: " + pot);
+                            logContributions();
+
+                            hideUserOptions();
+                            showPlayerAction(0, "Raise: " + raiseAmount);
+                            thread.postDelayed(new Runnable(){
+                                public void run()
+                                {
+                                    simulateTurns();
+                                }}, threadDelay);
+                        }
+                        else
+                        {
+                            if(result == 0)
+                                warning.setText("Must match or exceed max contribution.");
+                            else
+                                warning.setText("Not enough chips.");
+                        }
                     }
                     else
                     {
-                        if(result == 0)
-                            warning.setText("Must match or exceed max contribution.");
-                        else
-                            warning.setText("Not enough chips.");
+                        warning.setText("Must raise more than 0 chips.");
                     }
                 }
             }});
@@ -780,6 +966,9 @@ public class DrawPoker extends AppCompatActivity
 
         final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
         final Button noOpt = (Button)popupView.findViewById(R.id.no);
+
+        TextView prompt = (TextView)popupView.findViewById(R.id.prompt);
+        prompt.setText("Call?");
 
         yesOpt.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v)
@@ -877,44 +1066,99 @@ public class DrawPoker extends AppCompatActivity
     public void openBetWindow(View view)
     {
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        final View popupView = layoutInflater.inflate(R.layout.raise_popup, null);
+        final View popupView = layoutInflater.inflate(R.layout.call_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
 
-        final TextView warning = (TextView)popupView.findViewById(R.id.warning);
-        warning.setText("");
+        final Button yesOpt = (Button)popupView.findViewById(R.id.yes);
+        final Button noOpt = (Button)popupView.findViewById(R.id.no);
 
-        Button betSave = (Button)popupView.findViewById(R.id.raiseSave);
-        final EditText betText = (EditText)popupView.findViewById(R.id.raiseText);
-        betSave.setOnClickListener(new Button.OnClickListener(){
+        TextView prompt = (TextView)popupView.findViewById(R.id.prompt);
+        prompt.setText("Bet?");
+
+        yesOpt.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v)
             {
-                if(!betText.getText().toString().isEmpty())
+                int betAmount = 5;
+                if(currentPlayer == bigBlind)
+                    betAmount = 10;
+
+                int result = bet(betAmount);
+
+                if(result == 1)
                 {
-                    int betAmount = Integer.parseInt(betText.getText().toString());
-                    int result = raise(betAmount);
-                    if(result == 1)
-                    {
-                        popupWindow.dismiss();
+                    popupWindow.dismiss();
 
-                        //DEBUG
-                        Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Bet pot: " + pot);
-                        logContributions();
+                    //DEBUG
+                    Log.w("GAME_DEBUG", "Round: " + currentRound + " User action: Call pot: " + pot);
+                    logContributions();
 
-                        hideUserOptions();
-                        showPlayerAction(0, "Bet: " + betAmount);
-                        thread.postDelayed(new Runnable(){
-                            public void run()
-                            {
-                                simulateTurns();
-                            }}, threadDelay);
-                    }
-                    else
-                    {
-                        warning.setText("Insufficient funds.");
-                    }
+                    hideUserOptions();
+                    showPlayerAction(0, "Bet: " + betAmount);
+                    thread.postDelayed(new Runnable(){
+                        public void run()
+                        {
+                            simulateTurns();
+                        }}, threadDelay);
                 }
-            }});
+                else
+                {
+                    final TextView warning = (TextView)popupView.findViewById(R.id.warning);
+                    warning.setVisibility(View.VISIBLE);
+                    yesOpt.setVisibility(View.GONE);
+                    noOpt.setVisibility(View.GONE);
+
+                    final Button ok = (Button)popupView.findViewById(R.id.ok);
+                    final TextView callPrompt = (TextView)popupView.findViewById(R.id.prompt);
+                    callPrompt.setVisibility(View.GONE);
+                    ok.setVisibility(View.VISIBLE);
+                    ok.setOnClickListener(new Button.OnClickListener(){
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                            warning.setVisibility(View.GONE);
+                            yesOpt.setVisibility(View.VISIBLE);
+                            noOpt.setVisibility(View.VISIBLE);
+                            ok.setVisibility(View.GONE);
+                            callPrompt.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+        });
+
+        noOpt.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    public void openContinueWindow()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.continue_game_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        Button continueButton = (Button)popupView.findViewById(R.id.continueButton);
+        continueButton.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v)
+            {
+                popupWindow.dismiss();
+
+                hidePlayerActions(true); //hides player actions after user continues
+
+                //DEBUG
+                Log.w("GAME_DEBUG", "NEW GAME");
+
+                thread.postDelayed(new Runnable(){
+                    public void run()
+                    {
+                        gamePlay(getAllChipStacks());
+                    }}, threadDelay);
+            }
+        });
     }
 
     //----------AI----------
@@ -1043,6 +1287,7 @@ public class DrawPoker extends AppCompatActivity
     //DEBUG functions
     public void logContributions()
     {
+        /*
         if(numPlayers < 4)
         {
             Log.w("GAME_DEBUG", "Player Contributions: User: " + players[0].getContribution() + " 1: " + players[1].getContribution() + " 2: " + players[2].getContribution());
@@ -1057,5 +1302,6 @@ public class DrawPoker extends AppCompatActivity
 
         }
         Log.w("GAME_DEBUG", "Max Contribution: " + maxContribution);
+        */
     }
 }
