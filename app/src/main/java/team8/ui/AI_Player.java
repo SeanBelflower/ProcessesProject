@@ -569,4 +569,35 @@ public class AI_Player extends Player
         //return the score
         return handScore;
     }
+
+    public void observeHandFive(int round, int bet)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            myHand[i] = allCards.get(i);
+        }
+        confidence = (hand.score(myHand) * 0.0000001) + boldness * 0.05;
+        if(confidence > 1) confidence = 1;
+        bettingPhase(bet);
+    }
+
+    public ArrayList<Card> replace()
+    {
+        ArrayList<Card> replace = new ArrayList<>();
+        int score = hand.score(myHand);
+        for(int j = 0; j < 5; j++)
+        {
+            Card [] temp = myHand;
+            for(int i = 0; i < 52; i++)
+            {
+                Card temp2 = temp[j];
+                temp[j] = new Card((i%13)+2, family(i/4));
+                if(hand.score(temp) < score)
+                {
+                    replace.add(temp2);
+                }
+            }
+        }
+        return replace;
+    }
 }
