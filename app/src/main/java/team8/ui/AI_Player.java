@@ -45,10 +45,7 @@ public class AI_Player extends Player
         Log.w("GAME_DEBUG", "Bot's chipStack is " + chipStack + " and confidence is " + confidence);
         if(chipStack > 10 && confidence < .95)
         {
-            if(bet * 1.5 < chipStack)
-                return bet;
-            else
-                return chipStack;
+            return 10;
         }
         else
         {
@@ -72,6 +69,7 @@ public class AI_Player extends Player
     // calculate confidence based on what cards have been played so far
     public void observeHand(int cardsPlayed, int bet, boolean newRound)
     {
+        if(this.hasFolded()) return;
         double score;
         if(a == null || b == null)
         {
@@ -96,31 +94,31 @@ public class AI_Player extends Player
         }
 
         // flop
-        else if(cardsPlayed == 3 && newRound)
+        else if(cardsPlayed == 3)
         {
-
+            Log.w("GAME_DEBUG", "In here");
             myHand[2] = allCards.get(2);
             myHand[3] = allCards.get(3);
             myHand[4] = allCards.get(4);
-            score = scoreHand(myHand);
+            score = hand.score(myHand);
             recalcConfidence(2, score, score);
         }
 
         // 4th card
         else if(cardsPlayed == 4)
         {
-            score = scoreHand(myHand);
+            score = hand.score(myHand);
             myHand = bestHand(allCards,6);
-            double newScore = scoreHand(myHand);
+            double newScore = hand.score(myHand);
             recalcConfidence(1, score, newScore);
         }
 
         // river
         else if(cardsPlayed == 5)
         {
-            score = scoreHand(myHand);
+            score = hand.score(myHand);
             myHand = bestHand(allCards,7);
-            double newScore = scoreHand(myHand);
+            double newScore = hand.score(myHand);
             recalcConfidence(0, score, newScore);
         }
         bettingPhase(bet);
@@ -190,20 +188,21 @@ public class AI_Player extends Player
 
     private void recalcConfidence(int cardsLeft, double oldScore, double newScore)
     {
+        Log.w("GAME_DEBUG", "oldScore: " + oldScore + " newScore: " + newScore);
         if(newScore > oldScore)
         {
-            confidence += (newScore - oldScore) * .01 * (3 - cardsLeft) * 3;
+            confidence += (newScore - oldScore) * (.000000025) * (3 - cardsLeft) * 3;
         }
         else
         {
             if(chipStack == 0) return;
-            if(oldScore >= (bet/chipStack * 100))
+            if(oldScore >= (getContribution()/chipStack * 0x954321))
             {
-                confidence += oldScore * .01;
+                confidence += oldScore * (.000000025) * (3-cardsLeft);
             }
             else
             {
-                confidence -= (bet/chipStack * 100) * .33 * (3-cardsLeft);
+                confidence -= (getContribution()/chipStack * 100) * .33 * (3-cardsLeft);
             }
         }
 
@@ -234,7 +233,7 @@ public class AI_Player extends Player
 
         // if the amount betted is less than the amount required to continue
         boolean hasMadeChoice = false;
-        if(this.bet < bet && confidence < betConfidenceThreshold)
+        if(this.getContribution() < bet && confidence < betConfidenceThreshold)
         {
             if(confidence > callConfidenceThreshold)
             {
@@ -297,7 +296,7 @@ public class AI_Player extends Player
 
         if(!hasMadeChoice)
         {
-            if(this.bet < bet)
+            if(this.getContribution() < bet)
             {
                 decision = 0;
                 return;

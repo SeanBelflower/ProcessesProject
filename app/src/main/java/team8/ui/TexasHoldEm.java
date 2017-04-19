@@ -158,6 +158,7 @@ public class TexasHoldEm extends AppCompatActivity
     {
         //DEBUG
         Log.w("GAME_DEBUG", "--------FLOP--------");
+        isPreFlop = false;
 
         //show the the first 3 cards
         updateCommunityCards(cardsOnTable.get(0), cardsOnTable.get(1), cardsOnTable.get(2), null, null);
@@ -389,7 +390,7 @@ public class TexasHoldEm extends AppCompatActivity
                 allCards.add(card);
 
             Card[] bestHand = player.bestHand(allCards, 7);
-            double score = AI_Player.scoreHand(bestHand);
+            double score = hand.score(bestHand);
 
             playerMap.put(score, player);
         }

@@ -1,7 +1,5 @@
 package team8.ui;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class Player
@@ -149,51 +147,43 @@ public class Player
   // when a new card is given to the ai when the Turn and River cards are dealt
   public Card [] bestHand (ArrayList<Card> all, int cardsPlayed)
   {
-    Card [] base = {all.get(0), all.get(1), all.get(2), all.get(3), all.get(4)};
-    Card [] bestWithOne, bestWithTwo;
-    bestWithOne = base;
-    bestWithTwo = base;
-    double score = AI_Player.scoreHand(base);
-    for(Card c : all)
-    {
-      Log.w("GAME_DEBUG", c.toString());
-    }
-    double score2 = score;
-    for(int i = 5; i < cardsPlayed; i++)
-    {
-      for(int j = 0; j < 5; j++)
-      {
-        Card [] temp = base;
-        temp[j] = all.get(i);
-        double tempScore = AI_Player.scoreHand(temp);
-        if(tempScore > score)
-        {
-          bestWithOne = temp;
-          score = tempScore;
-        }
-      }
-    }
-    if(cardsPlayed > 6)
-    {
-      Card[] base2 = {all.get(5),all.get(6),all.get(0),all.get(1),all.get(2)};
-      for(int i = 3; i < cardsPlayed - 2; i++)
-      {
-        for(int j = 2; j < 5; j++)
-        {
-          Card [] temp = base2;
-          temp[j] = all.get(i);
-          double tempScore = AI_Player.scoreHand(temp);
-          if(tempScore > score2)
-          {
-            bestWithTwo = temp;
-            score2 = tempScore;
-          }
-        }
-      }
+      int max = thisHand(all, 0, 1, 2, 3, 4);
+      int [] maxVals = new int [5];
 
-      if (score == score2) return base;
-      return (score > score2) ? bestWithOne : bestWithTwo;
-    }
-    return bestWithOne;
+      for(int a = 0; a < 3; a++)
+      {
+          for(int b = 1; b < 4; b++)
+          {
+              for(int c = 2; c < 5; c++)
+              {
+                  for(int d = 3; d < 6; d++)
+                  {
+                      for(int e = 4; e < cardsPlayed; e++)
+                      {
+                          if(a < b && b < c && c < d && d < e)
+                          {
+                              int temp = thisHand(all, a, b, c, d, e);
+                              if(temp > max) {
+                                  max = temp;
+                                  maxVals[0] = a;
+                                  maxVals[1] = b;
+                                  maxVals[2] = c;
+                                  maxVals[3] = d;
+                                  maxVals[4] = e;
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+      Card [] toReturn = {all.get(maxVals[0]),all.get(maxVals[1]), all.get(maxVals[2]), all.get(maxVals[3]), all.get(maxVals[4])};
+      return toReturn;
   }
+
+    private int thisHand(ArrayList<Card> all, int a, int b, int c, int d, int e)
+    {
+        Card [] thisHand = {all.get(a), all.get(b), all.get(c), all.get(d), all.get(e)};
+        return hand.score(thisHand);
+    }
 }
