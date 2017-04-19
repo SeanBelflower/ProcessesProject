@@ -17,6 +17,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TexasHoldEm extends AppCompatActivity
 {
@@ -31,7 +33,7 @@ public class TexasHoldEm extends AppCompatActivity
     private int numPlayers;
     public Player[] players;
     private int pot = 0;
-    private int maxContribution = 0;
+    private int maxContribution = -1;
     private int playerIndex = 0; // Keeps track of the current player
     private int dealerIndex = 4; // Keeps track of the dealer, initialized to make user the smallBlind on start
     private Deck deck;
@@ -244,7 +246,7 @@ public class TexasHoldEm extends AppCompatActivity
 
         if(currentPlayer.getPlayerID() == USER_ID) //user's turn
         {
-            if(!currentPlayer.hasFolded() && !allBotsFolded()) //show buttons if user has not folded
+            if(!currentPlayer.hasFolded() && !allBotsFolded() && !betsEqual()) //show buttons if user has not folded
                 showUserOptions(currentRound); //show buttons based on the current round
             else //keep the bots playing
             {
@@ -296,7 +298,7 @@ public class TexasHoldEm extends AppCompatActivity
 
                 if(currentPlayer.hasFolded())
                     botAction = 0; //keep folding
-                else if((currentPlayer == smallBlind || currentPlayer == bigBlind) && currentPlayer.getContribution() < 1)
+                else if((currentPlayer == smallBlind || currentPlayer == bigBlind) && currentPlayer.getContribution() < 1 && currentRound == 0)
                     botAction = 4; //force bet (5-10 style)
 
                 switch (botAction)
@@ -327,7 +329,7 @@ public class TexasHoldEm extends AppCompatActivity
                         raise(raise);
                         break;
                     case 4:
-                        int bet = maxContribution + 10;
+                        int bet = 0;
 
                         //force 5-10 bets
                         if(currentPlayer == smallBlind)
@@ -375,11 +377,29 @@ public class TexasHoldEm extends AppCompatActivity
 
     public void continueGame()
     {
-       /* for(Player player : players)
+        Map<Double, Player> playerMap = new TreeMap<Double, Player>();
+
+        for(Player player : players)
         {
-            int rank = rankHand(player.getHand().toArray(new Card[player.getHand().size()]));
-            Log.w("GAME_DEBUG", "Player " + player.getPlayerID() + " rank: " + rank);
-        }*/
+            ArrayList<Card> allCards = new ArrayList<Card>();
+
+            for(Card card : cardsOnTable)
+                allCards.add(card);
+            for(Card card : player.getHand())
+                allCards.add(card);
+
+            Card[] bestHand = player.bestHand(allCards, 7);
+            double score = AI_Player.scoreHand(bestHand);
+
+            playerMap.put(score, player);
+        }
+
+        for(int i = 0; i < numPlayers; i++)
+        {
+            Double score = (Double)playerMap.keySet().toArray()[i];
+            Player player = playerMap.get(score);
+            Log.w("GAME_DEBUG", "Player " + player.getPlayerID() + " score: " + score.doubleValue());
+        }
 
         hideBlinds(); //hide the old blinds
 
@@ -652,6 +672,12 @@ public class TexasHoldEm extends AppCompatActivity
             {
                 callButton.setVisibility(View.VISIBLE);
             }
+        }
+
+        if(betsEqual())
+        {
+            hideUserOptions();
+            playerIndex++;
         }
     }
 
@@ -1206,8 +1232,31 @@ public class TexasHoldEm extends AppCompatActivity
         //one loop through hand
         for(int i = 1; i <= 5; i++)
         {
+            if(i == 5)
+            {
+                switch (counter)
+                {
+                    case 2: if (three)
+                        fullHouse = true;
+                    else if (pair)
+                        twoPair = true;
+                    else
+                        pair = true;
+                        break;
+                    case 3: if (pair)
+                        fullHouse = true;
+                    else
+                        three = true;
+                        break;
+                    case 4: four = true;
+                        break;
+                    default: break;
+                }
+                break;
+            }
+
             //when non-matching card is encountered, decide rank
-            if(hand[i].getValue() != valueCheck || i == 5)
+            if(hand[i].getValue() != valueCheck)
             {
                 switch (counter)
                 {
@@ -1232,7 +1281,6 @@ public class TexasHoldEm extends AppCompatActivity
             }
             else counter++;
         }
-
         //return rank of hand
         if (four)
             return 8;
@@ -1278,7 +1326,6 @@ public class TexasHoldEm extends AppCompatActivity
     //DEBUG functions
     public void logContributions()
     {
-        /*
         if(numPlayers < 4)
         {
             Log.w("GAME_DEBUG", "Player Contributions: User: " + players[0].getContribution() + " 1: " + players[1].getContribution() + " 2: " + players[2].getContribution());
@@ -1293,6 +1340,6 @@ public class TexasHoldEm extends AppCompatActivity
 
         }
         Log.w("GAME_DEBUG", "Max Contribution: " + maxContribution);
-        */
+
     }
 }

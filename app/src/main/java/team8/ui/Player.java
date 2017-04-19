@@ -149,7 +149,7 @@ public class Player
   // when a new card is given to the ai when the Turn and River cards are dealt
   public Card [] bestHand (ArrayList<Card> all, int cardsPlayed)
   {
-    Card [] base = {allCards.get(0),allCards.get(1),allCards.get(2),allCards.get(3),allCards.get(4)};
+    Card [] base = {all.get(0), all.get(1), all.get(2), all.get(3), all.get(4)};
     Card [] bestWithOne, bestWithTwo;
     bestWithOne = base;
     bestWithTwo = base;
@@ -175,7 +175,7 @@ public class Player
     }
     if(cardsPlayed > 6)
     {
-      Card[] base2 = {allCards.get(5),allCards.get(6),allCards.get(0),allCards.get(1),allCards.get(2)};
+      Card[] base2 = {all.get(5),all.get(6),all.get(0),all.get(1),all.get(2)};
       for(int i = 3; i < cardsPlayed - 2; i++)
       {
         for(int j = 2; j < 5; j++)

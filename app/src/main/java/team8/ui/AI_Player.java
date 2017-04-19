@@ -27,7 +27,7 @@ public class AI_Player extends Player
     private static final Suit CLUBS = Suit.CLUBS;
 
     private final double callConfidenceThreshold = 0.15;
-    private final double betConfidenceThreshold = 0.5;
+    private final double betConfidenceThreshold = 0.35;
 
 
     public AI_Player(int playerID, int chips, String name)
@@ -317,6 +317,7 @@ public class AI_Player extends Player
             default: return SPADES;
         }
     }
+
     //scores a hand
     public static double scoreHand (Card[] hand)
     {
