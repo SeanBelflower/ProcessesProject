@@ -416,6 +416,8 @@ public class TexasHoldEm extends AppCompatActivity
     //returns whether user needs to contribute more, or if they can't, or 1 for success
     public int raise(int value)
     {
+        // If raise is 10 and the players previous bet was 5, updatePotvalue should be 5
+        int updatePotValue = currentPlayer.getContribution();
         if(value + maxContribution < maxContribution)
         {
             // Enter a higher amount than maxContribution
@@ -428,7 +430,8 @@ public class TexasHoldEm extends AppCompatActivity
         else
         {
             maxContribution = value + maxContribution;
-            updatePot(maxContribution);
+            updatePotValue = maxContribution - updatePotValue;
+            updatePot(updatePotValue);
             updatePlayerInfo(currentPlayer.getPlayerID());
         }
 
@@ -439,13 +442,14 @@ public class TexasHoldEm extends AppCompatActivity
 
     public int call()
     {
-
+        // If call is 10 and the players previous bet was 5, updatePotvalue should be 5
+        int updatePotValue = maxContribution - currentPlayer.getContribution();
         if(!currentPlayer.call(maxContribution))
         {
             // print call was not possible
             return 0;
         }
-        updatePot(maxContribution);
+        updatePot(updatePotValue);
         updatePlayerInfo(currentPlayer.getPlayerID());
         playerIndex++;
 
