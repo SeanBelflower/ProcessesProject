@@ -77,9 +77,9 @@ public class Player
   // Returns true if a raise is possible, otherwise there was insufficient funds
   public boolean raise(int amount)
   {
-    if(amount <= this.chipStack && !this.hasFolded)
+    if(amount - this.contribution <= this.chipStack && !this.hasFolded)
     {
-      this.chipStack -= amount;
+      this.chipStack -= (amount - this.contribution);
       this.contribution = amount;
       return true;
     }
@@ -90,8 +90,8 @@ public class Player
   // Similar to raise but its for call
   public boolean call(int amount)
   {
-    if(amount <= this.chipStack && !this.hasFolded){
-      this.chipStack -= amount;
+    if(amount - this.contribution <= this.chipStack && !this.hasFolded){
+      this.chipStack -= (amount - this.contribution);
       this.contribution = amount;
       return true;
     }

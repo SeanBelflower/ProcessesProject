@@ -324,7 +324,7 @@ public class TexasHoldEm extends AppCompatActivity
                         break;
                     case 3:
                         int raise = ((AI_Player) currentPlayer).getRaiseAmount();
-                        action = "Raise: " + raise;
+                        action = "Raise: " + (raise + maxContribution);
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + raise));
                         showPlayerAction(currentPlayer.getPlayerID(), action);
                         raise(raise);
@@ -416,19 +416,19 @@ public class TexasHoldEm extends AppCompatActivity
     //returns whether user needs to contribute more, or if they can't, or 1 for success
     public int raise(int value)
     {
-        if(value < maxContribution)
+        if(value + maxContribution < maxContribution)
         {
             // Enter a higher amount than maxContribution
             return 0;
         }
-        else if(!currentPlayer.raise(value)) //not enough funds
+        else if(!currentPlayer.raise(value + maxContribution)) //not enough funds
         {
             return -1;
         }
         else
         {
-            maxContribution = value;
-            updatePot(value);
+            maxContribution = value + maxContribution;
+            updatePot(maxContribution);
             updatePlayerInfo(currentPlayer.getPlayerID());
         }
 
@@ -899,7 +899,6 @@ public class TexasHoldEm extends AppCompatActivity
                 if(!raiseText.getText().toString().isEmpty())
                 {
                     int raiseAmount = Integer.parseInt(raiseText.getText().toString());
-
                     if(raiseAmount > 0)
                     {
 
@@ -913,7 +912,7 @@ public class TexasHoldEm extends AppCompatActivity
                             logContributions();
 
                             hideUserOptions();
-                            showPlayerAction(0, "Raise: " + raiseAmount);
+                            showPlayerAction(0, "Raise: " + maxContribution);
                             thread.postDelayed(new Runnable(){
                                 public void run()
                                 {
