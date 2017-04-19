@@ -378,29 +378,7 @@ public class TexasHoldEm extends AppCompatActivity
 
     public void continueGame()
     {
-        Map<Double, Player> playerMap = new TreeMap<Double, Player>();
-
-        for(Player player : players)
-        {
-            ArrayList<Card> allCards = new ArrayList<Card>();
-
-            for(Card card : cardsOnTable)
-                allCards.add(card);
-            for(Card card : player.getHand())
-                allCards.add(card);
-
-            Card[] bestHand = player.bestHand(allCards, 7);
-            double score = hand.score(bestHand);
-
-            playerMap.put(score, player);
-        }
-
-        for(int i = 0; i < numPlayers; i++)
-        {
-            Double score = (Double)playerMap.keySet().toArray()[i];
-            Player player = playerMap.get(score);
-            Log.w("GAME_DEBUG", "Player " + player.getPlayerID() + " score: " + score.doubleValue());
-        }
+        determineWinners();
 
         hideBlinds(); //hide the old blinds
 
