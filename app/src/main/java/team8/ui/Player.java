@@ -186,4 +186,8 @@ public class Player
         Card [] thisHand = {all.get(a), all.get(b), all.get(c), all.get(d), all.get(e)};
         return hand.score(thisHand);
     }
+    public void addToChipstack(int amount)
+    {
+      chipStack += amount;
+    }
 }

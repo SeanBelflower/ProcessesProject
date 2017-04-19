@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -533,6 +533,80 @@ public class TexasHoldEm extends AppCompatActivity
         }
 
         return chipStacks;
+    }
+
+    //Determines the winners
+    public void determineWinners()
+    {
+        double[] scores = new double[numPlayers];
+        int i = 0;
+
+        for(Player player : players)
+        {
+            ArrayList<Card> allCards = new ArrayList<Card>();
+
+            for(Card card : cardsOnTable)
+                allCards.add(card);
+            for(Card card : player.getHand())
+                allCards.add(card);
+
+            Card[] bestHand = player.bestHand(allCards, 7);
+            double score = AI_Player.scoreHand(bestHand);
+
+            scores[i++] = score;
+        }
+
+        Arrays.sort(scores);
+
+        Player[] sortedPlayers = new Player[numPlayers];
+
+        for(Player player : players)
+        {
+            ArrayList<Card> allCards = new ArrayList<Card>();
+
+            for(Card card : cardsOnTable)
+                allCards.add(card);
+            for(Card card : player.getHand())
+                allCards.add(card);
+
+            Card[] bestHand = player.bestHand(allCards, 7);
+            double score = AI_Player.scoreHand(bestHand);
+
+            for(int j = 0; j < numPlayers; j++)
+            {
+                if(scores[j] == score)
+                {
+                    sortedPlayers[j] = player;
+                }
+            }
+        }
+
+        int numWinners = 1;
+        double winningScore = scores[numPlayers - 1]; //player with highest score
+
+        i = numPlayers - 2; //start checking for ties at second to last player
+        while(scores[i] == winningScore)
+        {
+            numWinners++;
+        }
+
+        int winnings = pot/numWinners;
+
+        Log.w("GAME_DEBUG", "Pot: " + pot + " winners: " + numWinners + " winnings: " + winnings);
+
+        i = numPlayers - 1;
+        do
+        {
+            sortedPlayers[i].addToChipstack(winnings);
+            updatePlayerInfo(sortedPlayers[i--].getPlayerID());
+            Log.w("GAME_DEBUG", "Player " + sortedPlayers[i + 1].getPlayerID() + " chipstack " + sortedPlayers[i + 1].getChipStack());
+            numWinners--;
+        }while(numWinners > 0);
+
+        for(int j = 0; j < numPlayers; j++)
+        {
+            Log.w("GAME_DEBUG", "Player " + sortedPlayers[j].getPlayerID() + " score: " + scores[j]);
+        }
     }
 
     //returns whether or not all bots have folded
