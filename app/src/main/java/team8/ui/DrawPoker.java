@@ -536,10 +536,11 @@ public class DrawPoker extends AppCompatActivity
     {
         ((AI_Player)currentPlayer).observeHandFive(maxContribution);
         ArrayList<Card> newHand = ((AI_Player)currentPlayer).replace();
+        Log.w("GAME_DEBUG", "replacement: " +  newHand.size());
 
         int numDrawn = 5 - newHand.size();
 
-        while(newHand.size() != 5)
+        while(newHand.size() < 5)
         {
             newHand.add(deck.getCard());
         }
@@ -1065,7 +1066,25 @@ public class DrawPoker extends AppCompatActivity
                             thread.postDelayed(new Runnable(){
                                 public void run()
                                 {
-                                    simulateTurns();
+                                    if (!betsEqual())
+                                        simulateTurns();
+                                    else
+                                    {
+                                        Log.w("GAME_DEBUG", "Bets Equal");
+                                        currentRound++;
+                                        switch (currentRound)
+                                        {
+                                            case 1:
+                                                draw();
+                                                break;
+                                            case 2:
+                                                secondBettingRound();
+                                                break;
+                                            case 3:
+                                                continueGame();
+                                                break;
+                                        }
+                                    }
                                 }}, threadDelay);
                         }
                         else
@@ -1108,7 +1127,25 @@ public class DrawPoker extends AppCompatActivity
                 thread.postDelayed(new Runnable(){
                     public void run()
                     {
-                        simulateTurns();
+                        if (!betsEqual())
+                            simulateTurns();
+                        else
+                        {
+                            Log.w("GAME_DEBUG", "Bets Equal");
+                            currentRound++;
+                            switch (currentRound)
+                            {
+                                case 1:
+                                    draw();
+                                    break;
+                                case 2:
+                                    secondBettingRound();
+                                    break;
+                                case 3:
+                                    continueGame();
+                                    break;
+                            }
+                        }
                     }}, threadDelay);
             }
         });
@@ -1154,7 +1191,25 @@ public class DrawPoker extends AppCompatActivity
                     thread.postDelayed(new Runnable(){
                         public void run()
                         {
-                            simulateTurns();
+                            if (!betsEqual())
+                                simulateTurns();
+                            else
+                            {
+                                Log.w("GAME_DEBUG", "Bets Equal");
+                                currentRound++;
+                                switch (currentRound)
+                                {
+                                    case 1:
+                                        draw();
+                                        break;
+                                    case 2:
+                                        secondBettingRound();
+                                        break;
+                                    case 3:
+                                        continueGame();
+                                        break;
+                                }
+                            }
                         }}, threadDelay);
                 }
                 else
@@ -1214,7 +1269,25 @@ public class DrawPoker extends AppCompatActivity
                 thread.postDelayed(new Runnable(){
                     public void run()
                     {
-                        simulateTurns();
+                        if (!betsEqual())
+                            simulateTurns();
+                        else
+                        {
+                            Log.w("GAME_DEBUG", "Bets Equal");
+                            currentRound++;
+                            switch (currentRound)
+                            {
+                                case 1:
+                                    draw();
+                                    break;
+                                case 2:
+                                    secondBettingRound();
+                                    break;
+                                case 3:
+                                    continueGame();
+                                    break;
+                            }
+                        }
                     }}, threadDelay);
             }
         });
@@ -1264,7 +1337,25 @@ public class DrawPoker extends AppCompatActivity
                     thread.postDelayed(new Runnable(){
                         public void run()
                         {
-                            simulateTurns();
+                            if (!betsEqual())
+                                simulateTurns();
+                            else
+                            {
+                                Log.w("GAME_DEBUG", "Bets Equal");
+                                currentRound++;
+                                switch (currentRound)
+                                {
+                                    case 1:
+                                        draw();
+                                        break;
+                                    case 2:
+                                        secondBettingRound();
+                                        break;
+                                    case 3:
+                                        continueGame();
+                                        break;
+                                }
+                            }
                         }}, threadDelay);
                 }
                 else
