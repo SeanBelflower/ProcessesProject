@@ -392,6 +392,9 @@ public class DrawPoker extends AppCompatActivity
             Card[] bestHand = player.bestHand(allCards, 7);
             double score = AI_Player.scoreHand(bestHand);
 
+            if(player.hasFolded())
+                score = 0;
+
             scores[i++] = score;
         }
 
@@ -410,6 +413,9 @@ public class DrawPoker extends AppCompatActivity
 
             Card[] bestHand = player.bestHand(allCards, 7);
             double score = AI_Player.scoreHand(bestHand);
+
+            if(player.hasFolded())
+                score = 0;
 
             for(int j = 0; j < numPlayers; j++)
             {
@@ -761,7 +767,7 @@ public class DrawPoker extends AppCompatActivity
             hideUserOptions();
 
             finishDrawing.setVisibility(View.VISIBLE);
-            //TODO: user draw (make cards clickable)
+
             startUserDraw();
         }
         else

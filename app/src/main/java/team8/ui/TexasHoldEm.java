@@ -538,6 +538,9 @@ public class TexasHoldEm extends AppCompatActivity
             Card[] bestHand = player.bestHand(allCards, 7);
             double score = AI_Player.scoreHand(bestHand);
 
+            if(player.hasFolded())
+                score = 0;
+
             scores[i++] = score;
         }
 
@@ -556,6 +559,9 @@ public class TexasHoldEm extends AppCompatActivity
 
             Card[] bestHand = player.bestHand(allCards, 7);
             double score = AI_Player.scoreHand(bestHand);
+
+            if(player.hasFolded())
+                score = 0;
 
             for(int j = 0; j < numPlayers; j++)
             {
