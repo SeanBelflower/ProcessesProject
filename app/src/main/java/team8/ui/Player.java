@@ -101,8 +101,9 @@ public class Player
   // Similar to raise but its for call
   public boolean call(int amount)
   {
-    if(amount - this.contribution <= this.chipStack && !this.hasFolded){
-      this.chipStack -= (amount - this.contribution);
+    if(amount <= this.chipStack && !this.hasFolded)
+    {
+      this.chipStack -= amount;
       this.contribution = amount;
       return true;
     }
