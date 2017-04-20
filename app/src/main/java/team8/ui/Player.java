@@ -103,7 +103,7 @@ public class Player
   {
     if(amount <= this.chipStack && !this.hasFolded)
     {
-      this.chipStack -= amount;
+      this.chipStack -= (amount - this.contribution);
       this.contribution = amount;
       return true;
     }
