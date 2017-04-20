@@ -60,6 +60,12 @@ public class Player
   {
     this.Hand.add(card);
   }
+
+  public void setHand(ArrayList<Card> newHand)
+  {
+      Hand = newHand;
+  }
+
   // Returns the players current Hand
   public ArrayList<Card> getHand()
   {

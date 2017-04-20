@@ -53,6 +53,11 @@ public class AI_Player extends Player
         }
     }
 
+    public void setHand(Card[] hand)
+    {
+        myHand = hand;
+    }
+
     //adds cards to all cards
     public void addToCards(Card card)
     {
@@ -570,7 +575,7 @@ public class AI_Player extends Player
         return handScore;
     }
 
-    public void observeHandFive(int round, int bet)
+    public void observeHandFive(int bet)
     {
         for (int i = 0; i < 5; i++)
         {

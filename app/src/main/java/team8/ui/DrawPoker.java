@@ -153,9 +153,10 @@ public class DrawPoker extends AppCompatActivity
         showPlayerCards(numPlayers);
     }
 
-    //turn logic and starts player turns
+    //draw logic and starts player turns
     public void draw()
     {
+        resetDrawnPlayers();
         //DEBUG
         Log.w("GAME_DEBUG", "--------DRAW--------");
 
@@ -321,9 +322,9 @@ public class DrawPoker extends AppCompatActivity
                         showPlayerAction(currentPlayer.getPlayerID(), action);
                         bet(bet);
                         break;
-                    //TODO: draw from AI and player
                     case 5:
-                        action = "Draw ";
+                        int numDrawn = drawCards();
+                        action = "Draw(" + numDrawn +")";
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Player " + currentPlayer.getPlayerID() + ": action: " + action);
                         showPlayerAction(currentPlayer.getPlayerID(), action);
                         playerIndex++;
@@ -361,7 +362,6 @@ public class DrawPoker extends AppCompatActivity
 
     public void continueGame()
     {
-        Log.w("GAME_", "here bro");
         int[] winners = determineWinners();
 
         hideBlinds(); //hide the old blinds
@@ -529,6 +529,26 @@ public class DrawPoker extends AppCompatActivity
         playerIndex++;
         currentPlayer = players[playerIndex % numPlayers];
 
+    }
+
+    //allows for AI to draw cards and returns the amount of new cards drawn
+    public int drawCards()
+    {
+        ((AI_Player)currentPlayer).observeHandFive(maxContribution);
+        ArrayList<Card> newHand = ((AI_Player)currentPlayer).replace();
+
+        int numDrawn = 5 - newHand.size();
+
+        while(newHand.size() != 5)
+        {
+            newHand.add(deck.getCard());
+        }
+
+        ((AI_Player)currentPlayer).setHand(newHand);
+
+        ((AI_Player)currentPlayer).setHand(newHand.toArray(new Card[newHand.size()]));
+
+        return numDrawn;
     }
 
     // checks to see if all the bets made by the current players is equal
@@ -806,6 +826,7 @@ public class DrawPoker extends AppCompatActivity
     //allows user to draw cards
     public void startUserDraw()
     {
+
         final ImageView card1View = (ImageView)findViewById(R.id.card1);
         card1View.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
