@@ -39,7 +39,7 @@
             android:layout_below="@+id/TexasHoldEm"
             android:layout_marginTop="86dp"
             android:onClick="goToOptions"
-            android:text="Five-card Draw" />
+            android:text="Five Card Draw" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

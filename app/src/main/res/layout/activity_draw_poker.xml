@@ -22,11 +22,9 @@
         android:layout_marginTop="23dp"
         android:background="#3c903c"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <RelativeLayout
@@ -159,44 +157,44 @@
             android:id="@+id/userBlind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/potLabel"
-            android:layout_alignTop="@+id/card4"
+            android:layout_alignLeft="@+id/fold"
+            android:layout_alignStart="@+id/fold"
+            android:layout_alignTop="@+id/player"
             android:text="" />
 
         <TextView
             android:id="@+id/b4Blind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/b4Action"
-            android:layout_alignRight="@+id/b4Action"
-            android:layout_below="@+id/b1Blind" />
+            android:layout_alignLeft="@+id/b4Cards"
+            android:layout_alignStart="@+id/b4Cards"
+            android:layout_alignTop="@+id/b1Blind" />
 
         <TextView
             android:id="@+id/b1Blind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/b1Action"
-            android:layout_alignStart="@+id/b1Action"
-            android:layout_alignTop="@+id/b1Cards"
-            android:layout_marginTop="26dp" />
+            android:layout_alignRight="@+id/b1Cards"
+            android:layout_alignEnd="@+id/b1Cards"
+            android:layout_alignTop="@+id/b1Cards" />
 
         <TextView
             android:id="@+id/b3Blind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/userAction"
-            android:layout_alignRight="@+id/userAction"
-            android:layout_below="@+id/b2Blind"
-            android:layout_marginTop="16dp" />
+            android:layout_alignLeft="@+id/b3Cards"
+            android:layout_alignStart="@+id/b3Cards"
+            android:layout_alignTop="@+id/b2Blind"
+             />
 
         <TextView
             android:id="@+id/b2Blind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/b2Action"
-            android:layout_alignStart="@+id/b2Action"
+            android:layout_alignRight="@+id/b2Cards"
+            android:layout_alignEnd="@+id/b2Cards"
             android:layout_alignTop="@+id/potLabel"
-            android:layout_marginLeft="16dp" />
+             />
 
         <TextView
             android:id="@+id/b4Action"
@@ -524,7 +522,7 @@
             android:id="@+id/card3"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            android:layout_alignTop="@+id/userBlind"
+            android:layout_alignTop="@+id/card2"
             android:layout_centerHorizontal="true"
             android:visibility="invisible"
             app:srcCompat="@android:color/background_light" />
