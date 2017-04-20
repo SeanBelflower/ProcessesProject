@@ -23,7 +23,7 @@
                 android:id="@+id/winner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="All bets equal."
+                android:text=""
                 android:gravity="center"/>
 
             <Button

@@ -324,6 +324,12 @@ public class TexasHoldEm extends AppCompatActivity
                         break;
                     case 3:
                         int raise = ((AI_Player) currentPlayer).getRaiseAmount();
+
+                        if(maxContribution == -1 && raise != currentPlayer.getChipStack())
+                            raise += 1;
+                        if(raise == currentPlayer.getChipStack())
+                            raise -= maxContribution;
+
                         action = "Raise: " + (raise + maxContribution);
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Bot: " + currentPlayer.getPlayerID() + " action: " + action + " pot: " + (pot + raise));
                         showPlayerAction(currentPlayer.getPlayerID(), action);
@@ -378,7 +384,7 @@ public class TexasHoldEm extends AppCompatActivity
 
     public void continueGame()
     {
-        determineWinners();
+        int[] winners = determineWinners();
 
         hideBlinds(); //hide the old blinds
 
@@ -388,7 +394,7 @@ public class TexasHoldEm extends AppCompatActivity
         pot = 0; //reset the pot
         updatePot(0);
 
-        openContinueWindow(); //start new game with current player chips
+        openContinueWindow(winners); //start new game with current player chips
     }
 
     //returns whether user needs to contribute more, or if they can't, or 1 for success
@@ -462,6 +468,7 @@ public class TexasHoldEm extends AppCompatActivity
     public void check()
     {
         // Should only be visible in rounds 2,3,4 not 1
+
         playerIndex++;
         currentPlayer = players[playerIndex % numPlayers];
 
@@ -514,7 +521,7 @@ public class TexasHoldEm extends AppCompatActivity
     }
 
     //Determines the winners
-    public void determineWinners()
+    public int[] determineWinners()
     {
         double[] scores = new double[numPlayers];
         int i = 0;
@@ -552,7 +559,7 @@ public class TexasHoldEm extends AppCompatActivity
 
             for(int j = 0; j < numPlayers; j++)
             {
-                if(scores[j] == score)
+                if(scores[j] == score && sortedPlayers[j] == null)
                 {
                     sortedPlayers[j] = player;
                 }
@@ -568,6 +575,8 @@ public class TexasHoldEm extends AppCompatActivity
             numWinners++;
         }
 
+        int[] winners = new int[numWinners];
+        int winnersIndex = 0;
         int winnings = pot/numWinners;
 
         Log.w("GAME_DEBUG", "Pot: " + pot + " winners: " + numWinners + " winnings: " + winnings);
@@ -575,6 +584,7 @@ public class TexasHoldEm extends AppCompatActivity
         i = numPlayers - 1;
         do
         {
+            winners[winnersIndex++] = sortedPlayers[i].getPlayerID();
             sortedPlayers[i].addToChipstack(winnings);
             updatePlayerInfo(sortedPlayers[i--].getPlayerID());
             Log.w("GAME_DEBUG", "Player " + sortedPlayers[i + 1].getPlayerID() + " chipstack " + sortedPlayers[i + 1].getChipStack());
@@ -585,6 +595,8 @@ public class TexasHoldEm extends AppCompatActivity
         {
             Log.w("GAME_DEBUG", "Player " + sortedPlayers[j].getPlayerID() + " score: " + scores[j]);
         }
+
+        return winners;
     }
 
     //returns whether or not all bots have folded
@@ -955,6 +967,10 @@ public class TexasHoldEm extends AppCompatActivity
                 if(!raiseText.getText().toString().isEmpty())
                 {
                     int raiseAmount = Integer.parseInt(raiseText.getText().toString());
+
+                    if(maxContribution == -1)
+                        raiseAmount += 1;
+
                     if(raiseAmount > 0)
                     {
 
@@ -1207,12 +1223,31 @@ public class TexasHoldEm extends AppCompatActivity
         });
     }
 
-    public void openContinueWindow()
+    public void openContinueWindow(int[] winners)
     {
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.continue_game_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        String winnerText = "Winner(s): ";
+
+        for(int num : winners)
+        {
+            if(num == 0)
+            {
+                winnerText += getIntent().getStringExtra("username") + ", ";
+            }
+            else
+            {
+                winnerText += getIntent().getStringExtra("name" + num) + ", ";
+            }
+        }
+
+        winnerText = winnerText.substring(0, winnerText.length() - 2);
+
+        TextView winnerTextView = (TextView)popupView.findViewById(R.id.winner);
+        winnerTextView.setText(winnerText);
 
         Button continueButton = (Button)popupView.findViewById(R.id.continueButton);
         continueButton.setOnClickListener(new Button.OnClickListener(){

@@ -16,12 +16,17 @@ public class Player
   private boolean hasFolded = false; // Is the player still playing
   private boolean TexasHoldEm;
   private boolean FiveCardDraw;
+  private boolean[] cardsDrawn;
+    private boolean hasDrawn = false;
 
   // Manually set the chipStack
   Player(int playerID, int chipStack)
   {
     this.playerID = playerID;
     this.chipStack = chipStack;
+      hasDrawn = false;
+    cardsDrawn = new boolean[5];
+    resetCardsDrawn();
   }
 
 
@@ -98,6 +103,34 @@ public class Player
     else
       return false;
   }
+
+    public void drawCard(int index)
+    {
+        cardsDrawn[index] = true;
+    }
+
+    public boolean cardDrawn(int index)
+    {
+        return cardsDrawn[index];
+    }
+
+    public void resetCardsDrawn()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            cardsDrawn[i] = false;
+        }
+    }
+
+    public boolean hasDrawn()
+    {
+        return hasDrawn;
+    }
+
+    public void resetDrawn()
+    {
+        hasDrawn = false;
+    }
 
   // User chooses to fold
   public void fold()
@@ -189,5 +222,10 @@ public class Player
     public void addToChipstack(int amount)
     {
       chipStack += amount;
+    }
+
+    public void setDrawn()
+    {
+        hasDrawn = true;
     }
 }

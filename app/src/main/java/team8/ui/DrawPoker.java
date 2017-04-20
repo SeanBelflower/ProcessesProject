@@ -37,6 +37,7 @@ public class DrawPoker extends AppCompatActivity
     private Deck deck;
     private int currentRound;
     private boolean isPreFlop;
+    private int numDrawn;
 
     private final int USER_ID = 0;
     private final int threadDelay = 2200;
@@ -64,6 +65,8 @@ public class DrawPoker extends AppCompatActivity
     // Must be called after firstBetRound()
     public void gamePlay(int[] chipStacks)
     {
+        numDrawn = 0;
+        resetDrawnPlayers();
         numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
         this.players = new Player[numPlayers];
 
@@ -147,6 +150,8 @@ public class DrawPoker extends AppCompatActivity
         //playerIndex = dealerIndex + 1;
 
         dealerIndex++;
+
+        showPlayerCards(numPlayers);
     }
 
     //flop logic and starts player turns
@@ -154,8 +159,6 @@ public class DrawPoker extends AppCompatActivity
     {
         //DEBUG
         Log.w("GAME_DEBUG", "--------DEAL--------");
-
-        showPlayerCards(numPlayers);
 
         for(int i = 0; i < players.length; i++)
         {
@@ -207,6 +210,8 @@ public class DrawPoker extends AppCompatActivity
     //river logic and starts player turns
     public void river()
     {
+        numDrawn = 0;
+        resetDrawnPlayers();
         //DEBUG
         Log.w("GAME_DEBUG", "--------RIVER--------");
 
@@ -235,6 +240,7 @@ public class DrawPoker extends AppCompatActivity
 
     public void simulateTurns()
     {
+        Log.w("GAME_DEBUG", "Drawn: " + numDrawn);
         currentPlayer = players[playerIndex % numPlayers];
 
         if(currentPlayer.getPlayerID() == USER_ID) //user's turn
@@ -251,6 +257,9 @@ public class DrawPoker extends AppCompatActivity
         {
             if(currentPlayer.hasFolded())
             {
+                if(currentRound == 1)
+                    currentPlayer.setDrawn();
+
                 if(!betsEqual())
                 {
                     playerIndex++;
@@ -264,16 +273,15 @@ public class DrawPoker extends AppCompatActivity
                     switch(currentRound)
                     {
                         case 1:
-                            deal();
-                            break;
-                        case 2:
                             draw();
                             break;
-                        case 3:
+                        case 2:
                             river();
                             break;
-                        case 4:
+                        case 3:
                             continueGame();
+                            break;
+                        case 4:
                             break;
                     }
                 }
@@ -290,11 +298,15 @@ public class DrawPoker extends AppCompatActivity
                 String action = "";
 
                 if(currentPlayer.hasFolded())
-                    botAction = 0; //keep folding
-                else if((currentPlayer == smallBlind || currentPlayer == bigBlind) && currentPlayer.getContribution() < 1)
+                {
+                    botAction = 0;
+                    if(currentRound == 1)
+                        currentPlayer.setDrawn();
+                }
+                else if((currentPlayer == smallBlind || currentPlayer == bigBlind) && currentPlayer.getContribution() < 1 && currentRound == 0)
                     botAction = 4; //force bet (5-10 style)
 
-                if(currentRound == 2)
+                if(currentRound == 1)
                     botAction = 5;
 
                 switch (botAction)
@@ -344,6 +356,7 @@ public class DrawPoker extends AppCompatActivity
                         Log.w("GAME_DEBUG", "Round: " + currentRound + " Player " + currentPlayer.getPlayerID() + ": action: " + action);
                         showPlayerAction(currentPlayer.getPlayerID(), action);
                         playerIndex++;
+                        currentPlayer.setDrawn();
                 }
 
                 logContributions();
@@ -358,16 +371,15 @@ public class DrawPoker extends AppCompatActivity
                             currentRound++;
                             switch (currentRound) {
                                 case 1:
-                                    deal();
-                                    break;
-                                case 2:
                                     draw();
                                     break;
-                                case 3:
+                                case 2:
                                     river();
                                     break;
-                                case 4:
+                                case 3:
                                     continueGame();
+                                    break;
+                                case 4:
                                     break;
                             }
                         }
@@ -485,7 +497,7 @@ public class DrawPoker extends AppCompatActivity
         for(int i = 0; i < this.numPlayers; i++)
         {
             equal &= ((players[i].getContribution() == this.maxContribution) ||
-                    players[i].hasFolded());
+                    players[i].hasFolded() || players[i].hasDrawn());
         }
         return equal;
     }
@@ -497,6 +509,14 @@ public class DrawPoker extends AppCompatActivity
         for(int i = 0; i < numPlayers;i++)
         {
             players[i].resetContribution();
+        }
+    }
+
+    public void resetDrawnPlayers()
+    {
+        for(int i = 0; i < numPlayers; i++)
+        {
+            players[i].resetDrawn();
         }
     }
 
@@ -675,6 +695,7 @@ public class DrawPoker extends AppCompatActivity
         Button checkButton = (Button)findViewById(R.id.check);
         Button callButton = (Button)findViewById(R.id.call);
         Button betButton = (Button)findViewById(R.id.bet);
+        Button finishDrawing = (Button)findViewById(R.id.finishDraw);
 
         if(round == 0)
         {
@@ -689,10 +710,11 @@ public class DrawPoker extends AppCompatActivity
                 callButton.setVisibility(View.VISIBLE);
             }
         }
-        else if(round == 2)
+        else if(round == 1)
         {
             hideUserOptions();
 
+            finishDrawing.setVisibility(View.VISIBLE);
             //TODO: user draw (make cards clickable)
             startUserDraw();
         }
@@ -719,12 +741,14 @@ public class DrawPoker extends AppCompatActivity
         Button checkButton = (Button)findViewById(R.id.check);
         Button callButton = (Button)findViewById(R.id.call);
         Button betButton = (Button)findViewById(R.id.bet);
+        Button finishDrawing = (Button)findViewById(R.id.finishDraw);
 
         raiseButton.setVisibility(View.INVISIBLE);
         foldButton.setVisibility(View.INVISIBLE);
         checkButton.setVisibility(View.INVISIBLE);
         callButton.setVisibility(View.INVISIBLE);
         betButton.setVisibility(View.INVISIBLE);
+        finishDrawing.setVisibility(View.INVISIBLE);
     }
 
     //allows user to draw cards
@@ -734,7 +758,11 @@ public class DrawPoker extends AppCompatActivity
         card1View.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                openDrawWindow(1);
+                if(!currentPlayer.cardDrawn(0))
+                {
+                    openDrawWindow(1);
+                    currentPlayer.drawCard(0);
+                }
             }
         });
         card1View.setVisibility(View.VISIBLE);
@@ -743,7 +771,11 @@ public class DrawPoker extends AppCompatActivity
         card2View.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                openDrawWindow(2);
+                if(!currentPlayer.cardDrawn(1))
+                {
+                    openDrawWindow(2);
+                    currentPlayer.drawCard(1);
+                }
             }
         });
         card2View.setVisibility(View.VISIBLE);
@@ -752,7 +784,11 @@ public class DrawPoker extends AppCompatActivity
         card3View.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                openDrawWindow(3);
+                if(!currentPlayer.cardDrawn(2))
+                {
+                    openDrawWindow(3);
+                    currentPlayer.drawCard(2);
+                }
             }
         });
         card3View.setVisibility(View.VISIBLE);
@@ -761,7 +797,11 @@ public class DrawPoker extends AppCompatActivity
         card4View.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                openDrawWindow(4);
+                if(!currentPlayer.cardDrawn(3))
+                {
+                    openDrawWindow(4);
+                    currentPlayer.drawCard(3);
+                }
             }
         });
         card4View.setVisibility(View.VISIBLE);
@@ -770,10 +810,26 @@ public class DrawPoker extends AppCompatActivity
         card5View.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                openDrawWindow(5);
+                if(!currentPlayer.cardDrawn(4))
+                {
+                    openDrawWindow(5);
+                    currentPlayer.drawCard(4);
+                }
             }
         });
         card5View.setVisibility(View.VISIBLE);
+    }
+
+    public void finishDrawTurn(View view)
+    {
+        hideUserOptions();
+
+        playerIndex++;
+        numDrawn++;
+
+        currentPlayer.setDrawn();
+
+        simulateTurns();
     }
 
     //updates the action of player with playerID to action
@@ -1381,7 +1437,6 @@ public class DrawPoker extends AppCompatActivity
     //DEBUG functions
     public void logContributions()
     {
-        /*
         if(numPlayers < 4)
         {
             Log.w("GAME_DEBUG", "Player Contributions: User: " + players[0].getContribution() + " 1: " + players[1].getContribution() + " 2: " + players[2].getContribution());
@@ -1396,6 +1451,6 @@ public class DrawPoker extends AppCompatActivity
 
         }
         Log.w("GAME_DEBUG", "Max Contribution: " + maxContribution);
-        */
+
     }
 }

@@ -22,19 +22,21 @@
         android:layout_marginTop="23dp"
         android:background="#3c903c"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
 
         <RelativeLayout
             android:id="@+id/b4Cards"
             android:layout_width="110dp"
             android:layout_height="150dp"
-            android:visibility="invisible"
-            android:layout_alignTop="@+id/b1Cards"
+            android:layout_alignEnd="@+id/bet"
             android:layout_alignRight="@+id/bet"
-            android:layout_alignEnd="@+id/bet">
+            android:layout_alignTop="@+id/b1Cards"
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/b4c5"
@@ -94,10 +96,10 @@
             android:id="@+id/b3Cards"
             android:layout_width="110dp"
             android:layout_height="150dp"
-            android:visibility="invisible"
             android:layout_alignTop="@+id/potLabel"
+            android:layout_toEndOf="@+id/b4Blind"
             android:layout_toRightOf="@+id/b4Blind"
-            android:layout_toEndOf="@+id/b4Blind">
+            android:visibility="invisible">
 
 
             <ImageView
@@ -222,12 +224,12 @@
             android:id="@+id/b2Action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
-            android:text="TextView"
-            android:visibility="invisible"
             android:layout_alignBottom="@+id/b2Cards"
+            android:layout_marginBottom="35dp"
+            android:layout_toEndOf="@+id/b1Blind"
             android:layout_toRightOf="@+id/b1Blind"
-            android:layout_toEndOf="@+id/b1Blind" />
+            android:text="TextView"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/b3Action"
@@ -383,12 +385,12 @@
             android:id="@+id/b2Cards"
             android:layout_width="110dp"
             android:layout_height="150dp"
+            android:layout_alignTop="@+id/b2Blind"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
-            android:visibility="invisible"
-            android:layout_alignTop="@+id/b2Blind"
             android:layout_toLeftOf="@+id/call"
-            android:layout_toStartOf="@+id/call">
+            android:layout_toStartOf="@+id/call"
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/b2c1"
@@ -474,13 +476,25 @@
             android:id="@+id/raise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="openRaiseWindow"
-            android:text="Raise"
-            android:visibility="invisible"
             android:layout_alignBaseline="@+id/bet"
             android:layout_alignBottom="@+id/bet"
+            android:layout_alignEnd="@+id/card5"
             android:layout_alignRight="@+id/card5"
-            android:layout_alignEnd="@+id/card5" />
+            android:onClick="openRaiseWindow"
+            android:text="Raise"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/finishDraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/bet"
+            android:layout_alignBottom="@+id/bet"
+            android:layout_alignEnd="@+id/card5"
+            android:layout_alignRight="@+id/card5"
+            android:onClick="finishDrawTurn"
+            android:text="Finish Drawing"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/check"
@@ -519,13 +533,13 @@
             android:id="@+id/card2"
             android:layout_width="60dp"
             android:layout_height="85dp"
-            android:visibility="invisible"
-            app:srcCompat="@android:color/background_light"
             android:layout_alignTop="@+id/card4"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/card1"
-            android:layout_toRightOf="@+id/card1" />
+            android:layout_toRightOf="@+id/card1"
+            android:visibility="invisible"
+            app:srcCompat="@android:color/background_light" />
 
         <ImageView
             android:id="@+id/card1"
