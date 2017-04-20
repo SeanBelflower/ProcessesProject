@@ -994,7 +994,27 @@ public class TexasHoldEm extends AppCompatActivity
                             thread.postDelayed(new Runnable(){
                                 public void run()
                                 {
-                                    simulateTurns();
+                                    if (!betsEqual())
+                                        simulateTurns();
+                                    else
+                                    {
+                                        Log.w("GAME_DEBUG", "Bets Equal");
+                                        currentRound++;
+                                        switch (currentRound) {
+                                            case 1:
+                                                flop();
+                                                break;
+                                            case 2:
+                                                turn();
+                                                break;
+                                            case 3:
+                                                river();
+                                                break;
+                                            case 4:
+                                                continueGame();
+                                                break;
+                                        }
+                                    }
                                 }}, threadDelay);
                         }
                         else
@@ -1037,7 +1057,27 @@ public class TexasHoldEm extends AppCompatActivity
                 thread.postDelayed(new Runnable(){
                     public void run()
                     {
-                        simulateTurns();
+                        if (!betsEqual())
+                            simulateTurns();
+                        else
+                        {
+                            Log.w("GAME_DEBUG", "Bets Equal");
+                            currentRound++;
+                            switch (currentRound) {
+                                case 1:
+                                    flop();
+                                    break;
+                                case 2:
+                                    turn();
+                                    break;
+                                case 3:
+                                    river();
+                                    break;
+                                case 4:
+                                    continueGame();
+                                    break;
+                            }
+                        }
                     }}, threadDelay);
             }
         });
@@ -1083,7 +1123,27 @@ public class TexasHoldEm extends AppCompatActivity
                     thread.postDelayed(new Runnable(){
                         public void run()
                         {
-                            simulateTurns();
+                            if (!betsEqual())
+                                simulateTurns();
+                            else
+                            {
+                                Log.w("GAME_DEBUG", "Bets Equal");
+                                currentRound++;
+                                switch (currentRound) {
+                                    case 1:
+                                        flop();
+                                        break;
+                                    case 2:
+                                        turn();
+                                        break;
+                                    case 3:
+                                        river();
+                                        break;
+                                    case 4:
+                                        continueGame();
+                                        break;
+                                }
+                            }
                         }}, threadDelay);
                 }
                 else
@@ -1143,7 +1203,27 @@ public class TexasHoldEm extends AppCompatActivity
                 thread.postDelayed(new Runnable(){
                     public void run()
                     {
-                        simulateTurns();
+                        if (!betsEqual())
+                            simulateTurns();
+                        else
+                        {
+                            Log.w("GAME_DEBUG", "Bets Equal");
+                            currentRound++;
+                            switch (currentRound) {
+                                case 1:
+                                    flop();
+                                    break;
+                                case 2:
+                                    turn();
+                                    break;
+                                case 3:
+                                    river();
+                                    break;
+                                case 4:
+                                    continueGame();
+                                    break;
+                            }
+                        }
                     }}, threadDelay);
             }
         });
@@ -1193,7 +1273,27 @@ public class TexasHoldEm extends AppCompatActivity
                     thread.postDelayed(new Runnable(){
                         public void run()
                         {
-                            simulateTurns();
+                            if (!betsEqual())
+                                simulateTurns();
+                            else
+                            {
+                                Log.w("GAME_DEBUG", "Bets Equal");
+                                currentRound++;
+                                switch (currentRound) {
+                                    case 1:
+                                        flop();
+                                        break;
+                                    case 2:
+                                        turn();
+                                        break;
+                                    case 3:
+                                        river();
+                                        break;
+                                    case 4:
+                                        continueGame();
+                                        break;
+                                }
+                            }
                         }}, threadDelay);
                 }
                 else

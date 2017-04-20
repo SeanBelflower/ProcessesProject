@@ -10,7 +10,8 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="game_" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
@@ -20,11 +21,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java" afterPath="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java" />
     </list>
     <ignored path="ProcessesProject-master.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,11 +58,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DrawPoker.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TexasHoldEm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1653">
+              <caret line="1295" column="29" selection-start-line="1295" selection-start-column="29" selection-end-line="1295" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DrawPoker.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="543" column="0" selection-start-line="543" selection-start-column="0" selection-end-line="543" selection-end-column="0" />
+            <state relative-caret-position="-2686">
+              <caret line="1086" column="37" selection-start-line="1086" selection-start-column="37" selection-end-line="1086" selection-end-column="37" />
               <folding>
                 <element signature="method#raise#0;class#DrawPoker#0" expanded="false" />
                 <element signature="method#fold#0;class#DrawPoker#0" expanded="false" />
@@ -77,16 +91,16 @@
                 <element signature="method#hidePlayerActions#0;class#DrawPoker#0" expanded="false" />
                 <element signature="method#updatePlayerInfo#0;class#DrawPoker#0" expanded="false" />
                 <element signature="method#updatePot#0;class#DrawPoker#0" expanded="false" />
-                <element signature="method#openRaiseWindow#0;class#DrawPoker#0" expanded="false" />
-                <element signature="method#openFoldWindow#0;class#DrawPoker#0" expanded="false" />
-                <element signature="method#openCheckWindow#0;class#DrawPoker#0" expanded="false" />
-                <element signature="method#openBetWindow#0;class#DrawPoker#0" expanded="false" />
+                <element signature="e#35361#36511#0" expanded="true" />
+                <element signature="e#36510#36511#0" expanded="true" />
+                <element signature="e#42828#42974#0" expanded="true" />
+                <element signature="e#42973#42974#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
@@ -1987,11 +2001,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/Login.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_draw_poker.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_game_mode.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/Player.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java" />
       </list>
     </option>
   </component>
@@ -2473,7 +2487,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.427957" sideWeight="0.5298826" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.51365185" sideWeight="0.7534685" order="8" side_tool="false" content_ui="tabs" x="1920" y="417" width="1366" height="705" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.8566553" sideWeight="0.7534685" order="8" side_tool="false" content_ui="tabs" x="1920" y="417" width="1366" height="705" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.4914621" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21158129" sideWeight="0.48292422" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.4914621" order="11" side_tool="false" content_ui="tabs" />
@@ -2912,16 +2926,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="563" column="26" selection-start-line="563" selection-start-column="26" selection-end-line="563" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/AI_Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -2946,10 +2950,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/TexasHoldEm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1653">
+          <caret line="1295" column="29" selection-start-line="1295" selection-start-column="29" selection-end-line="1295" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/team8/ui/DrawPoker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="543" column="0" selection-start-line="543" selection-start-column="0" selection-end-line="543" selection-end-column="0" />
+        <state relative-caret-position="-2686">
+          <caret line="1086" column="37" selection-start-line="1086" selection-start-column="37" selection-end-line="1086" selection-end-column="37" />
           <folding>
             <element signature="method#raise#0;class#DrawPoker#0" expanded="false" />
             <element signature="method#fold#0;class#DrawPoker#0" expanded="false" />
@@ -2966,23 +2991,12 @@
             <element signature="method#hidePlayerActions#0;class#DrawPoker#0" expanded="false" />
             <element signature="method#updatePlayerInfo#0;class#DrawPoker#0" expanded="false" />
             <element signature="method#updatePot#0;class#DrawPoker#0" expanded="false" />
-            <element signature="method#openRaiseWindow#0;class#DrawPoker#0" expanded="false" />
-            <element signature="method#openFoldWindow#0;class#DrawPoker#0" expanded="false" />
-            <element signature="method#openCheckWindow#0;class#DrawPoker#0" expanded="false" />
-            <element signature="method#openBetWindow#0;class#DrawPoker#0" expanded="false" />
+            <element signature="e#35361#36511#0" expanded="true" />
+            <element signature="e#36510#36511#0" expanded="true" />
+            <element signature="e#42828#42974#0" expanded="true" />
+            <element signature="e#42973#42974#0" expanded="true" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
       </provider>
     </entry>
   </component>
