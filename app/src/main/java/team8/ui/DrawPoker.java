@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DrawPoker extends AppCompatActivity
 {
@@ -37,7 +38,6 @@ public class DrawPoker extends AppCompatActivity
     private Deck deck;
     private int currentRound;
     private boolean isPreFlop;
-    private int numDrawn;
 
     private final int USER_ID = 0;
     private final int threadDelay = 2200;
@@ -62,10 +62,9 @@ public class DrawPoker extends AppCompatActivity
 
     //--------GAME--------
 
-    // Must be called after firstBetRound()
+    // Must be called after firstBettingRound()
     public void gamePlay(int[] chipStacks)
     {
-        numDrawn = 0;
         resetDrawnPlayers();
         numPlayers = Integer.parseInt(getIntent().getStringExtra("numBots")) + 1;
         this.players = new Player[numPlayers];
@@ -83,7 +82,7 @@ public class DrawPoker extends AppCompatActivity
 
         currentRound = 0;
 
-        firstBetRound();
+        firstBettingRound();
         isPreFlop = true;
 
         thread.postDelayed(new Runnable(){
@@ -97,10 +96,10 @@ public class DrawPoker extends AppCompatActivity
     }
 
     // Sets up the game including picking the blinds, dealers, creating the deck, etc.
-    public void firstBetRound()
+    public void firstBettingRound()
     {
         //DEBUG
-        Log.w("GAME_DEBUG", "--------DEAL--------");
+        Log.w("GAME_DEBUG", "--------FIRST ROUND--------");
 
         deck = new Deck();
         deck.shuffle();
@@ -154,28 +153,6 @@ public class DrawPoker extends AppCompatActivity
         showPlayerCards(numPlayers);
     }
 
-    //flop logic and starts player turns
-    public void deal()
-    {
-        //DEBUG
-        Log.w("GAME_DEBUG", "--------DEAL--------");
-
-        for(int i = 0; i < players.length; i++)
-        {
-            for(Card c : cardsOnTable)
-                if(!players[i].allCards.contains(c))
-                    players[i].allCards.add(c);
-        }
-        maxContribution = -1;
-        playerIndex = smallBlind.getPlayerID();
-        resetContributions();
-        thread.postDelayed(new Runnable(){
-            public void run()
-            {
-                simulateTurns();
-            }}, threadDelay);
-    }
-
     //turn logic and starts player turns
     public void draw()
     {
@@ -191,8 +168,6 @@ public class DrawPoker extends AppCompatActivity
                     players[i].allCards.add(c);
         }
 
-        //TODO: code for replacing cards
-
         //if all-in or all but one -> show cards
         // New round reset maxContribution and start at smallBlind again
         maxContribution = -1;
@@ -207,13 +182,12 @@ public class DrawPoker extends AppCompatActivity
             }}, threadDelay);
     }
 
-    //river logic and starts player turns
-    public void river()
+    //secondBettingRound logic and starts player turns
+    public void secondBettingRound()
     {
-        numDrawn = 0;
         resetDrawnPlayers();
         //DEBUG
-        Log.w("GAME_DEBUG", "--------RIVER--------");
+        Log.w("GAME_DEBUG", "--------SECOND ROUND--------");
 
         cardsOnTable.add(deck.getCard());
 
@@ -240,7 +214,6 @@ public class DrawPoker extends AppCompatActivity
 
     public void simulateTurns()
     {
-        Log.w("GAME_DEBUG", "Drawn: " + numDrawn);
         currentPlayer = players[playerIndex % numPlayers];
 
         if(currentPlayer.getPlayerID() == USER_ID) //user's turn
@@ -276,12 +249,10 @@ public class DrawPoker extends AppCompatActivity
                             draw();
                             break;
                         case 2:
-                            river();
+                            secondBettingRound();
                             break;
                         case 3:
                             continueGame();
-                            break;
-                        case 4:
                             break;
                     }
                 }
@@ -369,17 +340,16 @@ public class DrawPoker extends AppCompatActivity
                         {
                             Log.w("GAME_DEBUG", "Bets Equal");
                             currentRound++;
-                            switch (currentRound) {
+                            switch (currentRound)
+                            {
                                 case 1:
                                     draw();
                                     break;
                                 case 2:
-                                    river();
+                                    secondBettingRound();
                                     break;
                                 case 3:
                                     continueGame();
-                                    break;
-                                case 4:
                                     break;
                             }
                         }
@@ -391,11 +361,8 @@ public class DrawPoker extends AppCompatActivity
 
     public void continueGame()
     {
-       /* for(Player player : players)
-        {
-            int rank = rankHand(player.getHand().toArray(new Card[player.getHand().size()]));
-            Log.w("GAME_DEBUG", "Player " + player.getPlayerID() + " rank: " + rank);
-        }*/
+        Log.w("GAME_", "here bro");
+        int[] winners = determineWinners();
 
         hideBlinds(); //hide the old blinds
 
@@ -404,7 +371,86 @@ public class DrawPoker extends AppCompatActivity
         pot = 0; //reset the pot
         updatePot(0);
 
-        openContinueWindow(); //start new game with current player chips
+        openContinueWindow(winners); //start new game with current player chips
+    }
+
+    //Determines the winners
+    public int[] determineWinners()
+    {
+        double[] scores = new double[numPlayers];
+        int i = 0;
+
+        for(Player player : players)
+        {
+            ArrayList<Card> allCards = new ArrayList<Card>();
+
+            for(Card card : cardsOnTable)
+                allCards.add(card);
+            for(Card card : player.getHand())
+                allCards.add(card);
+
+            Card[] bestHand = player.bestHand(allCards, 7);
+            double score = AI_Player.scoreHand(bestHand);
+
+            scores[i++] = score;
+        }
+
+        Arrays.sort(scores);
+
+        Player[] sortedPlayers = new Player[numPlayers];
+
+        for(Player player : players)
+        {
+            ArrayList<Card> allCards = new ArrayList<Card>();
+
+            for(Card card : cardsOnTable)
+                allCards.add(card);
+            for(Card card : player.getHand())
+                allCards.add(card);
+
+            Card[] bestHand = player.bestHand(allCards, 7);
+            double score = AI_Player.scoreHand(bestHand);
+
+            for(int j = 0; j < numPlayers; j++)
+            {
+                if(scores[j] == score && sortedPlayers[j] == null)
+                {
+                    sortedPlayers[j] = player;
+                }
+            }
+        }
+
+        int numWinners = 1;
+        double winningScore = scores[numPlayers - 1]; //player with highest score
+
+        i = numPlayers - 2; //start checking for ties at second to last player
+        while(scores[i] == winningScore)
+        {
+            numWinners++;
+        }
+
+        int[] winners = new int[numWinners];
+        int winnersIndex = 0;
+        int winnings = pot/numWinners;
+
+        Log.w("GAME_DEBUG", "Pot: " + pot + " winners: " + numWinners + " winnings: " + winnings);
+
+        i = numPlayers - 1;
+        do
+        {
+            winners[winnersIndex++] = sortedPlayers[i].getPlayerID();
+            sortedPlayers[i].addToChipstack(winnings);
+            updatePlayerInfo(sortedPlayers[i--].getPlayerID());
+            Log.w("GAME_DEBUG", "Player " + sortedPlayers[i + 1].getPlayerID() + " chipstack " + sortedPlayers[i + 1].getChipStack());
+            numWinners--;
+        }while(numWinners > 0);
+
+        for(int j = 0; j < numPlayers; j++)
+        {
+            Log.w("GAME_DEBUG", "Player " + sortedPlayers[j].getPlayerID() + " score: " + scores[j]);
+        }
+
+        return winners;
     }
 
     //returns whether user needs to contribute more, or if they can't, or 1 for success
@@ -552,7 +598,7 @@ public class DrawPoker extends AppCompatActivity
     //----------UI----------
 
     //shows bot cards ands chips, as well as user chips
-    //called by firstBetRound()
+    //called by firstBettingRound()
     public void showPlayers(int numBots)
     {
         switch(numBots)
@@ -825,7 +871,6 @@ public class DrawPoker extends AppCompatActivity
         hideUserOptions();
 
         playerIndex++;
-        numDrawn++;
 
         currentPlayer.setDrawn();
 
@@ -1284,12 +1329,31 @@ public class DrawPoker extends AppCompatActivity
         });
     }
 
-    public void openContinueWindow()
+    public void openContinueWindow(int[] winners)
     {
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.continue_game_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.showAtLocation(findViewById(R.id.layout), Gravity.CENTER, 0, 0);
+
+        String winnerText = "Winner(s): ";
+
+        for(int num : winners)
+        {
+            if(num == 0)
+            {
+                winnerText += getIntent().getStringExtra("username") + ", ";
+            }
+            else
+            {
+                winnerText += getIntent().getStringExtra("name" + num) + ", ";
+            }
+        }
+
+        winnerText = winnerText.substring(0, winnerText.length() - 2);
+
+        TextView winnerTextView = (TextView)popupView.findViewById(R.id.winner);
+        winnerTextView.setText(winnerText);
 
         Button continueButton = (Button)popupView.findViewById(R.id.continueButton);
         continueButton.setOnClickListener(new Button.OnClickListener(){
