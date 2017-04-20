@@ -10,14 +10,14 @@ public class AI_Player extends Player
 {
 
     public String name;
-    public int bet;
+    private int bet;
     private Random rand;
     private double confidence;
     private Card[] myHand = new Card[5];
     private Card a;
     private Card b;
     private int decision;
-    public int boldness;
+    private int boldness;
     private boolean newRound = true;
 
     //Needed for finding Suit constants
@@ -37,7 +37,7 @@ public class AI_Player extends Player
         this.name = name;
         boldness = rand.nextInt(9)+1;
         confidence = 0.05 * boldness;
-        allCards = new ArrayList<Card>();
+        allCards = new ArrayList<>();
     }
 
     public int getRaiseAmount()
@@ -520,7 +520,7 @@ public class AI_Player extends Player
     }
 
     //converts suit to value, name is a lie
-    public static double suitToFloat (Suit suit)
+    private static double suitToFloat (Suit suit)
     {
         double suitValue;
         if (suit == CLUBS)
@@ -535,7 +535,7 @@ public class AI_Player extends Player
     }
 
     //ghetto bubblesort
-    public static Card[] sortHand (Card[] hand)
+    private static Card[] sortHand (Card[] hand)
     {
         int bound = 4;
         Card temp;
@@ -599,7 +599,9 @@ public class AI_Player extends Player
                 temp[j] = new Card((i%13)+2, family(i/4));
                 if(hand.score(temp) < score)
                 {
-                    replace.add(temp2);
+                    if(!replace.contains(temp2))
+                        replace.add(temp2);
+                    break;
                 }
             }
         }
